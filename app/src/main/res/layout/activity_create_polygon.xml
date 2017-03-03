@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create_polygon"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.popina.projekat.CreatePolygon"
+    android:weightSum="1">
+
+
+    <SurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/surfaceView2"
+        android:layout_weight="0.90" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:weightSum="4">
+
+        <Button
+            android:text="@string/pocetna"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/buttonStartHole" />
+
+        <Button
+            android:text="@string/krajnja"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonFinishHole"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="@string/pravougaona"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonObstacle"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="@string/rupa_u_koju_ne_sme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonWrongHole"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>
