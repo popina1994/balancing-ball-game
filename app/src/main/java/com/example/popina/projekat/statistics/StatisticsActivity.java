@@ -1,15 +1,15 @@
-package com.example.popina.projekat.create;
+package com.example.popina.projekat.statistics;
 
 import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.popina.projekat.R;
 
-public class CreatePolygon extends Activity {
+public class StatisticsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_polygon);
+        setContentView(R.layout.activity_statistics);
     }
 }

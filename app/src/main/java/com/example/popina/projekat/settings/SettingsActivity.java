@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.popina.projekat.R;
 
-public class Settings extends Activity {
+public class SettingsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,9 +8,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.popina.projekat.R;
-import com.example.popina.projekat.statistics.Statistics;
-import com.example.popina.projekat.create.CreatePolygon;
-import com.example.popina.projekat.settings.Settings;
+import com.example.popina.projekat.statistics.StatisticsActivity;
+import com.example.popina.projekat.create.CreatePolygonActivity;
+import com.example.popina.projekat.settings.SettingsActivity;
 
 public class MainActivity extends Activity {
 
@@ -33,13 +33,13 @@ public class MainActivity extends Activity {
         Class <?> classStart = null;
         switch (item.getItemId()) {
             case R.id.menuItemCreatePoligon:
-                classStart = CreatePolygon.class;
+                classStart = CreatePolygonActivity.class;
                 break;
             case R.id.menuItemStatistics:
-                classStart = Statistics.class;
+                classStart = StatisticsActivity.class;
                 break;
             case R.id.menuItemSettings:
-                classStart = Settings.class;
+                classStart = SettingsActivity.class;
                 break;
             default:
                 return super.onOptionsItemSelected(item);
