@@ -9,9 +9,17 @@ import java.util.LinkedList;
  */
 
 public class CreatePolygonModel {
+
+    public static final int MODE_ADD = 0;
+    public static final int MODE_MOVE = 1;
+    public static final int MODE_RESIZE = 2;
+    public static final int MODE_DELETE = 3;
+
     private int height;
     private int width;
     private LinkedList<Figure> listFigures;
+
+    private int curMode = MODE_ADD;
 
     public int getHeight() {
         return height;
@@ -27,5 +35,13 @@ public class CreatePolygonModel {
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public int getCurMode() {
+        return curMode;
+    }
+
+    public void setCurMode(int curMode) {
+        this.curMode = curMode;
     }
 }

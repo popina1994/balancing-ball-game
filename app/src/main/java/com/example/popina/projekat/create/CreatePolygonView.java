@@ -9,8 +9,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.View;
 
 import com.example.popina.projekat.R;
 
@@ -18,9 +20,10 @@ import com.example.popina.projekat.R;
  * Created by popina on 04.03.2017..
  */
 
-public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Callback {
+public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
 
     private CreatePolygonModel model;
+    private CreatePolygonController controller;
 
     public CreatePolygonView(Context context) {
         super(context);
@@ -74,6 +77,7 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
 
         holder.unlockCanvasAndPost(canvas);
+        setOnTouchListener(this);
 
     }
 
@@ -91,4 +95,37 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         this.model = model;
     }
 
+    public void setController(CreatePolygonController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        float x =   event.getX();
+        float y = event.getY();
+
+        Log.d("X:", Float.toString(x));
+        Log.d("Y:", Float.toString(y));
+
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                Log.d("CreatePolygonView", " DOWN");
+                controller.actionDownExecute(x, y);
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d("CreatePolygonView", " UP");
+                controller.actionUpExecute(x, y);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d("CreatePolygonView", " MOVE");
+                controller.actionMoveExecute(x, y);
+                break;
+            default:
+                return false;
+        }
+
+        return true;
+    }
 }

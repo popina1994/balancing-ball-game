@@ -12,41 +12,94 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/surfaceViewCreatePolygon"
-        android:layout_weight="0.90" />
+        android:layout_weight="0.9" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1">
+        android:layout_weight="0.05"
+        >
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/radioButtonAdd">
+
+            <RadioButton
+                android:text="Dodaj elemente"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/radioButtonAdd"
+                android:layout_weight="1"
+                android:onClick="onModeSelected"/>
+
+            <RadioButton
+                android:text="Pomeri elemente"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/radioButtonMove"
+                android:layout_weight="1"
+                android:onClick="onModeSelected"/>
+
+            <RadioButton
+                android:text="Promeni velicinu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/radioButtonResize"
+                android:layout_weight="1"
+                android:onClick="onModeSelected"/>
+
+            <RadioButton
+                android:text="Brisi elemente"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/radioButtonDelete"
+                android:layout_weight="1"
+                android:onClick="onModeSelected"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05">
 
         <Button
-            android:text="@string/pocetna"
+            android:text="POCETNA POZICIJA"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/buttonStartHole" />
+            android:id="@+id/buttonStartHole"
+            android:textSize="13sp" />
 
         <Button
-            android:text="@string/krajnja"
+            android:text="KRAJNJA POZICIJA"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/buttonFinishHole"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="13sp" />
+
 
         <Button
-            android:text="@string/pravougaona"
+            android:text="PREPREKA"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/buttonObstacle"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="13sp" />
 
         <Button
-            android:text="@string/rupa_u_koju_ne_sme"
+            android:text="AMBIS"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/buttonWrongHole"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textSize="13sp" />
     </LinearLayout>
 
 </LinearLayout>
