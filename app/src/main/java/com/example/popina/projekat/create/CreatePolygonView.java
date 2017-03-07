@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.create.shape.Coordinate;
@@ -25,11 +26,13 @@ import java.util.LinkedList;
  * Created by popina on 04.03.2017..
  */
 
-public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
+public class CreatePolygonView extends ImageView implements View.OnTouchListener{
 
     private CreatePolygonModel model;
     private CreatePolygonController controller;
-    private SurfaceThread surfaceThread = null;
+    //private SurfaceThread surfaceThread = null;
+
+
 
     public CreatePolygonView(Context context) {
         super(context);
@@ -54,28 +57,26 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
 
     private void init() {
-        SurfaceHolder surfaceHolder = getHolder();
-        surfaceHolder.addCallback(this);
+        //SurfaceHolder surfaceHolder = getHolder();
+        //surfaceHolder.addCallback(this);
     }
 
 
     public void invalidateSurfaceView()
     {
-        surfaceThread.interrupt();
+        invalidate();
+        //surfaceThread.interrupt();
     }
-
+/*
     public class SurfaceThread extends Thread {
         private boolean running = true;
         private int jobCnt = 0;
 
         @Override
         public void run() {
-            SurfaceHolder surfaceHolder = CreatePolygonView.this.getHolder();
+            //SurfaceHolder surfaceHolder = CreatePolygonView.this.getHolder();
             while (running)
             {
-                while (!interrupted())
-                {
-                }
                 if (running) {
                     Log.d("Sufrace view", "Drawing");
                     Canvas canvas = surfaceHolder.lockCanvas();
@@ -86,11 +87,10 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
                     }
                 }
 
-
             }
         }
     }
-
+*/
     private void renderSurfaceView(Canvas canvas) {
 
         Resources resources = getContext().getResources();
@@ -103,52 +103,85 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         Bitmap background = BitmapFactory.decodeResource(resources, R.drawable.background);
         canvas.drawBitmap(background, 0, 0, null);
 
-        synchronized (model) {
+        //synchronized (model) {
             LinkedList<Figure> listFigures = model.getListFigures();
             for (Figure it : listFigures) {
                 it.drawOnCanvas(canvas);
             }
-        }
+        //}
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        Log.d("Surface View", "Created surface");
-
-        Canvas canvas = holder.lockCanvas();
-        int height = canvas.getHeight();
-        int width = canvas.getWidth();
-        UtilScale.screenHeight = height;
-        UtilScale.screenWidth = width;
-        holder.unlockCanvasAndPost(canvas);
-
-        model.setHeight(height);
-        model.setWidth(width);
-
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        //super.onSizeChanged(w, h, oldw, oldh);
+        model.setWidth(w);
+        model.setHeight(h);
+        UtilScale.setScreenWidth(w);
+        UtilScale.setScreenHeight(h);
         setOnTouchListener(this);
-
-        surfaceThread = new SurfaceThread();
-        surfaceThread.start();
         invalidateSurfaceView();
     }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    /*
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            Log.d("Surface View", "Created surface");
 
-    }
+            Canvas canvas = holder.lockCanvas();
+            int height = canvas.getHeight();
+            int width = canvas.getWidth();
+            UtilScale.screenHeight = height;
+            UtilScale.screenWidth = width;
+            holder.unlockCanvasAndPost(canvas);
 
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        surfaceThread.running  = false;
-        surfaceThread.interrupt();
-    }
+            model.setHeight(height);
+            model.setWidth(width);
 
+            setOnTouchListener(this);
+
+            surfaceThread = new SurfaceThread();
+            surfaceThread.start();
+            invalidateSurfaceView();
+        }
+
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            surfaceThread.running  = false;
+            surfaceThread.interrupt();
+        }
+        */
     public void setModel(CreatePolygonModel model) {
         this.model = model;
     }
 
     public void setController(CreatePolygonController controller) {
         this.controller = controller;
+    }
+
+    Resources resources = getContext().getResources();
+    Bitmap background = BitmapFactory.decodeResource(resources, R.drawable.background);
+    @Override
+    protected void onDraw(Canvas canvas) {
+        Resources resources = getContext().getResources();
+
+
+        // Clear canvas of all drawings.
+        //
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        //Bitmap background = BitmapFactory.decodeResource(resources, R.drawable.background);
+        canvas.drawBitmap(background, 0, 0, null);
+
+        synchronized (model) {
+            LinkedList<Figure> listFigures = model.getListFigures();
+            for (Figure it : listFigures) {
+                it.drawOnCanvas(canvas);
+            }
+        }
     }
 
     // Prevent multitouch
