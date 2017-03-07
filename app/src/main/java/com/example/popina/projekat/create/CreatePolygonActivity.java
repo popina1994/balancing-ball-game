@@ -34,9 +34,6 @@ public class CreatePolygonActivity extends Activity {
         int curMode;
         switch (v.getId())
         {
-            case R.id.radioButtonAdd:
-                curMode = CreatePolygonModel.MODE_ADD;
-                break;
             case R.id.radioButtonDelete:
                 curMode = CreatePolygonModel.MODE_DELETE;
                 break;
@@ -51,6 +48,26 @@ public class CreatePolygonActivity extends Activity {
         }
 
         model.setCurMode(curMode);
+    }
 
+    public void onButtonClicked(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.buttonStartHole:
+                controller.createFigure(CreatePolygonModel.CREATE_START);
+                break;
+            case R.id.buttonFinishHole:
+                controller.createFigure(CreatePolygonModel.CREATE_FINISH);
+                break;
+            case R.id.buttonWrongHole:
+                controller.createFigure(CreatePolygonModel.CREATE_CIRCLE);
+                break;
+            case R.id.buttonObstacle:
+                controller.createFigure(CreatePolygonModel.CREATE_RECT);
+                break;
+            default:
+                return;
+        }
     }
 }

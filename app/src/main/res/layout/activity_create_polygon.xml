@@ -26,15 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:checkedButton="@+id/radioButtonAdd">
-
-            <RadioButton
-                android:text="Dodaj elemente"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/radioButtonAdd"
-                android:layout_weight="1"
-                android:onClick="onModeSelected"/>
+            android:checkedButton="@+id/radioButtonMove">
 
             <RadioButton
                 android:text="Pomeri elemente"
@@ -74,7 +66,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/buttonStartHole"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:onClick="onButtonClicked"/>
 
         <Button
             android:text="KRAJNJA POZICIJA"
@@ -82,7 +75,8 @@
             android:layout_height="match_parent"
             android:id="@+id/buttonFinishHole"
             android:layout_weight="1"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:onClick="onButtonClicked"/>
 
 
         <Button
@@ -91,7 +85,8 @@
             android:layout_height="match_parent"
             android:id="@+id/buttonObstacle"
             android:layout_weight="1"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:onClick="onButtonClicked"/>
 
         <Button
             android:text="AMBIS"
@@ -99,7 +94,8 @@
             android:layout_height="match_parent"
             android:id="@+id/buttonWrongHole"
             android:layout_weight="1"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:onClick="onButtonClicked"/>
     </LinearLayout>
 
 </LinearLayout>

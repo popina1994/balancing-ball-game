@@ -1,5 +1,9 @@
 package com.example.popina.projekat.create.shape;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 /**
  * Created by popina on 05.03.2017..
  */
@@ -10,6 +14,13 @@ public class Rectangle extends Figure{
 
     public Rectangle(float xCenter, float yCenter, float height, float width) {
         super(new Coordinate(xCenter, yCenter));
+        this.height = height;
+        this.width = width;
+    }
+
+    public Rectangle(Coordinate c, float height, float width)
+    {
+        super(c.clone());
         this.height = height;
         this.width = width;
     }
@@ -32,7 +43,7 @@ public class Rectangle extends Figure{
 
     public float getBottomY()
     {
-        return super.center.getY() - height / 2;
+        return super.center.getY() + height / 2;
     }
 
     public float getLeftX()
@@ -42,7 +53,7 @@ public class Rectangle extends Figure{
 
     public float getTopY()
     {
-        return super.center.getY() + height / 2;
+        return super.center.getY() - height / 2;
     }
 
     public float getRightX()
@@ -58,5 +69,21 @@ public class Rectangle extends Figure{
     public Coordinate getTopRight()
     {
         return new Coordinate(getRightX(), getTopY());
+    }
+
+    @Override
+    public void drawOnCanvas(Canvas canvas) {
+        Paint p = new Paint();
+        p.setColor(color);
+        canvas.drawRect(getLeftX(), getTopY(), getRightX(), getBottomY(), p);
+    }
+
+    @Override
+    public boolean isCoordinateInside(Coordinate c) {
+        if ( (c.getX() >= getLeftX()) && (c.getX() <= getRightX()) && (c.getY() <= getBottomY()) && (c.getY() >= getTopY()))
+        {
+            return true;
+        }
+        return false;
     }
 }

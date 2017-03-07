@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,6 +16,10 @@ import android.view.SurfaceHolder;
 import android.view.View;
 
 import com.example.popina.projekat.R;
+import com.example.popina.projekat.create.shape.Coordinate;
+import com.example.popina.projekat.create.shape.Figure;
+
+import java.util.LinkedList;
 
 /**
  * Created by popina on 04.03.2017..
@@ -24,6 +29,7 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
     private CreatePolygonModel model;
     private CreatePolygonController controller;
+    private SurfaceThread surfaceThread = null;
 
     public CreatePolygonView(Context context) {
         super(context);
@@ -52,33 +58,78 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         surfaceHolder.addCallback(this);
     }
 
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        Log.d("Test", "It works");
+
+    public void invalidateSurfaceView()
+    {
+        surfaceThread.interrupt();
+    }
+
+    public class SurfaceThread extends Thread {
+        private boolean running = true;
+        private int jobCnt = 0;
+
+        @Override
+        public void run() {
+            SurfaceHolder surfaceHolder = CreatePolygonView.this.getHolder();
+            while (running)
+            {
+                while (!interrupted())
+                {
+                }
+                if (running) {
+                    Log.d("Sufrace view", "Drawing");
+                    Canvas canvas = surfaceHolder.lockCanvas();
+                    try {
+                        CreatePolygonView.this.renderSurfaceView(canvas);
+                    } finally {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    private void renderSurfaceView(Canvas canvas) {
+
         Resources resources = getContext().getResources();
+
+
+        // Clear canvas of all drawings.
+        //
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
         Bitmap background = BitmapFactory.decodeResource(resources, R.drawable.background);
-
-
-        Canvas canvas = holder.lockCanvas();
-
         canvas.drawBitmap(background, 0, 0, null);
 
+        synchronized (model) {
+            LinkedList<Figure> listFigures = model.getListFigures();
+            for (Figure it : listFigures) {
+                it.drawOnCanvas(canvas);
+            }
+        }
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        Log.d("Surface View", "Created surface");
+
+        Canvas canvas = holder.lockCanvas();
         int height = canvas.getHeight();
         int width = canvas.getWidth();
+        UtilScale.screenHeight = height;
+        UtilScale.screenWidth = width;
+        holder.unlockCanvasAndPost(canvas);
 
         model.setHeight(height);
         model.setWidth(width);
 
-        Paint p = new Paint();
-        // Constructor won't set a color. I don't have idea why. -_-
-        //
-        p.setColor(Color.RED);
-        canvas.drawCircle(10, 10, 100, p);
-
-
-        holder.unlockCanvasAndPost(canvas);
         setOnTouchListener(this);
 
+        surfaceThread = new SurfaceThread();
+        surfaceThread.start();
+        invalidateSurfaceView();
     }
 
     @Override
@@ -88,7 +139,8 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        surfaceThread.running  = false;
+        surfaceThread.interrupt();
     }
 
     public void setModel(CreatePolygonModel model) {
@@ -99,11 +151,15 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         this.controller = controller;
     }
 
+    // Prevent multitouch
+    //
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
         float x =   event.getX();
         float y = event.getY();
+
+        Coordinate c = new Coordinate(x, y);
 
         Log.d("X:", Float.toString(x));
         Log.d("Y:", Float.toString(y));
@@ -112,15 +168,15 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         {
             case MotionEvent.ACTION_DOWN:
                 Log.d("CreatePolygonView", " DOWN");
-                controller.actionDownExecute(x, y);
+                controller.actionDownExecute(c);
                 break;
             case MotionEvent.ACTION_UP:
                 Log.d("CreatePolygonView", " UP");
-                controller.actionUpExecute(x, y);
+                controller.actionUpExecute(c);
                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.d("CreatePolygonView", " MOVE");
-                controller.actionMoveExecute(x, y);
+                controller.actionMoveExecute(c);
                 break;
             default:
                 return false;

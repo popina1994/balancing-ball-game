@@ -7,16 +7,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".begin.MainActivity">
+        <activity android:name=".begin.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".create.CreatePolygonActivity" />
-        <activity android:name=".statistics.StatisticsActivity" />
-        <activity android:name=".settings.SettingsActivity"></activity>
+
+        <activity android:name=".create.CreatePolygonActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".statistics.StatisticsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".settings.SettingsActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
