@@ -46,15 +46,12 @@ public class CreatePolygonController {
         switch (model.getCurMode())
         {
             case CreatePolygonModel.MODE_MOVE:
-                synchronized (model)
+                LinkedList<Figure> listFigures = model.getListFigures();
+                for (Figure figure : listFigures)
                 {
-                    LinkedList<Figure> listFigures = model.getListFigures();
-                    for (Figure figure : listFigures)
+                    if (figure.isCoordinateInside(c))
                     {
-                        if (figure.isCoordinateInside(c))
-                        {
-                            model.setSelectedFigure(figure);
-                        }
+                        model.setSelectedFigure(figure);
                     }
                 }
                 break;

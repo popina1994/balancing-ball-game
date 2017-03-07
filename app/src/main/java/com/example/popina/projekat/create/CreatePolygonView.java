@@ -66,15 +66,19 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
     public class SurfaceThread extends Thread {
         private boolean running = true;
-        private int jobCnt = 0;
 
         @Override
         public void run() {
             SurfaceHolder surfaceHolder = CreatePolygonView.this.getHolder();
             while (running)
             {
-                while (!interrupted())
+                try {
+                    while (!interrupted()) {
+                        sleep(100000000);
+                    }
+                }catch (InterruptedException e)
                 {
+
                 }
                 if (running) {
                     Log.d("Sufrace view", "Drawing");
@@ -91,16 +95,15 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         }
     }
 
+    Resources resources = getContext().getResources();
+    Bitmap background = BitmapFactory.decodeResource(resources, R.drawable.background);
+
     private void renderSurfaceView(Canvas canvas) {
-
-        Resources resources = getContext().getResources();
-
-
         // Clear canvas of all drawings.
         //
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-        Bitmap background = BitmapFactory.decodeResource(resources, R.drawable.background);
+
         canvas.drawBitmap(background, 0, 0, null);
 
         synchronized (model) {
@@ -141,6 +144,12 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
     public void surfaceDestroyed(SurfaceHolder holder) {
         surfaceThread.running  = false;
         surfaceThread.interrupt();
+        try {
+            surfaceThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d("Surface View", "Uspesno unisten surface View");
     }
 
     public void setModel(CreatePolygonModel model) {
