@@ -1,24 +1,26 @@
-package com.example.popina.projekat.create.shape;
+package com.example.popina.projekat.model.shape.figure.circle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
+import com.example.popina.projekat.model.shape.coordinate.Coordinate;
+import com.example.popina.projekat.model.shape.figure.Figure;
 
 /**
  * Created by popina on 05.03.2017..
  */
 
-public class Circle extends Figure {
+public abstract  class Circle extends Figure {
     private float radius;
 
-    public Circle(float x, float y, float radius) {
-        super(new Coordinate(x, y));
+    public Circle(float x, float y, float radius, String figureType) {
+        super(new Coordinate(x, y), figureType);
         this.radius = radius;
     }
 
-    public Circle(Coordinate c, float radius)
+    public Circle(Coordinate c, float radius, String figureType)
     {
-
-        super(c.clone());
+        super(c.clone(), figureType);
         this.radius = radius;
     }
 
@@ -45,4 +47,15 @@ public class Circle extends Figure {
         }
         return false;
     }
+
+    @Override
+    public void resize(Coordinate c) {
+        radius = (float)Math.sqrt( (c.getX() - center.getX()) * (c.getX() - center.getX()) +  (c.getY() - center.getY()) * (c.getY() - center.getY()));
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + Float.toString(radius) + " ";
+    }
+
 }

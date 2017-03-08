@@ -1,4 +1,4 @@
-package com.example.popina.projekat.create;
+package com.example.popina.projekat.application.create;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -55,19 +55,27 @@ public class CreatePolygonActivity extends Activity {
         switch (v.getId())
         {
             case R.id.buttonStartHole:
-                controller.createFigure(CreatePolygonModel.CREATE_START);
+                controller.createFigure(CreatePolygonModel.CREATE_START_HOLE);
                 break;
             case R.id.buttonFinishHole:
-                controller.createFigure(CreatePolygonModel.CREATE_FINISH);
+                controller.createFigure(CreatePolygonModel.CREATE_FINISH_HOLE);
                 break;
             case R.id.buttonWrongHole:
-                controller.createFigure(CreatePolygonModel.CREATE_CIRCLE);
+                controller.createFigure(CreatePolygonModel.CREATE_WRONG_HOLE);
                 break;
             case R.id.buttonObstacle:
-                controller.createFigure(CreatePolygonModel.CREATE_RECT);
+                controller.createFigure(CreatePolygonModel.CREATE_OBSTACLE);
                 break;
+            case  R.id.buttonSavePolygon:
+                controller.savePolygon();
             default:
                 return;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
     }
 }

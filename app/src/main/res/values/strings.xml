@@ -5,4 +5,12 @@
     <string name="pocetna">Pocetna</string>
     <string name="rupa_u_koju_ne_sme">Rupa u koju ne sme</string>
     <string name="smrtna">smrtna</string>
+    <string name="ambis">AMBIS</string>
+    <string name="brisi_elemente">Brisi elemente</string>
+    <string name="krajnja_pozicija">KRAJNJA POZICIJA</string>
+    <string name="prepreka">PREPREKA</string>
+    <string name="pocetna_pozicija">POCETNA POZICIJA</string>
+    <string name="pomeri_elemente">Pomeri elemente</string>
+    <string name="promeni_velicinu">Promeni velicinu</string>
+    <string name="sacuvaj_poligon">Sacuvaj poligon</string>
 </resources>

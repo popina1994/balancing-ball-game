@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.popina.projekat.create.CreatePolygonActivity">
+    tools:context=".application.create.CreatePolygonActivity">
 
 
-    <com.example.popina.projekat.create.CreatePolygonView
+    <com.example.popina.projekat.application.create.CreatePolygonView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/surfaceViewCreatePolygon"
@@ -23,13 +23,15 @@
 
 
         <RadioGroup
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:checkedButton="@+id/radioButtonMove">
+            android:checkedButton="@+id/radioButtonMove"
+            android:layout_weight="0.75"
+            >
 
             <RadioButton
-                android:text="Pomeri elemente"
+                android:text="@string/pomeri_elemente"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/radioButtonMove"
@@ -37,7 +39,7 @@
                 android:onClick="onModeSelected"/>
 
             <RadioButton
-                android:text="Promeni velicinu"
+                android:text="@string/promeni_velicinu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/radioButtonResize"
@@ -45,13 +47,23 @@
                 android:onClick="onModeSelected"/>
 
             <RadioButton
-                android:text="Brisi elemente"
+                android:text="@string/brisi_elemente"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/radioButtonDelete"
                 android:layout_weight="1"
                 android:onClick="onModeSelected"/>
         </RadioGroup>
+
+        <Button
+            android:text="@string/sacuvaj_poligon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonSavePolygon"
+            android:layout_weight="0.25"
+            android:textSize="13sp"
+            android:onClick="onButtonClicked"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +73,7 @@
         android:layout_weight="0.05">
 
         <Button
-            android:text="POCETNA POZICIJA"
+            android:text="@string/pocetna_pozicija"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -70,7 +82,7 @@
             android:onClick="onButtonClicked"/>
 
         <Button
-            android:text="KRAJNJA POZICIJA"
+            android:text="@string/krajnja_pozicija"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/buttonFinishHole"
@@ -80,7 +92,7 @@
 
 
         <Button
-            android:text="PREPREKA"
+            android:text="@string/prepreka"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/buttonObstacle"
@@ -89,7 +101,7 @@
             android:onClick="onButtonClicked"/>
 
         <Button
-            android:text="AMBIS"
+            android:text="@string/ambis"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/buttonWrongHole"

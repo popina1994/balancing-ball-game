@@ -1,6 +1,9 @@
-package com.example.popina.projekat.create;
+package com.example.popina.projekat.application.create;
 
-import com.example.popina.projekat.create.shape.Figure;
+import com.example.popina.projekat.application.Model;
+import com.example.popina.projekat.model.shape.ShapeDraw;
+import com.example.popina.projekat.model.shape.figure.Figure;
+import com.example.popina.projekat.model.shape.ShapeFactory;
 
 import java.util.LinkedList;
 
@@ -8,21 +11,18 @@ import java.util.LinkedList;
  * Created by popina on 04.03.2017..
  */
 
-public class CreatePolygonModel {
+public class CreatePolygonModel extends Model{
 
     public static final int MODE_MOVE = 0;
     public static final int MODE_RESIZE = 1;
     public static final int MODE_DELETE = 2;
 
-    public static final int CREATE_START = 0;
-    public static final int CREATE_FINISH = 1;
-    public static final int CREATE_CIRCLE = 2;
-    public static final int CREATE_RECT = 3;
+    public static final int CREATE_START_HOLE = 0;
+    public static final int CREATE_FINISH_HOLE = 1;
+    public static final int CREATE_WRONG_HOLE = 2;
+    public static final int CREATE_OBSTACLE = 3;
 
 
-
-    private int height;
-    private int width;
     // List of unscaled figures.
     //
     private LinkedList<Figure> listFigures = new LinkedList<>();
@@ -30,6 +30,8 @@ public class CreatePolygonModel {
     private int curMode = MODE_MOVE;
 
     private Figure selectedFigure = null;
+
+
 
     public Figure getSelectedFigure() {
         return selectedFigure;
@@ -39,21 +41,6 @@ public class CreatePolygonModel {
         this.selectedFigure = selectedFigure;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
 
     public int getCurMode() {
         return curMode;
@@ -70,4 +57,5 @@ public class CreatePolygonModel {
     public void setListFigures(LinkedList<Figure> listFigures) {
         this.listFigures = listFigures;
     }
+
 }

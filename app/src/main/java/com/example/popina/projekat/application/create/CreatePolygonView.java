@@ -1,4 +1,4 @@
-package com.example.popina.projekat.create;
+package com.example.popina.projekat.application.create;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,8 +15,11 @@ import android.view.SurfaceHolder;
 import android.view.View;
 
 import com.example.popina.projekat.R;
-import com.example.popina.projekat.create.shape.Coordinate;
-import com.example.popina.projekat.create.shape.Figure;
+import com.example.popina.projekat.model.shape.ShapeDraw;
+import com.example.popina.projekat.model.shape.coordinate.Coordinate;
+import com.example.popina.projekat.model.shape.figure.Figure;
+import com.example.popina.projekat.model.shape.ShapeFactory;
+import com.example.popina.projekat.model.shape.scale.UtilScaleNormal;
 
 import java.util.LinkedList;
 
@@ -99,19 +101,11 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
     Bitmap background = BitmapFactory.decodeResource(resources, R.drawable.background);
 
     private void renderSurfaceView(Canvas canvas) {
-        // Clear canvas of all drawings.
-        //
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
-
-        canvas.drawBitmap(background, 0, 0, null);
-
-        synchronized (model) {
-            LinkedList<Figure> listFigures = model.getListFigures();
-            for (Figure it : listFigures) {
-                it.drawOnCanvas(canvas);
-            }
+        synchronized (model)
+        {
+            model.getShapeDraw().drawOnCanvas(model.getListFigures(), canvas);
         }
+
     }
 
     @Override
@@ -121,13 +115,17 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         Canvas canvas = holder.lockCanvas();
         int height = canvas.getHeight();
         int width = canvas.getWidth();
-        UtilScale.screenHeight = height;
-        UtilScale.screenWidth = width;
+
+        UtilScaleNormal utilScaleNormal = new UtilScaleNormal(width, height);
+
+        ShapeFactory shapeFactory = new ShapeFactory(utilScaleNormal);
+        model.setShapeFactory(shapeFactory);
+
+        ShapeDraw shapeDraw = new ShapeDraw(getContext());
+        shapeDraw.setModel(model);
+        model.setShapeDraw(shapeDraw);
+
         holder.unlockCanvasAndPost(canvas);
-
-        model.setHeight(height);
-        model.setWidth(width);
-
         setOnTouchListener(this);
 
         surfaceThread = new SurfaceThread();

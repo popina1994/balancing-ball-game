@@ -1,28 +1,35 @@
-package com.example.popina.projekat.create.shape;
+package com.example.popina.projekat.model.shape.figure.rectangle;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
+import com.example.popina.projekat.model.shape.coordinate.Coordinate;
+import com.example.popina.projekat.model.shape.ShapeModel;
+import com.example.popina.projekat.model.shape.figure.Figure;
+import com.example.popina.projekat.model.shape.scale.UtilScale;
 
 /**
  * Created by popina on 05.03.2017..
  */
 
-public class Rectangle extends Figure{
+public class Rectangle extends Figure {
     private float height;
     private float width;
 
-    public Rectangle(float xCenter, float yCenter, float height, float width) {
-        super(new Coordinate(xCenter, yCenter));
+    public Rectangle(float xCenter, float yCenter, float width, float height) {
+        super(new Coordinate(xCenter, yCenter), ShapeModel.TYPE_OBSTACLE);
         this.height = height;
         this.width = width;
+
+        color = ShapeModel.COLOR_OBSTACLE;
     }
 
-    public Rectangle(Coordinate c, float height, float width)
+    public Rectangle(Coordinate c, float width, float height)
     {
-        super(c.clone());
+        super(c.clone(), ShapeModel.TYPE_OBSTACLE);
         this.height = height;
         this.width = width;
+        color = ShapeModel.COLOR_OBSTACLE;
     }
 
     public float getWidth() {
@@ -85,5 +92,28 @@ public class Rectangle extends Figure{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void resize(Coordinate c) {
+        width = 2 * Math.abs(c.getX() - center.getX());
+        height = 2 * Math.abs(c.getY() - center.getY());
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + width + " " + height + " ";
+    }
+
+    @Override
+    public Rectangle scale(UtilScale utilScale) {
+        Rectangle rect = new Rectangle(utilScale.scaleCoordinate(getCenter()), utilScale.scaleWidth(getWidth()), utilScale.scaleHeight(getHeight()));
+        return rect;
+    }
+
+    @Override
+    public Rectangle scaleReverse(UtilScale utilScale) {
+        Rectangle rectPer = new Rectangle(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getWidth()), utilScale.scaleReverseHeight(getHeight()));
+        return rectPer;
     }
 }

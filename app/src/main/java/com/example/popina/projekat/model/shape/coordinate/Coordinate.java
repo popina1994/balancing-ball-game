@@ -1,4 +1,4 @@
-package com.example.popina.projekat.create.shape;
+package com.example.popina.projekat.model.shape.coordinate;
 
 /**
  * Created by popina on 05.03.2017..
@@ -30,7 +30,12 @@ public class Coordinate implements Cloneable{
     }
 
     @Override
-    protected Coordinate clone() {
+    public Coordinate clone() {
         return new Coordinate(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return Float.toString(x) + " " + Float.toString(y) + " ";
     }
 }
