@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 
 import com.example.popina.projekat.R;
-import com.example.popina.projekat.application.Model;
+import com.example.popina.projekat.application.common.CommonModel;
 import com.example.popina.projekat.model.shape.figure.Figure;
 
 import java.util.LinkedList;
@@ -20,27 +20,19 @@ import java.util.LinkedList;
 public class ShapeDraw {
     Context context;
     Bitmap background;
-    Model model;
+    CommonModel commonModel;
 
     public ShapeDraw(Context context) {
         this.context = context;
-        background = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.background);
+        background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
     }
 
-    public Context getContext() {
-        return context;
+    public CommonModel getCommonModel() {
+        return commonModel;
     }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    public Model getModel() {
-        return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
+    public void setCommonModel(CommonModel commonModel) {
+        this.commonModel = commonModel;
     }
 
     public  void drawOnCanvas(LinkedList<Figure> listFigures, Canvas canvas)
@@ -49,8 +41,8 @@ public class ShapeDraw {
 
         canvas.drawBitmap(background, 0, 0, null);
 
-        if (model!= null) {
-            synchronized (model) {
+        if (commonModel != null) {
+            synchronized (commonModel) {
                 for (Figure it : listFigures) {
                     it.drawOnCanvas(canvas);
                 }

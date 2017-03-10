@@ -21,7 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.popina.projekat.R;
-import com.example.popina.projekat.application.Model;
+import com.example.popina.projekat.application.common.CommonActivity;
+import com.example.popina.projekat.application.game.GameActivity;
 import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.application.create.CreatePolygonActivity;
 import com.example.popina.projekat.application.settings.SettingsActivity;
@@ -36,15 +37,20 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends CommonActivity {
 
     private static final String TAG = "BEGIN_ACTIVITY";
     private  MainModel model;
     private String[] createdPolygons = null;
 
+    public MainActivity() {
+        super(true);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         model = new MainModel();
         init();
@@ -159,6 +165,19 @@ public class MainActivity extends Activity {
         });
 
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView=(TextView)view.findViewById(R.id.textViewListItemPolygonName);
+                String fileName=textView.getText().toString();
+
+                Intent intent= new Intent(MainActivity.this,GameActivity.class);
+                intent.putExtra(MainModel.POLYGON_NAME,fileName);
+                startActivityForResult(intent,MainModel.REQUEST_CODE_NEW_GAME);
+            }
+        });
+
         registerForContextMenu(listView);
     }
 

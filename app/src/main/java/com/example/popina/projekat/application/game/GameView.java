@@ -1,52 +1,52 @@
-package com.example.popina.projekat.application.create;
+package com.example.popina.projekat.application.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 
+import com.example.popina.projekat.application.create.CreatePolygonView;
 import com.example.popina.projekat.model.shape.ShapeDraw;
-import com.example.popina.projekat.model.shape.coordinate.Coordinate;
 import com.example.popina.projekat.model.shape.ShapeFactory;
+import com.example.popina.projekat.model.shape.ShapeParser;
 import com.example.popina.projekat.model.shape.scale.UtilScaleNormal;
 
 /**
- * Created by popina on 04.03.2017..
+ * Created by popina on 09.03.2017..
  */
 
-public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
 
-    private CreatePolygonModel model;
-    private CreatePolygonController controller;
+    private GameModel model;
+    private GameController controller;
     private SurfaceThread surfaceThread = null;
 
-    public CreatePolygonView(Context context) {
+    public GameView(Context context) {
         super(context);
         init();
     }
 
-    public CreatePolygonView(Context context, AttributeSet attrs) {
+    public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-
-    public CreatePolygonView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public CreatePolygonView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public GameView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
-
-    private void init() {
+    private void init()
+    {
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
     }
@@ -62,7 +62,7 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
         @Override
         public void run() {
-            SurfaceHolder surfaceHolder = CreatePolygonView.this.getHolder();
+            SurfaceHolder surfaceHolder = GameView.this.getHolder();
             while (running)
             {
                 try {
@@ -77,7 +77,7 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
                     Log.d("Sufrace view", "Drawing");
                     Canvas canvas = surfaceHolder.lockCanvas();
                     try {
-                        CreatePolygonView.this.renderSurfaceView(canvas);
+                        GameView.this.renderSurfaceView(canvas);
                     } finally {
                         surfaceHolder.unlockCanvasAndPost(canvas);
                     }
@@ -94,8 +94,6 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.d("Surface View", "Created surface");
-
         Canvas canvas = holder.lockCanvas();
         int height = canvas.getHeight();
         int width = canvas.getWidth();
@@ -106,8 +104,17 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         model.setShapeFactory(shapeFactory);
 
         ShapeDraw shapeDraw = new ShapeDraw(getContext());
-        shapeDraw.setCommonModel(model);
+        // Only used for synchronization.
+        //
+        //shapeDraw.setModel(model);
         model.setShapeDraw(shapeDraw);
+
+        ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
+        model.setShapeParser(shapeParser);
+
+        model.setListFigures(shapeParser.parseFile(model.getFileName()));
+
+        //shapeParser.pa
 
         holder.unlockCanvasAndPost(canvas);
         setOnTouchListener(this);
@@ -134,45 +141,16 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         Log.d("Surface View", "Uspesno unisten surface View");
     }
 
-    public void setModel(CreatePolygonModel model) {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
+    }
+
+    public void setModel(GameModel model) {
         this.model = model;
     }
 
-    public void setController(CreatePolygonController controller) {
+    public void setController(GameController controller) {
         this.controller = controller;
-    }
-
-    // Prevent multitouch
-    //
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        float x =   event.getX();
-        float y = event.getY();
-
-        Coordinate c = new Coordinate(x, y);
-
-        Log.d("X:", Float.toString(x));
-        Log.d("Y:", Float.toString(y));
-
-        switch (event.getAction())
-        {
-            case MotionEvent.ACTION_DOWN:
-                Log.d("CreatePolygonView", " DOWN");
-                controller.actionDownExecute(c);
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.d("CreatePolygonView", " UP");
-                controller.actionUpExecute(c);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                Log.d("CreatePolygonView", " MOVE");
-                controller.actionMoveExecute(c);
-                break;
-            default:
-                return false;
-        }
-
-        return true;
     }
 }

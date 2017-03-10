@@ -1,9 +1,7 @@
 package com.example.popina.projekat.application.create;
 
-import com.example.popina.projekat.application.Model;
-import com.example.popina.projekat.model.shape.ShapeDraw;
+import com.example.popina.projekat.application.common.CommonModel;
 import com.example.popina.projekat.model.shape.figure.Figure;
-import com.example.popina.projekat.model.shape.ShapeFactory;
 
 import java.util.LinkedList;
 
@@ -11,7 +9,7 @@ import java.util.LinkedList;
  * Created by popina on 04.03.2017..
  */
 
-public class CreatePolygonModel extends Model{
+public class CreatePolygonModel extends CommonModel {
 
     public static final int MODE_MOVE = 0;
     public static final int MODE_RESIZE = 1;

@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.Window;
 
 import com.example.popina.projekat.R;
+import com.example.popina.projekat.application.common.CommonActivity;
 
-public class CreatePolygonActivity extends Activity {
+public class CreatePolygonActivity extends CommonActivity{
 
     private CreatePolygonView view;
     private CreatePolygonController controller;
@@ -18,7 +19,7 @@ public class CreatePolygonActivity extends Activity {
         super.onCreate(savedInstanceState);
         // Prevent Title.
         //
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_create_polygon);
 

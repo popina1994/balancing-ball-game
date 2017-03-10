@@ -82,7 +82,7 @@ public class ShapeParser {
         return  figure;
     }
 
-    private LinkedList<Figure> parseFile(String fileName)
+    public LinkedList<Figure> parseFile(String fileName)
     {
         FileInputStream file = null;
         LinkedList<Figure> listFigures = new LinkedList<>();

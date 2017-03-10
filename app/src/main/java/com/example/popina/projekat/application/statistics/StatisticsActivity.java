@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.popina.projekat.R;
+import com.example.popina.projekat.application.common.CommonActivity;
 
-public class StatisticsActivity extends Activity {
+public class StatisticsActivity extends CommonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
