@@ -1,11 +1,11 @@
-package com.example.popina.projekat.model.shape;
+package com.example.popina.projekat.logic.shape;
 
-import com.example.popina.projekat.model.shape.figure.Figure;
-import com.example.popina.projekat.model.shape.figure.circle.FinishHole;
-import com.example.popina.projekat.model.shape.figure.rectangle.Rectangle;
-import com.example.popina.projekat.model.shape.figure.circle.StartHole;
-import com.example.popina.projekat.model.shape.figure.circle.WrongHole;
-import com.example.popina.projekat.model.shape.scale.UtilScale;
+import com.example.popina.projekat.logic.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.circle.FinishHole;
+import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
+import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
+import com.example.popina.projekat.logic.shape.figure.circle.WrongHole;
+import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 import java.util.LinkedList;
 

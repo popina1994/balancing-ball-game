@@ -1,6 +1,6 @@
-package com.example.popina.projekat.model.shape.scale;
+package com.example.popina.projekat.logic.shape.scale;
 
-import com.example.popina.projekat.model.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 
 /**
  * Created by popina on 08.03.2017..

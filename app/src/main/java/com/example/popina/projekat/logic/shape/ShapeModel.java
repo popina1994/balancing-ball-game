@@ -1,4 +1,4 @@
-package com.example.popina.projekat.model.shape;
+package com.example.popina.projekat.logic.shape;
 
 import android.graphics.Color;
 

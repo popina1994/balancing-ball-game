@@ -1,6 +1,5 @@
 package com.example.popina.projekat.application.begin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -26,10 +25,10 @@ import com.example.popina.projekat.application.game.GameActivity;
 import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.application.create.CreatePolygonActivity;
 import com.example.popina.projekat.application.settings.SettingsActivity;
-import com.example.popina.projekat.model.shape.ShapeDraw;
-import com.example.popina.projekat.model.shape.ShapeFactory;
-import com.example.popina.projekat.model.shape.ShapeParser;
-import com.example.popina.projekat.model.shape.scale.UtilScaleNormal;
+import com.example.popina.projekat.logic.shape.ShapeDraw;
+import com.example.popina.projekat.logic.shape.ShapeFactory;
+import com.example.popina.projekat.logic.shape.ShapeParser;
+import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -68,7 +67,7 @@ public class MainActivity extends CommonActivity {
         ShapeFactory shapeFactory = new ShapeFactory(utilScaleNormal);
         model.setShapeFactory(shapeFactory);
 
-        ShapeDraw shapeDraw = new ShapeDraw(this);
+        ShapeDraw shapeDraw = new ShapeDraw(this, (int)width, (int)height);
         model.setShapeDraw(shapeDraw);
         ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, this);
         model.setShapeParser(shapeParser);
@@ -155,6 +154,7 @@ public class MainActivity extends CommonActivity {
                             (int)model.getShapeFactory().getUtilScale().getScreenHeight(),
                             Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(bmp);
+                    //model.getShapeDraw().drawOnCanvas();
                     model.getShapeParser().drawImageFromFile(canvas, (String)data);
                     imageViewPolygon.setImageBitmap(bmp);
                     return  true;

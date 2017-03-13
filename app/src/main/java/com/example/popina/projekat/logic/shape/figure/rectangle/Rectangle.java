@@ -1,12 +1,13 @@
-package com.example.popina.projekat.model.shape.figure.rectangle;
+package com.example.popina.projekat.logic.shape.figure.rectangle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.example.popina.projekat.model.shape.coordinate.Coordinate;
-import com.example.popina.projekat.model.shape.ShapeModel;
-import com.example.popina.projekat.model.shape.figure.Figure;
-import com.example.popina.projekat.model.shape.scale.UtilScale;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.ShapeModel;
+import com.example.popina.projekat.logic.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.circle.Circle;
+import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
  * Created by popina on 05.03.2017..
@@ -115,5 +116,10 @@ public class Rectangle extends Figure {
     public Rectangle scaleReverse(UtilScale utilScale) {
         Rectangle rectPer = new Rectangle(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getWidth()), utilScale.scaleReverseHeight(getHeight()));
         return rectPer;
+    }
+
+    @Override
+    public boolean hits(Circle ball) {
+        return false;
     }
 }

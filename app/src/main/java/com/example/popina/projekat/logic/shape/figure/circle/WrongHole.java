@@ -1,8 +1,8 @@
-package com.example.popina.projekat.model.shape.figure.circle;
+package com.example.popina.projekat.logic.shape.figure.circle;
 
-import com.example.popina.projekat.model.shape.coordinate.Coordinate;
-import com.example.popina.projekat.model.shape.ShapeModel;
-import com.example.popina.projekat.model.shape.scale.UtilScale;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.ShapeModel;
+import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
  * Created by popina on 08.03.2017..

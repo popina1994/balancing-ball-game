@@ -4,22 +4,24 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
-import com.example.popina.projekat.application.create.CreatePolygonView;
-import com.example.popina.projekat.model.shape.ShapeDraw;
-import com.example.popina.projekat.model.shape.ShapeFactory;
-import com.example.popina.projekat.model.shape.ShapeParser;
-import com.example.popina.projekat.model.shape.scale.UtilScaleNormal;
+import com.example.popina.projekat.logic.shape.ShapeDraw;
+import com.example.popina.projekat.logic.shape.ShapeFactory;
+import com.example.popina.projekat.logic.shape.ShapeParser;
+import com.example.popina.projekat.logic.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.circle.Circle;
+import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
+import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
+
+import java.util.LinkedList;
 
 /**
  * Created by popina on 09.03.2017..
  */
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
+public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     private GameModel model;
     private GameController controller;
@@ -54,7 +56,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
     public void invalidateSurfaceView()
     {
-        surfaceThread.interrupt();
+        if (null != surfaceThread)
+        {
+            surfaceThread.interrupt();
+        }
+
     }
 
     public class SurfaceThread extends Thread {
@@ -89,7 +95,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     }
 
     private void renderSurfaceView(Canvas canvas) {
-        model.getShapeDraw().drawOnCanvas(model.getListFigures(), canvas);
+        model.getShapeDraw().drawOnCanvas(model.getBall(), canvas);
     }
 
     @Override
@@ -98,29 +104,47 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         int height = canvas.getHeight();
         int width = canvas.getWidth();
 
+        model.setWidth(width);
+        model.setHeight(height);
         UtilScaleNormal utilScaleNormal = new UtilScaleNormal(width, height);
 
         ShapeFactory shapeFactory = new ShapeFactory(utilScaleNormal);
         model.setShapeFactory(shapeFactory);
 
-        ShapeDraw shapeDraw = new ShapeDraw(getContext());
+        ShapeDraw shapeDraw = new ShapeDraw(getContext(), width, height);
         // Only used for synchronization.
         //
         //shapeDraw.setModel(model);
         model.setShapeDraw(shapeDraw);
 
+        if (null == model.getBall()) {
         ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
         model.setShapeParser(shapeParser);
 
-        model.setListFigures(shapeParser.parseFile(model.getFileName()));
+        LinkedList<Figure> listFigures = shapeParser.parseFile(model.getFileName());
 
+
+            for (Figure it : listFigures) {
+                if (it instanceof StartHole) {
+                    model.setBall((Circle) it);
+                    listFigures.remove(it);
+                    break;
+                }
+            }
+
+
+        model.setListFigures(listFigures);
+
+        // Split ball from other figures.
+        //
+        shapeDraw.spriteOnBackground(model.getListFigures());
         //shapeParser.pa
-
+        }
         holder.unlockCanvasAndPost(canvas);
-        setOnTouchListener(this);
 
         surfaceThread = new SurfaceThread();
         surfaceThread.start();
+        model.setSufraceInitialized(true);
         invalidateSurfaceView();
     }
 
@@ -131,6 +155,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        model.setSufraceInitialized(false);
         surfaceThread.running  = false;
         surfaceThread.interrupt();
         try {
@@ -141,16 +166,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         Log.d("Surface View", "Uspesno unisten surface View");
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return false;
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
+
+    public GameModel getModel() {
+        return model;
     }
 
     public void setModel(GameModel model) {
         this.model = model;
-    }
-
-    public void setController(GameController controller) {
-        this.controller = controller;
     }
 }

@@ -1,10 +1,10 @@
-package com.example.popina.projekat.model.shape.figure.circle;
+package com.example.popina.projekat.logic.shape.figure.circle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.example.popina.projekat.model.shape.coordinate.Coordinate;
-import com.example.popina.projekat.model.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.figure.Figure;
 
 /**
  * Created by popina on 05.03.2017..
@@ -51,6 +51,11 @@ public abstract  class Circle extends Figure {
     @Override
     public void resize(Coordinate c) {
         radius = (float)Math.sqrt( (c.getX() - center.getX()) * (c.getX() - center.getX()) +  (c.getY() - center.getY()) * (c.getY() - center.getY()));
+    }
+
+    @Override
+    public boolean hits(Circle ball) {
+        return false;
     }
 
     @Override

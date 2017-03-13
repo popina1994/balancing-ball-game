@@ -9,10 +9,10 @@ import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.View;
 
-import com.example.popina.projekat.model.shape.ShapeDraw;
-import com.example.popina.projekat.model.shape.coordinate.Coordinate;
-import com.example.popina.projekat.model.shape.ShapeFactory;
-import com.example.popina.projekat.model.shape.scale.UtilScaleNormal;
+import com.example.popina.projekat.logic.shape.ShapeDraw;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.ShapeFactory;
+import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
 
 /**
  * Created by popina on 04.03.2017..
@@ -105,7 +105,7 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         ShapeFactory shapeFactory = new ShapeFactory(utilScaleNormal);
         model.setShapeFactory(shapeFactory);
 
-        ShapeDraw shapeDraw = new ShapeDraw(getContext());
+        ShapeDraw shapeDraw = new ShapeDraw(getContext(), width, height);
         shapeDraw.setCommonModel(model);
         model.setShapeDraw(shapeDraw);
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ACCELERATION_COEFICIENT_DEFAULT" format="float" type="dimen">
+    10.0
+    </item>
+    <item name="MI_COEFICIENT_DEFAULT" format="float" type="dimen">
+        10.0
+    </item>
+    <item name="REVERSE_SLOW_DOWN_COEFICIENT_DEFAULT" format="float" type="dimen">
+        0.99
+    </item>
+</resources>

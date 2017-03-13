@@ -1,4 +1,4 @@
-package com.example.popina.projekat.logic.game;
+package com.example.popina.projekat.application.game;
 
 import com.example.popina.projekat.logic.game.Coordinate3D;
 
@@ -15,7 +15,7 @@ public class Filter {
         this.alpha = alpha;
     }
 
-    public void filter(Coordinate3D newVals) {
+    public Coordinate3D filter(Coordinate3D newVals) {
         if (null == oldVals)
         {
             oldVals = newVals;
@@ -26,6 +26,8 @@ public class Filter {
             oldVals.setY(filterVal(oldVals.getY(), newVals.getY()));
             oldVals.setZ(filterVal(oldVals.getZ(), newVals.getZ()));
         }
+
+        return oldVals.clone();
     }
 
     private float filterVal(float oldVal, float newVal)

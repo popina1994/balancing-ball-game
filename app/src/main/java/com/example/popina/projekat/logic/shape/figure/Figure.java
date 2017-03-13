@@ -1,10 +1,11 @@
-package com.example.popina.projekat.model.shape.figure;
+package com.example.popina.projekat.logic.shape.figure;
 
 import android.graphics.Canvas;
 
-import com.example.popina.projekat.model.shape.coordinate.Coordinate;
-import com.example.popina.projekat.model.shape.ShapeModel;
-import com.example.popina.projekat.model.shape.scale.UtilScale;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.ShapeModel;
+import com.example.popina.projekat.logic.shape.figure.circle.Circle;
+import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
  * Created by popina on 05.03.2017..
@@ -84,5 +85,7 @@ public abstract class Figure {
     public abstract Figure scale(UtilScale utilScale);
 
     public abstract  Figure scaleReverse(UtilScale utilScale);
+
+    public abstract boolean hits(Circle ball);
 
 }

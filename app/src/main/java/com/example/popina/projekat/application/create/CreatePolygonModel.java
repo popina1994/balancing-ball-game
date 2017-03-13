@@ -1,7 +1,7 @@
 package com.example.popina.projekat.application.create;
 
 import com.example.popina.projekat.application.common.CommonModel;
-import com.example.popina.projekat.model.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.Figure;
 
 import java.util.LinkedList;
 

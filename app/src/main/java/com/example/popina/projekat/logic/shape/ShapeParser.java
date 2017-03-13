@@ -1,14 +1,14 @@
-package com.example.popina.projekat.model.shape;
+package com.example.popina.projekat.logic.shape;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 
-import com.example.popina.projekat.model.shape.figure.Figure;
-import com.example.popina.projekat.model.shape.figure.circle.FinishHole;
-import com.example.popina.projekat.model.shape.figure.circle.StartHole;
-import com.example.popina.projekat.model.shape.figure.circle.WrongHole;
-import com.example.popina.projekat.model.shape.figure.rectangle.Rectangle;
+import com.example.popina.projekat.logic.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.circle.FinishHole;
+import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
+import com.example.popina.projekat.logic.shape.figure.circle.WrongHole;
+import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

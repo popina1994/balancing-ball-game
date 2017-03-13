@@ -2,9 +2,9 @@ package com.example.popina.projekat.application.create;
 
 import android.widget.Toast;
 
-import com.example.popina.projekat.model.shape.coordinate.Coordinate;
-import com.example.popina.projekat.model.shape.figure.Figure;
-import com.example.popina.projekat.model.shape.ShapeModel;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.ShapeModel;
 
 import java.util.LinkedList;
 

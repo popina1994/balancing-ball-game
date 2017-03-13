@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.popina.projekat.R;
-import com.example.popina.projekat.model.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.Figure;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

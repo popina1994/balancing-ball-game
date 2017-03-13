@@ -1,4 +1,4 @@
-package com.example.popina.projekat.model.shape.coordinate;
+package com.example.popina.projekat.logic.shape.coordinate;
 
 /**
  * Created by popina on 05.03.2017..

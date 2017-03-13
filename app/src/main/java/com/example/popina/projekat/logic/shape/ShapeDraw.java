@@ -1,4 +1,4 @@
-package com.example.popina.projekat.model.shape;
+package com.example.popina.projekat.logic.shape;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,7 +9,7 @@ import android.graphics.PorterDuff;
 
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.common.CommonModel;
-import com.example.popina.projekat.model.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.Figure;
 
 import java.util.LinkedList;
 
