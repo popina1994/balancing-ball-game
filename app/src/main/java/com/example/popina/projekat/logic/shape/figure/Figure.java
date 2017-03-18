@@ -88,4 +88,10 @@ public abstract class Figure {
 
     public abstract boolean hits(Circle ball);
 
+
+    public abstract boolean isGameOver();
+
+    public abstract boolean isWon();
+
+    public abstract void collide();
 }

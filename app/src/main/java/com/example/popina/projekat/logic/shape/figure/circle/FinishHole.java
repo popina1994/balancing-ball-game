@@ -30,4 +30,14 @@ public class FinishHole extends Circle {
         FinishHole finishHole = new FinishHole(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getRadius()));
         return  finishHole;
     }
+
+    @Override
+    public boolean isWon() {
+        return true;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return true;
+    }
 }

@@ -55,7 +55,13 @@ public abstract  class Circle extends Figure {
 
     @Override
     public boolean hits(Circle ball) {
-        return false;
+        return  isCoordinateInside(ball.getCenter());
+    }
+
+
+    @Override
+    public void collide() {
+
     }
 
     @Override

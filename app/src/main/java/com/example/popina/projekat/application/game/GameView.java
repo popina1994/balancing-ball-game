@@ -80,7 +80,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                 }
                 if (running) {
-                    Log.d("Sufrace view", "Drawing");
+                    //Log.d("Sufrace view", "Drawing");
                     Canvas canvas = surfaceHolder.lockCanvas();
                     try {
                         GameView.this.renderSurfaceView(canvas);

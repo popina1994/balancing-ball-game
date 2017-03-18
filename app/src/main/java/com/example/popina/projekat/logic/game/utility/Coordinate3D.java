@@ -1,4 +1,4 @@
-package com.example.popina.projekat.logic.game;
+package com.example.popina.projekat.logic.game.utility;
 
 /**
  * Created by popina on 12.03.2017..

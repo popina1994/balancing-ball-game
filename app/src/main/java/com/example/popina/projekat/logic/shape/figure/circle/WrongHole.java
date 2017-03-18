@@ -30,4 +30,14 @@ public class WrongHole extends Circle {
         WrongHole wrongHole = new WrongHole(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getRadius()));
         return  wrongHole;
     }
+
+    @Override
+    public boolean isWon() {
+        return false;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return true;
+    }
 }

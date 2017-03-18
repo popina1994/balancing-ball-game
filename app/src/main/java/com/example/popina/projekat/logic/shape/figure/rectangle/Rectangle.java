@@ -3,10 +3,12 @@ package com.example.popina.projekat.logic.shape.figure.rectangle;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.ShapeModel;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.circle.Circle;
+import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
@@ -74,10 +76,14 @@ public class Rectangle extends Figure {
         return new Coordinate(getLeftX(), getBottomY());
     }
 
+    public Coordinate getBottomRight() { return  new Coordinate(getRightX(), getBottomY());}
+
     public Coordinate getTopRight()
     {
         return new Coordinate(getRightX(), getTopY());
     }
+
+    public Coordinate getTopLeft() { return  new Coordinate(getLeftX(), getTopY());}
 
     @Override
     public void drawOnCanvas(Canvas canvas) {
@@ -120,6 +126,63 @@ public class Rectangle extends Figure {
 
     @Override
     public boolean hits(Circle ball) {
+        boolean retValue = false;
+        float widthHalf = width / 2;
+        float heighHalf = height / 2;
+
+        // Translation.
+        //
+        float newX = Math.abs(ball.getCenter().getX() - center.getX());
+        float newY = Math.abs(ball.getCenter().getY() - center.getY());
+
+        if ( (newX <= widthHalf) && (newY <= heighHalf))
+        {
+            retValue = true;
+        }
+
+        else if ( (newX <= widthHalf)&& (Utility.isDistanceBetweenCoordLesThan(
+                    new Coordinate(newX, newY),
+                    new Coordinate(newX, heighHalf),
+                    ball.getRadius(), false))) {
+            retValue = true;
+        }
+        else if ( (newY <= heighHalf) && (Utility.isDistanceBetweenCoordLesThan(
+                new Coordinate(newX, newY),
+                new Coordinate(widthHalf, newY),
+                ball.getRadius(),
+                false
+        )))
+        {
+            retValue = true;
+        }
+
+        else  if (  ( (newX > widthHalf) && (newY > heighHalf)) &&
+            Utility.isDistanceBetweenCoordLesThan(
+                    new Coordinate(newX, newY),
+                    new Coordinate(widthHalf, heighHalf),
+                    ball.getRadius(),
+                    false
+            )
+            )
+        {
+            retValue =  true;
+        }
+
+        return  retValue;
+    }
+
+    @Override
+    public boolean isGameOver() {
         return false;
+    }
+
+    @Override
+    public boolean isWon() {
+        return false;
+    }
+
+    @Override
+    public void collide() {
+
     }
 }

@@ -1,8 +1,9 @@
 package com.example.popina.projekat.application.game;
 
 import com.example.popina.projekat.application.common.CommonModel;
-import com.example.popina.projekat.logic.game.Coordinate3D;
+import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.coeficient.Coeficient;
+import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.circle.Circle;
 
@@ -14,7 +15,15 @@ import java.util.LinkedList;
 
 public class GameModel extends CommonModel {
 
+    public static final int BIT_LEFT_COLISION = 0x1 << 0;
+    public static final int BIT_RIGHT_COLISION = 0x1 << 1;
+    public static final int BIT_TOP_COLISION = 0x1 << 2;
+    public static final int BIT_BOTTOM_COLISION = 0x1 << 3;
+
+    public static final float FLOAT_ACCURACY = Utility.FLOAT_ACCURACY;
+
     public static float ALPHA = 0.9f;
+
     public static final float S_NS = 1000000000;
     public static final float REVERSE_SLOW_DOWN = 0.99f;
     public static final float SCALE_ACC = 10;
@@ -31,6 +40,7 @@ public class GameModel extends CommonModel {
     private int width;
     private boolean sufraceInitialized;
     private Coeficient coeficient;
+    private boolean gameOver = false;
 
     public LinkedList<Figure> getListFigures() {
         return listFigures;
@@ -110,5 +120,13 @@ public class GameModel extends CommonModel {
 
     public void setCoeficient(Coeficient coeficient) {
         this.coeficient = coeficient;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 }

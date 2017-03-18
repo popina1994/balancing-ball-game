@@ -1,6 +1,6 @@
 package com.example.popina.projekat.application.game;
 
-import com.example.popina.projekat.logic.game.Coordinate3D;
+import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 
 /**
  * Created by popina on 12.03.2017..

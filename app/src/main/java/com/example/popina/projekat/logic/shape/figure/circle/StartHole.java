@@ -31,4 +31,14 @@ public class StartHole extends Circle {
         StartHole startHole = new StartHole(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getRadius()));
         return  startHole;
     }
+
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
+    public boolean isWon() {
+        return false;
+    }
 }
