@@ -22,8 +22,6 @@ public class GameActivity extends CommonActivity implements SensorEventListener{
     private GameController controller;
     private GameView view;
 
-    private SensorManager sensorManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String fileName = null;
@@ -37,48 +35,41 @@ public class GameActivity extends CommonActivity implements SensorEventListener{
         }
 
         model = new GameModel();
+        // TODO : Refactor where file name and coeficent are initialized..
+        //
         model.setFileName(fileName);
-        Coeficient coeficient = new Coeficient(this);
-
-        model.setCoeficient(coeficient);
 
         view = (GameView)findViewById(R.id.surfaceViewGame);
         controller = new GameController(this, model, view);
         view.setModel(model);
         view.setController(controller);
-
-        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Sensor s = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        if (null != s)
-        {
-            model.setLastTime(Long.MAX_VALUE);
-            sensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_GAME);
-        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this);
+        controller.pause();
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         controller.onNewValues(event.values, event.timestamp);
-        {
-
-        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
 
+    // Carefull, this is needed to be called.
+    //
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        controller.destructor();
     }
 }

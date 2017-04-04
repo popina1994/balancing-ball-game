@@ -114,31 +114,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         ShapeDraw shapeDraw = new ShapeDraw(getContext(), width, height);
         // Only used for synchronization.
         //
-        //shapeDraw.setModel(model);
         model.setShapeDraw(shapeDraw);
 
-        if (null == model.getBall()) {
-        ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
-        model.setShapeParser(shapeParser);
+        if ( (null == model.getBall()) ||(model.isPaused())) {
+            ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
+            model.setShapeParser(shapeParser);
 
-        LinkedList<Figure> listFigures = shapeParser.parseFile(model.getFileName());
+            LinkedList<Figure> listFigures = shapeParser.parseFile(model.getFileName());
+                for (Figure it : listFigures) {
 
-
-            for (Figure it : listFigures) {
-                if (it instanceof StartHole) {
-                    model.setBall((Circle) it);
-                    listFigures.remove(it);
-                    break;
+                    if (it instanceof StartHole) {
+                        if (null == model.getBall()) {
+                            model.setBall((Circle) it);
+                        }
+                        listFigures.remove(it);
+                        break;
+                    }
                 }
-            }
 
 
-        model.setListFigures(listFigures);
+            model.setListFigures(listFigures);
 
-        // Split ball from other figures.
-        //
-        shapeDraw.spriteOnBackground(model.getListFigures());
-        //shapeParser.pa
+            // Split ball from other figures.
+            //
+            shapeDraw.spriteOnBackground(model.getListFigures());
+            controller.resume();
         }
         holder.unlockCanvasAndPost(canvas);
 

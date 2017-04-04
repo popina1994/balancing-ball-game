@@ -1,9 +1,16 @@
 package com.example.popina.projekat.application.game;
 
-import android.content.Intent;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.popina.projekat.R;
+import com.example.popina.projekat.logic.game.coeficient.Coeficient;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
@@ -26,8 +33,74 @@ public class GameController {
         this.model = model;
         this.view = view;
 
+        initActivity();
+        initGameSound();
+        loadSounds();
         // Maybe put initialization of data from gameModel to here???
         //
+    }
+
+    private void initActivity() {
+        Coeficient coeficient = new Coeficient(gameActivity);
+        model.setCoeficient(coeficient);
+        SensorManager sensorManager = (SensorManager)gameActivity.getSystemService(Context.SENSOR_SERVICE);
+        model.setSensorManager(sensorManager);
+    }
+
+    public void destructor() {
+        model.getSoundPool().release();
+    }
+
+    public void resume() {
+        SensorManager sensorManager = model.getSensorManager();
+        Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        if (null != sensor)
+        {
+            model.setLastTime(Long.MAX_VALUE);
+            sensorManager.registerListener(gameActivity, sensor, SensorManager.SENSOR_DELAY_GAME);
+        }
+
+    }
+
+    public void pause() {
+        model.getSensorManager().unregisterListener(gameActivity);
+        model.setPaused(true);
+    }
+
+    private void loadSounds() {
+        int sounds[] = new int[GameModel.SOUND_MAX];
+        model.setSoundsId(sounds);
+
+        // Raw files should start with small letters.
+        //
+        sounds[GameModel.SOUND_ID_COLLISION] = model.getSoundPool().load(gameActivity, R.raw.collision, GameModel.SOUND_PRIORITY);
+        sounds[GameModel.SOUND_ID_MISS] = model.getSoundPool().load(gameActivity, R.raw.miss, GameModel.SOUND_PRIORITY);
+        sounds[GameModel.SOUND_ID_SUCCESS] = model.getSoundPool().load(gameActivity, R.raw.success, GameModel.SOUND_PRIORITY);
+    }
+
+    private void playSound(int idSound)
+    {
+        model.getSoundPool().play(model.getSoundsId()[idSound],
+                                    GameModel.SOUND_LEFT_VOLUME,
+                                    GameModel.SOUND_RIGHT_VOLUME,
+                                    GameModel.SOUND_PRIORITY_STREAM,
+                                    GameModel.SOUND_NO_LOOP,
+                                    GameModel.SOUND_RATE_PLAYBACK);
+    }
+
+    private void initGameSound() {
+        AudioAttributes attributes = new AudioAttributes.Builder().
+                setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        SoundPool soundPool = new SoundPool.Builder()
+                .setMaxStreams(GameModel.MAX_STREAMS)
+                .setAudioAttributes(attributes)
+                .build();
+
+        model.setSoundPool(soundPool);
+        gameActivity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
 
@@ -85,12 +158,13 @@ public class GameController {
                         // In case of Finish hole.
                         //
                         if (itFigure.isWon()) {
+                            playSound(GameModel.SOUND_ID_SUCCESS);
                             Toast.makeText(gameActivity, "Pobedio si igru", Toast.LENGTH_SHORT).show();
-
                         }
                         // In case of wrong hole.
                         //
                         else {
+                            playSound(GameModel.SOUND_ID_MISS);
                             Toast.makeText(gameActivity, "Izgubio si igru", Toast.LENGTH_SHORT).show();
                         }
                     } else {
@@ -121,9 +195,11 @@ public class GameController {
                 if (newX - ball.getRadius() < 0) {
                     center.setX(ball.getRadius());
                     model.getSpeed().setX(reverseDir(vX));
+                    rightLeftCollision = true;
                 } else if (newX + ball.getRadius() >= model.getWidth()) {
                     center.setX(model.getWidth() - ball.getRadius() - 1);
                     model.getSpeed().setX(reverseDir(vX));
+                    rightLeftCollision = true;
                 } else {
                     center.setX(newX);
                 }
@@ -133,9 +209,11 @@ public class GameController {
                 if (newY - ball.getRadius() < 0) {
                     center.setY(ball.getRadius());
                     model.getSpeed().setY(reverseDir(vY));
+                    topBottomCollision = true;
                 } else if (newY + ball.getRadius() >= model.getHeight()) {
                     center.setY(model.getHeight() - ball.getRadius() - 1);
                     model.getSpeed().setY(reverseDir(vY));
+                    topBottomCollision = true;
                 } else {
                     center.setY(newY);
                 }
@@ -143,6 +221,10 @@ public class GameController {
 
             ball.setCenter(center);
             view.invalidateSurfaceView();
+            if (rightLeftCollision || topBottomCollision)
+            {
+                playSound(GameModel.SOUND_ID_COLLISION);
+            }
             //Log.d("GameController", "VX " + Float.toString(model.getSpeed().getX()));
             //Log.d("GameController", "VY " + Float.toString(model.getSpeed().getY()));
             //Log.d("GameController", "X " + Float.toString(model.getBall().getCenter().getX()));
@@ -678,5 +760,6 @@ public class GameController {
     {
         return speed * - model.getCoeficient().getReverseSlowDown();
     }
+
 
 }
