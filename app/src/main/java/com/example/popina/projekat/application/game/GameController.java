@@ -1,23 +1,30 @@
 package com.example.popina.projekat.application.game;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.SyncAdapterType;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.logic.game.coeficient.Coeficient;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
+import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.circle.Circle;
 import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
 import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
+import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+
+import java.util.LinkedList;
 
 /**
  * Created by popina on 09.03.2017..
@@ -59,12 +66,15 @@ public class GameController {
         {
             model.setLastTime(Long.MAX_VALUE);
             sensorManager.registerListener(gameActivity, sensor, SensorManager.SENSOR_DELAY_GAME);
+            model.getListTimes().addLast(new Time(System.currentTimeMillis()));
+            model.setPaused(false);
         }
 
     }
 
     public void pause() {
         model.getSensorManager().unregisterListener(gameActivity);
+        model.getListTimes().getLast().setEnd(System.currentTimeMillis());
         model.setPaused(true);
     }
 
@@ -133,7 +143,7 @@ public class GameController {
         //
         if (model.isSufraceInitialized()) {
 
-            float deltaT = (time - model.getLastTime()) / GameModel.S_NS;
+            float deltaT = Utility.convertNsToS(time - model.getLastTime());
             Circle ball = model.getBall();
             Coordinate center = ball.getCenter().clone();
 
@@ -159,7 +169,9 @@ public class GameController {
                         //
                         if (itFigure.isWon()) {
                             playSound(GameModel.SOUND_ID_SUCCESS);
-                            Toast.makeText(gameActivity, "Pobedio si igru", Toast.LENGTH_SHORT).show();
+                            model.getListTimes().getLast().setEnd(System.currentTimeMillis());
+                            Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getListTimes()), model.getFileName());
+                            dialog.show();
                         }
                         // In case of wrong hole.
                         //
@@ -236,6 +248,16 @@ public class GameController {
 
 
     }
+
+    private long calcTime(LinkedList<Time> listTimes) {
+        long timeAll = 0;
+        for (Time time : listTimes)
+        {
+            timeAll += time.timeInt();
+        }
+        return  timeAll;
+    }
+
     // A * X + B * Y = Z
     //
     private Coordinate3D calculateLine(Coordinate point1, Coordinate point2) {
@@ -261,7 +283,7 @@ public class GameController {
         //
         float det = -A1 * B2 + A2 * B1;
         if (Math.abs(det)
-                < GameModel.FLOAT_ACCURACY) {
+                < Utility.FLOAT_ACCURACY) {
             return null;
         }
 

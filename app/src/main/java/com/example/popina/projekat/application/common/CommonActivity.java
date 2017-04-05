@@ -2,7 +2,7 @@ package com.example.popina.projekat.application.common;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+//import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,7 +25,7 @@ public class CommonActivity extends Activity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         int uiOptions;
         super.onCreate(savedInstanceState);
         if (!isMainMenu)

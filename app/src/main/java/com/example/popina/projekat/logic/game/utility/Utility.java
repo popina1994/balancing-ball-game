@@ -9,6 +9,8 @@ import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 
 public class Utility {
     public static float FLOAT_ACCURACY = 0.01f;
+    public static float S_MS = 1000;
+    public static final float S_NS = 1000000000;
 
     public static boolean isDistanceBetweenCoordLesThan(Coordinate coordinate1, Coordinate coordinate2,
                                                         float dist, boolean isSquared)
@@ -46,4 +48,15 @@ public class Utility {
         var1 = var2;
         var2 = tmp;
     }
+
+    public static float convertMsToS(float ms)
+    {
+        return  ms / S_MS;
+    }
+
+    public static float convertNsToS(float ns)
+    {
+        return  ns / S_NS;
+    }
+
 }

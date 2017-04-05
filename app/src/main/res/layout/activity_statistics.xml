@@ -10,13 +10,53 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".application.statistics.StatisticsActivity">
 
-    <TextView
-        android:text="Statistics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="107dp"
-        android:layout_marginTop="31dp"
-        android:id="@+id/textView2" />
+        android:layout_marginTop="10dp">
+
+        <Spinner
+            android:id="@+id/spinnerPolygon"
+            android:layout_width="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"/>
+
+        <ListView
+            android:id="@+id/listViewHighScore"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/spinnerPolygon"
+            android:layout_weight="0.8" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.1">
+
+            <Button
+                android:id="@+id/buttonResetCurrentHighScore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Resetuj trenutnu" />
+
+            <Button
+                android:id="@+id/buttonResetAllHighScore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Resetuj sve" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 </RelativeLayout>

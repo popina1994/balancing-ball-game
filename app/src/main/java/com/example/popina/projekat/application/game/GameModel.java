@@ -6,9 +6,11 @@ import android.media.SoundPool;
 import com.example.popina.projekat.application.common.CommonModel;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.coeficient.Coeficient;
+import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.circle.Circle;
+import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 
 import java.util.LinkedList;
 
@@ -23,13 +25,7 @@ public class GameModel extends CommonModel {
     public static final int BIT_TOP_COLISION = 0x1 << 2;
     public static final int BIT_BOTTOM_COLISION = 0x1 << 3;
 
-    public static final float FLOAT_ACCURACY = Utility.FLOAT_ACCURACY;
-
     public static float ALPHA = 0.9f;
-
-    public static final float S_NS = 1000000000;
-    public static final float REVERSE_SLOW_DOWN = 0.99f;
-    public static final float SCALE_ACC = 10;
 
     public  static final int MAX_STREAMS = 10;
 
@@ -51,6 +47,8 @@ public class GameModel extends CommonModel {
     private SoundPool soundPool;
     private int soundsId[];
 
+    private LinkedList<Time> listTimes = new LinkedList<>();
+
     public static final int SOUND_PRIORITY = 1;
     public static final float SOUND_LEFT_VOLUME = 1;
     public static final float SOUND_RIGHT_VOLUME = 1;
@@ -65,8 +63,7 @@ public class GameModel extends CommonModel {
 
     private SensorManager sensorManager;
 
-
-
+    public static final String POLYGON_NAME = "POLYGON_NAME";
 
     public LinkedList<Figure> getListFigures() {
         return listFigures;
@@ -187,4 +184,13 @@ public class GameModel extends CommonModel {
     public void setSensorManager(SensorManager sensorManager) {
         this.sensorManager = sensorManager;
     }
+
+    public LinkedList<Time> getListTimes() {
+        return listTimes;
+    }
+
+    public void setListTimes(LinkedList<Time> listTimes) {
+        this.listTimes = listTimes;
+    }
+
 }

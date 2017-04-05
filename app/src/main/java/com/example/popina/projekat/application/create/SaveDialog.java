@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.popina.projekat.R;
+import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 
 import java.io.FileOutputStream;
@@ -63,6 +64,10 @@ public class SaveDialog extends Dialog {
                         stringBuilder.append(it.toString() + "\n");
                     }
                     outputStream.write(stringBuilder.toString().getBytes());
+
+                    ScoreDatabase database = new ScoreDatabase(activity.getApplicationContext());
+                    database.insertLevel(fileName);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
