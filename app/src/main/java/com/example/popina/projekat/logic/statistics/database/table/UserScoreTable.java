@@ -7,8 +7,7 @@ import android.provider.BaseColumns;
  */
 
 public class UserScoreTable implements BaseColumns{
-    // TODO : When the level is deleted, all its scores are deleted.
-    //
+
     public static final String TABLE_NAME = "user_score";
     public static final String TABLE_COLUMN_USER_NAME = "user_name";
     public static final String TABLE_COLUMN_TIME = "time";

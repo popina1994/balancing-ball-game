@@ -210,4 +210,12 @@ public class ScoreDatabase {
                         null);
         return OK;
     }
+
+    public int deleteLevel(String level) {
+        SQLiteDatabase database = databaseHelper.getWritableDatabase();
+        database.delete(LevelTable.TABLE_NAME,
+                LevelTable.TABLE_COLUMN_LEVEL_NAME  + "=" + "\"" + level + "\"",
+                null);
+        return OK;
+    }
 }

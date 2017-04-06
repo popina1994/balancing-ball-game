@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.Menu;
@@ -29,6 +28,7 @@ import com.example.popina.projekat.logic.shape.ShapeDraw;
 import com.example.popina.projekat.logic.shape.ShapeFactory;
 import com.example.popina.projekat.logic.shape.ShapeParser;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
+import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -38,10 +38,8 @@ import java.util.List;
 
 public class MainActivity extends CommonActivity {
 
-    private static final String TAG = "BEGIN_ACTIVITY";
-    private  MainModel model;
-    private String[] createdPolygons = null;
 
+    private  MainModel model;
     public MainActivity() {
         super(true);
     }
@@ -52,11 +50,11 @@ public class MainActivity extends CommonActivity {
 
         setContentView(R.layout.activity_main);
         model = new MainModel();
-        init();
+        initList();
         loadList();
     }
 
-    private void init(){
+    private void initList(){
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -115,7 +113,7 @@ public class MainActivity extends CommonActivity {
         String [] from = new String[]{MainModel.POLYGON_NAME, MainModel.POLYGON_IMAGE};
         int [] to = new int[] {R.id.textViewListItemPolygonName, R.id.imageViewPolygon};
 
-        createdPolygons = getFilesDir().list(new FilenameFilter() {
+        String[] createdPolygons = getFilesDir().list(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
                 if (!name.equals(MainModel.INSTANT_RUN))
@@ -125,6 +123,7 @@ public class MainActivity extends CommonActivity {
                 return false;
             }
         });
+        model.setCreatedPolygons(createdPolygons);
 
         List<HashMap<String, String>> data = new LinkedList<>();
         for (String fileName : createdPolygons)
@@ -154,7 +153,6 @@ public class MainActivity extends CommonActivity {
                             (int)model.getShapeFactory().getUtilScale().getScreenHeight(),
                             Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(bmp);
-                    //model.getShapeDraw().drawOnCanvas();
                     model.getShapeParser().drawImageFromFile(canvas, (String)data);
                     imageViewPolygon.setImageBitmap(bmp);
                     return  true;
@@ -194,11 +192,16 @@ public class MainActivity extends CommonActivity {
         int id = (int)menuInfo.id;
         if (item.getTitle().equals(MainModel.SELECT_DELETE))
         {
-            File file = new File(getFilesDir(), createdPolygons[id]);
+            File file = new File(getFilesDir(), model.getCreatedPolygons()[id]);
             boolean delted = file.delete();
-            Log.d("Main Activity", Boolean.toString(delted));
-            Toast.makeText(getApplicationContext(),"Izbrisan poilgon" + createdPolygons[id], Toast.LENGTH_LONG).show();
-            init();
+
+            initDatabase();
+            model.getScoreDatabase().deleteLevel(model.getCreatedPolygons()[id]);
+
+            Toast.makeText(getApplicationContext(),"Izbrisan poilgon" +
+                    model.getCreatedPolygons()[id], Toast.LENGTH_LONG).show();
+
+            initList();
             loadList();
             return false;
         }
@@ -212,9 +215,18 @@ public class MainActivity extends CommonActivity {
             case MainModel.REQUEST_CODE_CREATE_POLYGON:
                 if (resultCode == RESULT_OK)
                 {
-                    init();
+                    initList();
                     loadList();
                 }
+        }
+    }
+
+    private void initDatabase()
+    {
+        if (null == model.getScoreDatabase())
+        {
+            ScoreDatabase database = new ScoreDatabase(getApplicationContext());
+            model.setScoreDatabase(database);
         }
     }
 }

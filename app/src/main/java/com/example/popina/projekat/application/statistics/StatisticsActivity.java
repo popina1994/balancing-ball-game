@@ -111,36 +111,38 @@ public class StatisticsActivity extends CommonActivity {
         final int[] idToSpinner = new int[]{ R.id.textViewStatisticsSpinnerId,
                                             R.id.textViewStatisticsSpinnerLevelName
                                         };
-                                        cursor.moveToFirst();
+        cursor.moveToFirst();
         int idx = 0;
-        while (!cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME)).equals(model.getSelectedLevel()))
-        {
-            cursor.moveToNext();
-            idx ++;
+        if (!cursor.isBeforeFirst()) {
+            while (!cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME)).equals(model.getSelectedLevel()))
+            {
+                cursor.moveToNext();
+                idx++;
+            }
+            SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+                    getApplicationContext(),
+                    R.layout.spinner_item_polygon,
+                    cursor,
+                    columnFromLevel,
+                    idToSpinner,
+                    0
+            );
+
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                    String selectedLevelName = cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME));
+                    loadListView(selectedLevelName);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            spinner.setSelection(idx);
         }
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-                getApplicationContext(),
-                R.layout.spinner_item_polygon,
-                cursor,
-                columnFromLevel,
-                idToSpinner,
-                0
-        );
-
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor  = (Cursor)parent.getItemAtPosition(position);
-                String selectedLevelName = cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME));
-                loadListView(selectedLevelName);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spinner.setSelection(idx);
     }
 }
