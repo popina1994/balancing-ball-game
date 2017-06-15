@@ -1,6 +1,7 @@
-package com.example.popina.projekat.logic.shape;
+package com.example.popina.projekat.logic.shape.model;
 
 import android.graphics.Color;
+import android.icu.lang.UCharacter;
 
 /**
  * Created by popina on 08.03.2017..
@@ -32,6 +33,29 @@ public class ShapeModel {
     public static final float DEFAULT_FINISH_X = 0.9f;
     public static final float DEFAULT_FINISH_Y = 0.9f;
 
+    // Constants used for initialization of border walls.
+    //
+
+    public static final float WIDTH_RECT_WALL = 1.2f;
+    public static final float HEIGHT_RECT_WALL = 1.2f;
+    public static final float BORDER_LEFT_X = -1f;
+    public static final float BORDER_LEFT_Y = -1f;
+
+    public static final float WALL_LEFT_X = -WIDTH_RECT_WALL / 2;
+    public static final float WALL_LEFT_Y = HEIGHT_RECT_WALL / 2;
+
+    public static final float WALL_RIGHT_X = 1 + WIDTH_RECT_WALL / 2;
+    public static final float WALL_RIGHT_Y = HEIGHT_RECT_WALL / 2;
+
+    public static final float WALL_TOP_X = WIDTH_RECT_WALL / 2;
+    public static final float WALL_TOP_Y = -HEIGHT_RECT_WALL / 2;
+
+    public static final float WALL_BOTTOM_X = WIDTH_RECT_WALL / 2;
+    public static final float WALL_BOTTOM_Y = 1 + HEIGHT_RECT_WALL / 2;
+
+
+    // Represents idx of data which is saved in file, this is used in shape parser.
+    //
     public static int FIGURE_TYPE_IDX = 1;
     public static int FIGURE_COLOR_IDX = 3;
     public static int FIGURE_COORDINATE_X_IDX = 5;

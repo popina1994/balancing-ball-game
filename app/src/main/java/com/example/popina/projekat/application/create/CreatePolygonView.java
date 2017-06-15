@@ -9,10 +9,14 @@ import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.View;
 
-import com.example.popina.projekat.logic.shape.ShapeDraw;
+import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.ShapeFactory;
+import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
+import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
+import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
+
+import java.util.LinkedList;
 
 /**
  * Created by popina on 04.03.2017..
@@ -92,6 +96,17 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         model.getShapeDraw().drawOnCanvas(model.getListFigures(), canvas);
     }
 
+    private void initWalls()
+    {
+        ShapeBorderFactory shapeBorderFactory = (ShapeBorderFactory) model.getShapeFactory();
+        LinkedList<Rectangle> listWalls = shapeBorderFactory.createBorders();
+
+        for (Rectangle it : listWalls)
+        {
+            model.getListFigures().addLast(it);
+        }
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d("Surface View", "Created surface");
@@ -102,8 +117,11 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
         UtilScaleNormal utilScaleNormal = new UtilScaleNormal(width, height);
 
-        ShapeFactory shapeFactory = new ShapeFactory(utilScaleNormal);
+
+
+        ShapeFactory shapeFactory = new ShapeBorderFactory(utilScaleNormal);
         model.setShapeFactory(shapeFactory);
+        initWalls();
 
         ShapeDraw shapeDraw = new ShapeDraw(getContext(), width, height);
         shapeDraw.setCommonModel(model);

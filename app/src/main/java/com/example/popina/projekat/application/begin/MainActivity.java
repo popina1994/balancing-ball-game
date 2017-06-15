@@ -24,9 +24,9 @@ import com.example.popina.projekat.application.game.GameActivity;
 import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.application.create.CreatePolygonActivity;
 import com.example.popina.projekat.application.settings.SettingsActivity;
-import com.example.popina.projekat.logic.shape.ShapeDraw;
-import com.example.popina.projekat.logic.shape.ShapeFactory;
-import com.example.popina.projekat.logic.shape.ShapeParser;
+import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
+import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
+import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
 import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 

@@ -2,9 +2,9 @@ package com.example.popina.projekat.application.common;
 
 import android.view.View;
 
-import com.example.popina.projekat.logic.shape.ShapeDraw;
-import com.example.popina.projekat.logic.shape.ShapeFactory;
-import com.example.popina.projekat.logic.shape.ShapeParser;
+import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
+import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
+import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 
 /**
  * Created by popina on 08.03.2017..

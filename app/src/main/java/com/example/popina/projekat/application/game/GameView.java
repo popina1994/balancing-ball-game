@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.popina.projekat.logic.shape.ShapeDraw;
-import com.example.popina.projekat.logic.shape.ShapeFactory;
-import com.example.popina.projekat.logic.shape.ShapeParser;
+import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
+import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
+import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.circle.Circle;
 import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
@@ -88,8 +88,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         surfaceHolder.unlockCanvasAndPost(canvas);
                     }
                 }
-
-
             }
         }
     }
@@ -121,16 +119,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             model.setShapeParser(shapeParser);
 
             LinkedList<Figure> listFigures = shapeParser.parseFile(model.getFileName());
-                for (Figure it : listFigures) {
+            for (Figure it : listFigures) {
 
-                    if (it instanceof StartHole) {
-                        if (null == model.getBall()) {
-                            model.setBall((Circle) it);
-                        }
-                        listFigures.remove(it);
-                        break;
+                if (it instanceof StartHole) {
+                    if (null == model.getBall()) {
+                        model.setBall((Circle) it);
                     }
+                    listFigures.remove(it);
+                    break;
                 }
+            }
 
 
             model.setListFigures(listFigures);

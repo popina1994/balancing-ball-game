@@ -29,8 +29,6 @@ public class CreatePolygonModel extends CommonModel {
 
     private Figure selectedFigure = null;
 
-
-
     public Figure getSelectedFigure() {
         return selectedFigure;
     }

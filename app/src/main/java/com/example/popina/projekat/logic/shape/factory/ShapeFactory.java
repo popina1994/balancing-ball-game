@@ -1,5 +1,6 @@
-package com.example.popina.projekat.logic.shape;
+package com.example.popina.projekat.logic.shape.factory;
 
+import com.example.popina.projekat.logic.shape.model.ShapeModel;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.circle.FinishHole;
 import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;

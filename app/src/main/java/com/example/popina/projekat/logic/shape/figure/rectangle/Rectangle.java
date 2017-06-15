@@ -5,10 +5,9 @@ import android.graphics.Paint;
 
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.ShapeModel;
+import com.example.popina.projekat.logic.shape.model.ShapeModel;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.circle.Circle;
-import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**

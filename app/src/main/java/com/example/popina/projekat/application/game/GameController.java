@@ -149,6 +149,8 @@ public class GameController {
 
             scaleAcceleration(filteredAcc);
             addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
+            // TODO : separate friction to one which is done via x and one via y, and in case if direction is changed via some
+            // axis, then do not add friction in that case.
 
             float newX = possibleMove(model.getSpeed().getX(), center.getX(), deltaT);
             float newY = possibleMove(model.getSpeed().getY(), center.getY(), deltaT);
@@ -160,14 +162,17 @@ public class GameController {
 
             StartHole newBallPos = new StartHole(newX, newY, ball.getRadius());
 
-            for (Figure itFigure : model.getListFigures()) {
-                if (itFigure.hits(newBallPos)) {
-                    //itFigure.playMusic(musicPlayer);
-                    if (itFigure.isGameOver()) {
+            for (Figure itFigure : model.getListFigures())
+            {
+                if (itFigure.hits(newBallPos))
+                {
+                    if (itFigure.isGameOver())
+                    {
                         model.setGameOver(true);
                         // In case of Finish hole.
                         //
-                        if (itFigure.isWon()) {
+                        if (itFigure.isWon())
+                        {
                             playSound(GameModel.SOUND_ID_SUCCESS);
                             model.getListTimes().getLast().setEnd(System.currentTimeMillis());
                             Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getListTimes()), model.getFileName());
@@ -175,22 +180,27 @@ public class GameController {
                         }
                         // In case of wrong hole.
                         //
-                        else {
+                        else
+                        {
                             playSound(GameModel.SOUND_ID_MISS);
                             Toast.makeText(gameActivity, "Izgubio si igru", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        // Here shouldn't be case of start hole at all.
+                    }
+                    else
+                    {
+                        // In case of obstacle collision.
                         //
-
+                        playSound(GameModel.SOUND_ID_COLLISION);
                         Rectangle rectangle = (Rectangle) itFigure;
 
                         int val = isCollisionAndUpdate(rectangle, ball, newBallPos, center);
-                        if ((val & (GameModel.BIT_LEFT_COLISION | GameModel.BIT_RIGHT_COLISION)) != 0) {
+                        if ((val & (GameModel.BIT_LEFT_COLISION | GameModel.BIT_RIGHT_COLISION)) != 0)
+                        {
                             model.getSpeed().setX(reverseDir(vX));
                             rightLeftCollision = true;
                         }
-                        if ((val & (GameModel.BIT_TOP_COLISION | GameModel.BIT_BOTTOM_COLISION)) != 0) {
+                        if ((val & (GameModel.BIT_TOP_COLISION | GameModel.BIT_BOTTOM_COLISION)) != 0)
+                        {
                             model.getSpeed().setY(reverseDir(vY));
                             topBottomCollision = true;
                         }
@@ -200,43 +210,18 @@ public class GameController {
                 }
             }
 
-            // Check if hits.
-
-            if (!rightLeftCollision) {
-
-                if (newX - ball.getRadius() < 0) {
-                    center.setX(ball.getRadius());
-                    model.getSpeed().setX(reverseDir(vX));
-                    rightLeftCollision = true;
-                } else if (newX + ball.getRadius() >= model.getWidth()) {
-                    center.setX(model.getWidth() - ball.getRadius() - 1);
-                    model.getSpeed().setX(reverseDir(vX));
-                    rightLeftCollision = true;
-                } else {
-                    center.setX(newX);
-                }
+            if (!rightLeftCollision)
+            {
+                center.setX(newX);
             }
 
-            if (!topBottomCollision) {
-                if (newY - ball.getRadius() < 0) {
-                    center.setY(ball.getRadius());
-                    model.getSpeed().setY(reverseDir(vY));
-                    topBottomCollision = true;
-                } else if (newY + ball.getRadius() >= model.getHeight()) {
-                    center.setY(model.getHeight() - ball.getRadius() - 1);
-                    model.getSpeed().setY(reverseDir(vY));
-                    topBottomCollision = true;
-                } else {
-                    center.setY(newY);
-                }
+            if (!topBottomCollision)
+            {
+                center.setY(newY);
             }
 
             ball.setCenter(center);
             view.invalidateSurfaceView();
-            if (rightLeftCollision || topBottomCollision)
-            {
-                playSound(GameModel.SOUND_ID_COLLISION);
-            }
             //Log.d("GameController", "VX " + Float.toString(model.getSpeed().getX()));
             //Log.d("GameController", "VY " + Float.toString(model.getSpeed().getY()));
             //Log.d("GameController", "X " + Float.toString(model.getBall().getCenter().getX()));

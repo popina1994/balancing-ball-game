@@ -1,7 +1,7 @@
 package com.example.popina.projekat.logic.shape.figure.circle;
 
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.ShapeModel;
+import com.example.popina.projekat.logic.shape.model.ShapeModel;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
