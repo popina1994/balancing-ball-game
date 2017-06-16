@@ -1,7 +1,7 @@
 package com.example.popina.projekat.logic.shape.figure.hole;
 
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.model.ShapeModel;
+import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
@@ -11,13 +11,13 @@ import com.example.popina.projekat.logic.shape.scale.UtilScale;
 public class WrongHole extends CircleHole
 {
     public WrongHole(float x, float y, float radius) {
-        super(x, y, radius, ShapeModel.TYPE_WRONG_HOLE);
-        color = ShapeModel.COLOR_HOLE_WRONG;
+        super(x, y, radius, ShapeConst.TYPE_WRONG_HOLE);
+        color = ShapeConst.COLOR_HOLE_WRONG;
     }
 
     public WrongHole(Coordinate c, float radius) {
-        super(c, radius, ShapeModel.TYPE_WRONG_HOLE);
-        color = ShapeModel.COLOR_HOLE_WRONG;
+        super(c, radius, ShapeConst.TYPE_WRONG_HOLE);
+        color = ShapeConst.COLOR_HOLE_WRONG;
     }
 
     @Override

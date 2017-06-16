@@ -1,6 +1,6 @@
 package com.example.popina.projekat.logic.shape.factory;
 
-import com.example.popina.projekat.logic.shape.model.ShapeModel;
+import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
@@ -32,7 +32,7 @@ public class ShapeFactory {
 
     public  StartHole createStartHole()
     {
-        final StartHole DEFAULT_START = new StartHole(ShapeModel.DEFAULT_START_X, ShapeModel.DEFAULT_START_Y, ShapeModel.DEFAULT_RADIUS);
+        final StartHole DEFAULT_START = new StartHole(ShapeConst.DEFAULT_START_X, ShapeConst.DEFAULT_START_Y, ShapeConst.DEFAULT_RADIUS);
         StartHole startHole = DEFAULT_START.scale(utilScale);
 
         return startHole;
@@ -40,7 +40,7 @@ public class ShapeFactory {
 
     public FinishHole createFinishHole()
     {
-        final FinishHole DEFAULT_FINISH = new FinishHole(ShapeModel.DEFAULT_FINISH_X, ShapeModel.DEFAULT_FINISH_Y, ShapeModel.DEFAULT_RADIUS);
+        final FinishHole DEFAULT_FINISH = new FinishHole(ShapeConst.DEFAULT_FINISH_X, ShapeConst.DEFAULT_FINISH_Y, ShapeConst.DEFAULT_RADIUS);
         FinishHole finishHole = DEFAULT_FINISH.scale(utilScale);
 
         return finishHole;
@@ -48,7 +48,7 @@ public class ShapeFactory {
 
     public WrongHole createWrongHole()
     {
-        final WrongHole DEFAULT_OBSTACLE_CIRCLE = new WrongHole(ShapeModel.DEFAULT_OBSTACLE_X, ShapeModel.DEFAULT_OBSTACLE_Y, ShapeModel.DEFAULT_RADIUS);
+        final WrongHole DEFAULT_OBSTACLE_CIRCLE = new WrongHole(ShapeConst.DEFAULT_OBSTACLE_X, ShapeConst.DEFAULT_OBSTACLE_Y, ShapeConst.DEFAULT_RADIUS);
         WrongHole wrongHole = DEFAULT_OBSTACLE_CIRCLE.scale(utilScale);
 
         return wrongHole;
@@ -56,7 +56,7 @@ public class ShapeFactory {
 
     public RectangleObstacle createObstacle()
     {
-        final RectangleObstacle DEFAULT_OBSTACLE_RECT = new RectangleObstacle(ShapeModel.DEFAULT_OBSTACLE_X, ShapeModel.DEFAULT_OBSTACLE_Y, ShapeModel.DEFAULT_RECT_WIDTH, ShapeModel.DEFAULT_RECT_HEIGHT);
+        final RectangleObstacle DEFAULT_OBSTACLE_RECT = new RectangleObstacle(ShapeConst.DEFAULT_OBSTACLE_X, ShapeConst.DEFAULT_OBSTACLE_Y, ShapeConst.DEFAULT_RECT_WIDTH, ShapeConst.DEFAULT_RECT_HEIGHT);
         RectangleObstacle rect = DEFAULT_OBSTACLE_RECT.scale(utilScale);
 
         return rect;

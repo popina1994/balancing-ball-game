@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
-import com.example.popina.projekat.logic.shape.model.ShapeModel;
+import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
@@ -48,39 +48,39 @@ public class ShapeParser {
         String[] tokens = line.split("\\s+");
         Figure figure = null;
 
-        switch (tokens[ShapeModel.FIGURE_TYPE_IDX])
+        switch (tokens[ShapeConst.FIGURE_TYPE_IDX])
         {
-            case ShapeModel.TYPE_START_HOLE:
+            case ShapeConst.TYPE_START_HOLE:
                 figure = new StartHole(
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_X_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_Y_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_CIRCLE_RADIUS_IDX])
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_X_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_Y_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_CIRCLE_RADIUS_IDX])
                 );
                 break;
-            case ShapeModel.TYPE_FINISH_HOLE:
+            case ShapeConst.TYPE_FINISH_HOLE:
                 figure = new FinishHole(
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_X_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_Y_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_CIRCLE_RADIUS_IDX])
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_X_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_Y_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_CIRCLE_RADIUS_IDX])
                 );
                 break;
-            case ShapeModel.TYPE_WRONG_HOLE:
+            case ShapeConst.TYPE_WRONG_HOLE:
                 figure = new WrongHole(
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_X_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_Y_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_CIRCLE_RADIUS_IDX])
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_X_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_Y_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_CIRCLE_RADIUS_IDX])
                 );
                 break;
-            case ShapeModel.TYPE_OBSTACLE:
+            case ShapeConst.TYPE_OBSTACLE:
                 figure = new RectangleObstacle(
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_X_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_Y_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_RECT_WIDTH_IDX]),
-                        Float.parseFloat(tokens[ShapeModel.FIGURE_RECT_HEIGHT_IDX])
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_X_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_Y_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_WIDTH_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_HEIGHT_IDX])
                 );
         }
 
-        figure.setColor(Integer.parseInt(tokens[ShapeModel.FIGURE_COLOR_IDX]));
+        figure.setColor(Integer.parseInt(tokens[ShapeConst.FIGURE_COLOR_IDX]));
 
         return  figure;
     }

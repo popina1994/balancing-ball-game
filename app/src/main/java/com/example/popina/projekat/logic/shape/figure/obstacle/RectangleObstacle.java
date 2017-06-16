@@ -5,33 +5,34 @@ import android.graphics.Paint;
 
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.model.ShapeModel;
+import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
+import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
  * Created by popina on 05.03.2017..
  */
 
-public class RectangleObstacle extends Figure {
+public class RectangleObstacle extends Obstacle {
     private float height;
     private float width;
 
     public RectangleObstacle(float xCenter, float yCenter, float width, float height) {
-        super(new Coordinate(xCenter, yCenter), ShapeModel.TYPE_OBSTACLE);
+        super(new Coordinate(xCenter, yCenter), ShapeConst.TYPE_OBSTACLE);
         this.height = height;
         this.width = width;
 
-        color = ShapeModel.COLOR_OBSTACLE;
+        color = ShapeConst.COLOR_OBSTACLE;
     }
 
     public RectangleObstacle(Coordinate c, float width, float height)
     {
-        super(c.clone(), ShapeModel.TYPE_OBSTACLE);
+        super(c.clone(), ShapeConst.TYPE_OBSTACLE);
         this.height = height;
         this.width = width;
-        color = ShapeModel.COLOR_OBSTACLE;
+        color = ShapeConst.COLOR_OBSTACLE;
     }
 
     public float getWidth() {
@@ -124,7 +125,7 @@ public class RectangleObstacle extends Figure {
     }
 
     @Override
-    public boolean hits(CircleHole ball) {
+    public boolean doesCollide(CircleHole ball) {
         boolean retValue = false;
         float widthHalf = width / 2;
         float heighHalf = height / 2;
@@ -180,4 +181,9 @@ public class RectangleObstacle extends Figure {
         return false;
     }
 
+    @Override
+    public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate speed)
+    {
+        return null;
+    }
 }

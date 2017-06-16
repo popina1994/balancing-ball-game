@@ -13,7 +13,7 @@ import com.example.popina.projekat.logic.shape.figure.Figure;
 public abstract  class CircleHole extends Figure {
     private float radius;
 
-    public CircleHole(float x, float y, float radius, String figureType) {
+    protected CircleHole(float x, float y, float radius, String figureType) {
         super(new Coordinate(x, y), figureType);
         this.radius = radius;
     }
@@ -54,7 +54,7 @@ public abstract  class CircleHole extends Figure {
     }
 
     @Override
-    public boolean hits(CircleHole ball) {
+    public boolean doesCollide(CircleHole ball) {
         return  isCoordinateInside(ball.getCenter());
     }
 

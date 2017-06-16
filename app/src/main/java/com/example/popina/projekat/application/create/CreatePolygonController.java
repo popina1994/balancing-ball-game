@@ -4,7 +4,7 @@ import android.widget.Toast;
 
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.model.ShapeModel;
+import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 
 import java.util.LinkedList;
 
@@ -135,12 +135,12 @@ public class CreatePolygonController {
         int cntFinish = 0;
         for (Figure it : listFIgures)
         {
-            if (ShapeModel.TYPE_START_HOLE.equals(it.getFigureType()))
+            if (ShapeConst.TYPE_START_HOLE.equals(it.getFigureType()))
             {
                 cntStart ++;
             }
 
-            if (ShapeModel.TYPE_FINISH_HOLE.equals(it.getFigureType()))
+            if (ShapeConst.TYPE_FINISH_HOLE.equals(it.getFigureType()))
             {
                 cntFinish ++;
             }

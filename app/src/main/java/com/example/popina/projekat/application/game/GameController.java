@@ -160,7 +160,7 @@ public class GameController {
 
             for (Figure itFigure : model.getListFigures())
             {
-                if (itFigure.hits(newBallPos))
+                if (itFigure.doesCollide(newBallPos))
                 {
                     if (itFigure.isGameOver())
                     {
@@ -189,7 +189,7 @@ public class GameController {
                         playSound(GameModel.SOUND_ID_COLLISION);
                         RectangleObstacle rectangleObstacle = (RectangleObstacle) itFigure;
 
-                        int val = isCollisionAndUpdate(rectangleObstacle, ball, newBallPos, center);
+                        int val = isCollisionAndUpdate(rectangleObstacle, ball, newBallPos, center, model.getSpeed());
                         if ((val & (GameModel.BIT_LEFT_COLISION | GameModel.BIT_RIGHT_COLISION)) != 0)
                         {
                             model.getSpeed().setX(reverseDir(vX));
@@ -218,11 +218,8 @@ public class GameController {
 
             ball.setCenter(center);
 
-            if (!rightLeftCollision && !topBottomCollision)
-            {
-                scaleAcceleration(filteredAcc);
-                addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
-            }
+            scaleAcceleration(filteredAcc);
+            addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
 
             view.invalidateSurfaceView();
             //Log.d("GameController", "VX " + Float.toString(model.getSpeed().getX()));
@@ -278,44 +275,15 @@ public class GameController {
         return new Coordinate((B2 * C1 - B1 * C2) / det, (A1 * C2 - A2 * C1) / det);
     }
 
-    private float distanceBetweenParallelLines(Coordinate3D line1, Coordinate3D line2) {
-        float A1 = line1.getX();
-        float B1 = line1.getY();
-        float C1 = line1.getZ();
-
-        float A2 = line2.getX();
-        float B2 = line2.getY();
-        float C2 = line2.getZ();
-
-        if (A1 != 0) {
-            // A2 cannot be 0 if they are parallel.
-            //
-            B2 = B2 / A2 * A1;
-            C2 = C2 / A2 * A1;
-            A2 = A1;
-        } else if (B1 != 0) {
-            // B2 cannot be zero if they are parellel.
-            //
-            A2 = A2 / B2 * B1;
-            C2 = C2 / B2 * B1;
-            B2 = B1;
+    private boolean doesBallCenterHitsLine(Coordinate beginSegment, Coordinate endSegment, CircleHole ball, CircleHole ballNew, boolean isXLine)
+    {
+        boolean doesIntersect = doesSegmentIntersectsCircle(beginSegment, endSegment, ballNew.getCenter(), ball.getRadius(), isXLine);
+        if (!doesIntersect)
+        {
+            return  false;
         }
 
-        return (C2 - C1) * (C2 - C1) / (A1 * A1 + B1 * B1);
-    }
-
-    private boolean doesBallCenterHitsLine(Coordinate intersectionPoint, Coordinate beginSegment, Coordinate endSegment,
-                                           float minDist, CircleHole ball, CircleHole ballNew, Coordinate3D lineCenter,
-                                           Coordinate3D line, boolean isXLine)
-    {
-        return  ((null != intersectionPoint) &&
-                Utility.isOnSegment(beginSegment, endSegment, intersectionPoint)
-                && doesSegmentIntersectsCircle(beginSegment, endSegment, ballNew.getCenter(), ball.getRadius(),
-                isXLine)
-                && Utility.isDistanceBetweenCoordLesThan(intersectionPoint, ball.getCenter(), minDist, true))
-                ||
-                ( (intersectionPoint == null) &&
-                        distanceBetweenParallelLines(line, lineCenter) <= ball.getRadius() * ball.getRadius()) ;
+        return doesIntersect;
     }
 
     private float calculateX(Coordinate3D line, float y)
@@ -375,147 +343,15 @@ public class GameController {
 
     }
 
-    // Returns -1 in case it doesn't hit a line.
-    // If less than min dist returns that distance squared.
-    //
-    public float distanceHitFromBeginPosition(Coordinate intersectionPoint, CircleHole ball,
-                                             CircleHole ballNew,
-                                             Coordinate beginSegment, Coordinate endSegment,
-                                             Coordinate3D lineCenter,
-                                             float minDist,
-                                             boolean isXLine)
-    {
-        // Paralele center line and line.
-        //
-        if (null != intersectionPoint)
-        {
-            // In case of intersection with xLine of rectangle.
-            //
-            if (isXLine)
-            {
-                CircleHole ballUsed = ball;
-                if (Math.abs(intersectionPoint.getY() - ball.getCenter().getY()) <= Utility.FLOAT_ACCURACY)
-                {
-                    if (Math.abs(intersectionPoint.getY() - ballNew.getCenter().getY()) <= Utility.FLOAT_ACCURACY)
-                    {
-                        ballUsed = null;
-                    }
-                    else
-                    {
-                        ballUsed = ballNew;
-                    }
-                }
-
-                float xDistanceFromIntersection =
-                        Math.abs(intersectionPoint.getX() - ballUsed.getCenter().getX()) * ballUsed.getRadius() /
-                        Math.abs(intersectionPoint.getY() - ballUsed.getCenter().getY());
-                float leftPotentialX = intersectionPoint.getX() - xDistanceFromIntersection;
-                float rightPotentialX = intersectionPoint.getX() + xDistanceFromIntersection;
-
-                Coordinate leftPotential = new Coordinate(leftPotentialX, calculateY(lineCenter, leftPotentialX));
-                Coordinate rightPotential = new Coordinate(rightPotentialX, calculateY(lineCenter, rightPotentialX));
-
-                float beginX = ball.getCenter().getX();
-                float endX = ballNew.getCenter().getX();
-
-                if (beginX > endX)
-                {
-                    float tmp = beginX;
-                    beginX = endX;
-                    endX = tmp;
-                }
-
-                if (Utility.isDimBetweenDims(beginX, endX, leftPotential.getX())
-                        && doesSegmentIntersectsCircle(beginSegment, endSegment, leftPotential, ball.getRadius(),
-                        isXLine)
-                        && isFirstHit(intersectionPoint, leftPotential, minDist))
-                {
-                    return Utility.distanceSquared(ball.getCenter(), leftPotential);
-                }
-
-                if (Utility.isDimBetweenDims(beginX, endX, rightPotential.getX())
-                        && doesSegmentIntersectsCircle(beginSegment, endSegment, rightPotential, ball.getRadius(),
-                        isXLine)
-                        && isFirstHit(intersectionPoint, rightPotential, minDist))
-                {
-                    return Utility.distanceSquared(ball.getCenter(), rightPotential);
-                }
-
-            }
-            else
-            {
-                // TO DO update everything on y.
-                //
-                CircleHole ballUsed = ball;
-                if (Math.abs(intersectionPoint.getX() - ball.getCenter().getX()) <= Utility.FLOAT_ACCURACY)
-                {
-                    if (Math.abs(intersectionPoint.getX() - ballNew.getCenter().getX()) <= Utility.FLOAT_ACCURACY)
-                    {
-                        ballUsed = null;
-                    }
-                    else
-                    {
-                        ballUsed = ballNew;
-                    }
-                }
-
-
-                float yDistanceFromIntersection =
-                        Math.abs(intersectionPoint.getY() - ballUsed.getCenter().getY()) * ballUsed.getRadius() /
-                                Math.abs(intersectionPoint.getX() - ballUsed.getCenter().getX());
-                float topPotentialY = intersectionPoint.getY() - yDistanceFromIntersection;
-                float bottomPotentialY = intersectionPoint.getY() + yDistanceFromIntersection;
-                Coordinate topPotential = new Coordinate(calculateX(lineCenter, topPotentialY), topPotentialY);
-                Coordinate bottomPotential = new Coordinate(calculateX(lineCenter, bottomPotentialY), bottomPotentialY);
-
-                float beginY = ball.getCenter().getY();
-                float endY = ballNew.getCenter().getY();
-
-                if (beginY > endY)
-                {
-                    float tmp = beginY;
-                    beginY = endY;
-                    endY = tmp;
-                }
-
-                if ( (Utility.isDimBetweenDims(beginY, endY, topPotential.getY())
-                        && doesSegmentIntersectsCircle(beginSegment, endSegment, topPotential, ball.getRadius(), isXLine)
-                        && isFirstHit(intersectionPoint, topPotential, minDist))
-                        )
-                {
-                    //.d("GameCon", "Top");
-                    return Utility.distanceSquared(ball.getCenter(), topPotential);
-                }
-
-                if (Utility.isDimBetweenDims(beginY, endY, bottomPotential.getY())
-                        && doesSegmentIntersectsCircle(beginSegment, endSegment, bottomPotential, ball.getRadius(), isXLine)
-                        && isFirstHit(intersectionPoint, bottomPotential, minDist))
-                {
-                    //Log.d("GameCon", "Bottom");
-                    return Utility.distanceSquared(ball.getCenter(), bottomPotential);
-                }
-
-
-
-            }
-            if (doesSegmentIntersectsCircle(beginSegment, endSegment, ballNew.getCenter(), ball.getRadius(), isXLine))
-            {
-                //Log.d("GameCon", "Zero");
-                return 0;
-            }
-
-        }
-        return  -1;
-    }
-
-
-    public int isCollisionAndUpdate(RectangleObstacle rectangleObstacle, CircleHole ball, CircleHole ballNew, Coordinate center)
+    public int isCollisionAndUpdate(RectangleObstacle rectangleObstacle, CircleHole ball, CircleHole ballNew, Coordinate center, Coordinate3D speed)
     {
         int retVal = 0x0;
+        /*
         float minDist = Float.MAX_VALUE;
 
         // Carefull there is no movement case.
         //
+
         Coordinate3D lineCenter = calculateLine(ball.getCenter(), ballNew.getCenter());
         Coordinate3D lineRectBottom = calculateLine(rectangleObstacle.getBotomLeft(), rectangleObstacle.getBottomRight());
         Coordinate3D lineRectTop = calculateLine(rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight());
@@ -526,172 +362,26 @@ public class GameController {
         Coordinate centerTopIntersection = intersectionLines(lineCenter, lineRectTop);
         Coordinate centerLeftIntersection = intersectionLines(lineCenter, lineRectLeft);
         Coordinate centerRightIntersection = intersectionLines(lineCenter, lineRectRight);
-
-        if (doesBallCenterHitsLine(centerBottomIntersection, rectangleObstacle.getBotomLeft(),
-                rectangleObstacle.getBottomRight(), minDist, ball, ballNew, lineCenter, lineRectBottom, true))
+        */
+        if (doesBallCenterHitsLine(rectangleObstacle.getBotomLeft(), rectangleObstacle.getBottomRight(), ball, ballNew, true) && speed.getY() <= 0)
         {
-            float val;
-            if (centerBottomIntersection == null)
-            {
-                val =  distanceBetweenParallelLines(lineRectBottom, lineCenter);
-            }
-            else
-            {
-                val = Utility.distanceSquared(centerBottomIntersection, ball.getCenter());
-            }
-
-            if (minDist >= val)
-            {
-                retVal = GameModel.BIT_BOTTOM_COLISION;
-                minDist = val;
-            }
+            retVal = GameModel.BIT_BOTTOM_COLISION;
         }
 
-        if (doesBallCenterHitsLine(centerTopIntersection, rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight(),
-                minDist, ball, ballNew, lineCenter, lineRectTop, true))
+        if (doesBallCenterHitsLine(rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight(), ball, ballNew, true) && speed.getY() >= 0)
         {
-            float val;
-            if (centerTopIntersection == null)
-            {
-                val =  distanceBetweenParallelLines(lineRectTop, lineCenter);
-            }
-            else
-            {
-                val = Utility.distanceSquared(centerTopIntersection, ball.getCenter());
-            }
-            if (minDist >= val)
-            {
-                retVal = GameModel.BIT_TOP_COLISION;
-                minDist = val;
-            }
+            retVal = GameModel.BIT_TOP_COLISION;
         }
 
-        if (doesBallCenterHitsLine(centerLeftIntersection, rectangleObstacle.getTopLeft(), rectangleObstacle.getBotomLeft(),
-                minDist, ball, ballNew, lineCenter, lineRectTop, false))
+        if (doesBallCenterHitsLine(rectangleObstacle.getTopLeft(), rectangleObstacle.getBotomLeft(), ball, ballNew, false) && speed.getX() >= 0)
         {
-            float val;
-            if (centerLeftIntersection == null)
-            {
-                val =  distanceBetweenParallelLines(lineRectLeft, lineCenter);
-            }
-            else
-            {
-                val = Utility.distanceSquared(centerLeftIntersection, ball.getCenter());
-            }
-
-            if (minDist >= val)
-            {
-                retVal |= GameModel.BIT_LEFT_COLISION;
-                //retVal = GameModel.BIT_LEFT_COLISION;
-                minDist = val;
-            }
+            retVal |= GameModel.BIT_LEFT_COLISION;
         }
 
-        if (doesBallCenterHitsLine(centerRightIntersection, rectangleObstacle.getTopRight(), rectangleObstacle.getBottomRight(), minDist,
-                ball, ballNew, lineCenter, lineRectRight, false))
+        if (doesBallCenterHitsLine( rectangleObstacle.getTopRight(), rectangleObstacle.getBottomRight(), ball, ballNew, false) && speed.getX() <= 0)
         {
-            float val;
-            if (centerRightIntersection == null)
-            {
-                val =  distanceBetweenParallelLines(lineRectRight, lineCenter);
-            }
-            else
-            {
-                val = Utility.distanceSquared(centerRightIntersection, ball.getCenter());
-            }
-
-            if (minDist >= val)
-            {
-                //retVal = GameModel.BIT_RIGHT_COLISION;
-                retVal = (retVal & ~GameModel.BIT_LEFT_COLISION) | GameModel.BIT_RIGHT_COLISION;
-                minDist = val;
-            }
+            retVal = (retVal & ~GameModel.BIT_LEFT_COLISION) | GameModel.BIT_RIGHT_COLISION;
         }
-
-        if (retVal == 0)
-        {
-            // It means center doesn't intersect with neither of lines.
-            //
-
-            // Min dist needs to be added.
-            //
-            float distBottom =  distanceHitFromBeginPosition(centerBottomIntersection, ball,
-                    ballNew, rectangleObstacle.getBotomLeft(), rectangleObstacle.getBottomRight(),
-                    lineCenter, minDist, true);
-            float distTop =  distanceHitFromBeginPosition(centerTopIntersection, ball,
-                    ballNew, rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight(),
-                    lineCenter, minDist, true);
-            float distLeft = distanceHitFromBeginPosition(centerLeftIntersection, ball,
-                    ballNew, rectangleObstacle.getTopLeft(), rectangleObstacle.getBotomLeft(),
-                    lineCenter, minDist, false);
-            float distRight = distanceHitFromBeginPosition(centerRightIntersection, ball,
-                    ballNew, rectangleObstacle.getTopRight(), rectangleObstacle.getBottomRight(),
-                    lineCenter, minDist, false);
-
-            if  ( (distTop >= 0) && (distTop <= minDist))
-            {
-                minDist = distTop;
-                retVal = GameModel.BIT_TOP_COLISION;
-            }
-
-            if ((distBottom >= 0) && (distBottom <= minDist))
-            {
-                minDist = distBottom;
-                retVal = GameModel.BIT_BOTTOM_COLISION;
-            }
-
-            if ((distLeft >= 0) && (distLeft <= minDist))
-            {
-                minDist = distLeft;
-                retVal |= GameModel.BIT_LEFT_COLISION;
-                //retVal = GameModel.BIT_LEFT_COLISION;
-            }
-
-            if ( (distRight >= 0) && (distRight <= minDist))
-            {
-                minDist = distLeft;
-                retVal = (retVal & ~GameModel.BIT_LEFT_COLISION) | GameModel.BIT_RIGHT_COLISION;
-                //retVal = GameModel.BIT_RIGHT_COLISION;
-            }
-        }
-        else
-
-        if (retVal == 0) {
-            Log.d("Game controller", "WARNING!!!");
-        }
-
-        int cnt = GameModel.BIT_LEFT_COLISION & retVal << GameModel.BIT_LEFT_COLISION
-                + GameModel.BIT_RIGHT_COLISION & retVal << GameModel.BIT_RIGHT_COLISION
-                + GameModel.BIT_BOTTOM_COLISION & retVal << GameModel.BIT_BOTTOM_COLISION
-                + GameModel.BIT_TOP_COLISION & retVal << GameModel.BIT_TOP_COLISION;
-
-        float dist = ball.getRadius();
-
-        if (cnt > 1)
-        {
-            dist = dist * 1.4142f / 2;
-        }
-
-        if ( (retVal & GameModel.BIT_LEFT_COLISION) != 0)
-        {
-            center.setX(rectangleObstacle.getLeftX() - dist);
-        }
-
-        if ( (retVal & GameModel.BIT_RIGHT_COLISION) != 0)
-        {
-            center.setX(rectangleObstacle.getRightX() + dist);
-        }
-
-        if ( (retVal & GameModel.BIT_BOTTOM_COLISION) != 0)
-        {
-            center.setY(rectangleObstacle.getBottomY() + dist);
-        }
-
-        if ( (retVal & GameModel.BIT_TOP_COLISION) != 0)
-        {
-            center.setY(rectangleObstacle.getTopY() - dist);
-        }
-
 
         return retVal;
     }
@@ -749,7 +439,6 @@ public class GameController {
     {
         acc.setX(scaleAcceleration(acc.getX()));
         acc.setY(scaleAcceleration(acc.getY()));
-        //acc.setZ(scaleAcceleration(acc.getZ()));
     }
 
     private float scaleAcceleration(float accDir) {

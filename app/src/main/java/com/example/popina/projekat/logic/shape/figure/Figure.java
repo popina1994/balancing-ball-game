@@ -3,9 +3,11 @@ package com.example.popina.projekat.logic.shape.figure;
 import android.graphics.Canvas;
 
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.model.ShapeModel;
+import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
+
+import java.util.LinkedList;
 
 /**
  * Created by popina on 05.03.2017..
@@ -16,7 +18,7 @@ public abstract class Figure {
     protected int color;
     protected String figureType;
 
-    public Figure(Coordinate center, String figureType) {
+    protected Figure(Coordinate center, String figureType) {
         this.center = center;
         this.figureType = figureType;
     }
@@ -77,16 +79,17 @@ public abstract class Figure {
 
     @Override
     public String toString() {
-        return ShapeModel.FIGURE_TYPE + " " + figureType + " "
-                + ShapeModel.FIGURE_COLOR + " " + color + " "
-                + ShapeModel.FIGURE_CENTER + " " + center;
+        return ShapeConst.FIGURE_TYPE + " " + figureType + " "
+                + ShapeConst.FIGURE_COLOR + " " + color + " "
+                + ShapeConst.FIGURE_CENTER + " " + center;
     }
 
     public abstract Figure scale(UtilScale utilScale);
 
     public abstract  Figure scaleReverse(UtilScale utilScale);
 
-    public abstract boolean hits(CircleHole ball);
+    public abstract boolean doesCollide(CircleHole ball);
+
 
 
     public abstract boolean isGameOver();

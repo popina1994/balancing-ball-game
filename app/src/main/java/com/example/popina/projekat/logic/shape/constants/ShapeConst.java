@@ -1,13 +1,13 @@
-package com.example.popina.projekat.logic.shape.model;
+package com.example.popina.projekat.logic.shape.constants;
 
 import android.graphics.Color;
-import android.icu.lang.UCharacter;
 
 /**
  * Created by popina on 08.03.2017..
  */
 
-public class ShapeModel {
+public class ShapeConst
+{
     public static final int COLOR_HOLE_START = Color.RED;
     public static final int COLOR_HOLE_FINISH = Color.GREEN;
     public static final int COLOR_HOLE_WRONG = Color.BLACK;
