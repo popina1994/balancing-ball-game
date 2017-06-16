@@ -2,10 +2,10 @@ package com.example.popina.projekat.logic.shape.factory;
 
 import com.example.popina.projekat.logic.shape.model.ShapeModel;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.circle.FinishHole;
-import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
-import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
-import com.example.popina.projekat.logic.shape.figure.circle.WrongHole;
+import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
+import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
+import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
+import com.example.popina.projekat.logic.shape.figure.hole.WrongHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 import java.util.LinkedList;
@@ -54,10 +54,10 @@ public class ShapeFactory {
         return wrongHole;
     }
 
-    public Rectangle createObstacle()
+    public RectangleObstacle createObstacle()
     {
-        final Rectangle DEFAULT_OBSTACLE_RECT = new Rectangle(ShapeModel.DEFAULT_OBSTACLE_X, ShapeModel.DEFAULT_OBSTACLE_Y, ShapeModel.DEFAULT_RECT_WIDTH, ShapeModel.DEFAULT_RECT_HEIGHT);
-        Rectangle rect = DEFAULT_OBSTACLE_RECT.scale(utilScale);
+        final RectangleObstacle DEFAULT_OBSTACLE_RECT = new RectangleObstacle(ShapeModel.DEFAULT_OBSTACLE_X, ShapeModel.DEFAULT_OBSTACLE_Y, ShapeModel.DEFAULT_RECT_WIDTH, ShapeModel.DEFAULT_RECT_HEIGHT);
+        RectangleObstacle rect = DEFAULT_OBSTACLE_RECT.scale(utilScale);
 
         return rect;
     }

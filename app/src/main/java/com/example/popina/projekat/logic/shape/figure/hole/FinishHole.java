@@ -1,4 +1,4 @@
-package com.example.popina.projekat.logic.shape.figure.circle;
+package com.example.popina.projekat.logic.shape.figure.hole;
 
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.model.ShapeModel;
@@ -8,7 +8,8 @@ import com.example.popina.projekat.logic.shape.scale.UtilScale;
  * Created by popina on 08.03.2017..
  */
 
-public class FinishHole extends Circle {
+public class FinishHole extends CircleHole
+{
     public FinishHole(float x, float y, float radius) {
         super(x, y, radius, ShapeModel.TYPE_FINISH_HOLE);
         color = ShapeModel.COLOR_HOLE_FINISH;

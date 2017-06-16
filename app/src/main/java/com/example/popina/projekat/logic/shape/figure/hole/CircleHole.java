@@ -1,4 +1,4 @@
-package com.example.popina.projekat.logic.shape.figure.circle;
+package com.example.popina.projekat.logic.shape.figure.hole;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -10,15 +10,15 @@ import com.example.popina.projekat.logic.shape.figure.Figure;
  * Created by popina on 05.03.2017..
  */
 
-public abstract  class Circle extends Figure {
+public abstract  class CircleHole extends Figure {
     private float radius;
 
-    public Circle(float x, float y, float radius, String figureType) {
+    public CircleHole(float x, float y, float radius, String figureType) {
         super(new Coordinate(x, y), figureType);
         this.radius = radius;
     }
 
-    public Circle(Coordinate c, float radius, String figureType)
+    public CircleHole(Coordinate c, float radius, String figureType)
     {
         super(c.clone(), figureType);
         this.radius = radius;
@@ -54,15 +54,10 @@ public abstract  class Circle extends Figure {
     }
 
     @Override
-    public boolean hits(Circle ball) {
+    public boolean hits(CircleHole ball) {
         return  isCoordinateInside(ball.getCenter());
     }
 
-
-    @Override
-    public void collide() {
-
-    }
 
     @Override
     public String toString() {

@@ -1,4 +1,4 @@
-package com.example.popina.projekat.logic.shape.figure.rectangle;
+package com.example.popina.projekat.logic.shape.figure.obstacle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -7,18 +7,18 @@ import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.model.ShapeModel;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.circle.Circle;
+import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
  * Created by popina on 05.03.2017..
  */
 
-public class Rectangle extends Figure {
+public class RectangleObstacle extends Figure {
     private float height;
     private float width;
 
-    public Rectangle(float xCenter, float yCenter, float width, float height) {
+    public RectangleObstacle(float xCenter, float yCenter, float width, float height) {
         super(new Coordinate(xCenter, yCenter), ShapeModel.TYPE_OBSTACLE);
         this.height = height;
         this.width = width;
@@ -26,7 +26,7 @@ public class Rectangle extends Figure {
         color = ShapeModel.COLOR_OBSTACLE;
     }
 
-    public Rectangle(Coordinate c, float width, float height)
+    public RectangleObstacle(Coordinate c, float width, float height)
     {
         super(c.clone(), ShapeModel.TYPE_OBSTACLE);
         this.height = height;
@@ -112,19 +112,19 @@ public class Rectangle extends Figure {
     }
 
     @Override
-    public Rectangle scale(UtilScale utilScale) {
-        Rectangle rect = new Rectangle(utilScale.scaleCoordinate(getCenter()), utilScale.scaleWidth(getWidth()), utilScale.scaleHeight(getHeight()));
+    public RectangleObstacle scale(UtilScale utilScale) {
+        RectangleObstacle rect = new RectangleObstacle(utilScale.scaleCoordinate(getCenter()), utilScale.scaleWidth(getWidth()), utilScale.scaleHeight(getHeight()));
         return rect;
     }
 
     @Override
-    public Rectangle scaleReverse(UtilScale utilScale) {
-        Rectangle rectPer = new Rectangle(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getWidth()), utilScale.scaleReverseHeight(getHeight()));
+    public RectangleObstacle scaleReverse(UtilScale utilScale) {
+        RectangleObstacle rectPer = new RectangleObstacle(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getWidth()), utilScale.scaleReverseHeight(getHeight()));
         return rectPer;
     }
 
     @Override
-    public boolean hits(Circle ball) {
+    public boolean hits(CircleHole ball) {
         boolean retValue = false;
         float widthHalf = width / 2;
         float heighHalf = height / 2;
@@ -180,8 +180,4 @@ public class Rectangle extends Figure {
         return false;
     }
 
-    @Override
-    public void collide() {
-
-    }
 }

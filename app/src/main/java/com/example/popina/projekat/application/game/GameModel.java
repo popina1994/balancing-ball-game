@@ -7,10 +7,8 @@ import com.example.popina.projekat.application.common.CommonModel;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.coeficient.Coeficient;
 import com.example.popina.projekat.logic.game.utility.Time;
-import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.circle.Circle;
-import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 
 import java.util.LinkedList;
 
@@ -31,7 +29,7 @@ public class GameModel extends CommonModel {
 
     private LinkedList<Figure> listFigures = new LinkedList<>();
     private String fileName;
-    private Circle ball;
+    private CircleHole ball;
     private Filter filter = new Filter(ALPHA);
     // OnInit
     //
@@ -81,11 +79,11 @@ public class GameModel extends CommonModel {
         this.fileName = fileName;
     }
 
-    public Circle getBall() {
+    public CircleHole getBall() {
         return ball;
     }
 
-    public void setBall(Circle ball) {
+    public void setBall(CircleHole ball) {
         this.ball = ball;
     }
 

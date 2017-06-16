@@ -2,13 +2,11 @@ package com.example.popina.projekat.application.game;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SyncAdapterType;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,10 +17,9 @@ import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.circle.Circle;
-import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
-import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
-import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
+import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
+import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 
 import java.util.LinkedList;
 
@@ -144,11 +141,10 @@ public class GameController {
         if (model.isSufraceInitialized()) {
 
             float deltaT = Utility.convertNsToS(time - model.getLastTime());
-            Circle ball = model.getBall();
+            CircleHole ball = model.getBall();
             Coordinate center = ball.getCenter().clone();
 
-            scaleAcceleration(filteredAcc);
-            addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
+
             // TODO : separate friction to one which is done via x and one via y, and in case if direction is changed via some
             // axis, then do not add friction in that case.
 
@@ -191,9 +187,9 @@ public class GameController {
                         // In case of obstacle collision.
                         //
                         playSound(GameModel.SOUND_ID_COLLISION);
-                        Rectangle rectangle = (Rectangle) itFigure;
+                        RectangleObstacle rectangleObstacle = (RectangleObstacle) itFigure;
 
-                        int val = isCollisionAndUpdate(rectangle, ball, newBallPos, center);
+                        int val = isCollisionAndUpdate(rectangleObstacle, ball, newBallPos, center);
                         if ((val & (GameModel.BIT_LEFT_COLISION | GameModel.BIT_RIGHT_COLISION)) != 0)
                         {
                             model.getSpeed().setX(reverseDir(vX));
@@ -221,6 +217,13 @@ public class GameController {
             }
 
             ball.setCenter(center);
+
+            if (!rightLeftCollision && !topBottomCollision)
+            {
+                scaleAcceleration(filteredAcc);
+                addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
+            }
+
             view.invalidateSurfaceView();
             //Log.d("GameController", "VX " + Float.toString(model.getSpeed().getX()));
             //Log.d("GameController", "VY " + Float.toString(model.getSpeed().getY()));
@@ -302,8 +305,8 @@ public class GameController {
     }
 
     private boolean doesBallCenterHitsLine(Coordinate intersectionPoint, Coordinate beginSegment, Coordinate endSegment,
-                                          float minDist, Circle ball, Circle ballNew, Coordinate3D lineCenter,
-                                          Coordinate3D line, boolean isXLine)
+                                           float minDist, CircleHole ball, CircleHole ballNew, Coordinate3D lineCenter,
+                                           Coordinate3D line, boolean isXLine)
     {
         return  ((null != intersectionPoint) &&
                 Utility.isOnSegment(beginSegment, endSegment, intersectionPoint)
@@ -375,8 +378,8 @@ public class GameController {
     // Returns -1 in case it doesn't hit a line.
     // If less than min dist returns that distance squared.
     //
-    public float distanceHitFromBeginPosition(Coordinate intersectionPoint, Circle ball,
-                                             Circle ballNew,
+    public float distanceHitFromBeginPosition(Coordinate intersectionPoint, CircleHole ball,
+                                             CircleHole ballNew,
                                              Coordinate beginSegment, Coordinate endSegment,
                                              Coordinate3D lineCenter,
                                              float minDist,
@@ -390,7 +393,7 @@ public class GameController {
             //
             if (isXLine)
             {
-                Circle ballUsed = ball;
+                CircleHole ballUsed = ball;
                 if (Math.abs(intersectionPoint.getY() - ball.getCenter().getY()) <= Utility.FLOAT_ACCURACY)
                 {
                     if (Math.abs(intersectionPoint.getY() - ballNew.getCenter().getY()) <= Utility.FLOAT_ACCURACY)
@@ -443,7 +446,7 @@ public class GameController {
             {
                 // TO DO update everything on y.
                 //
-                Circle ballUsed = ball;
+                CircleHole ballUsed = ball;
                 if (Math.abs(intersectionPoint.getX() - ball.getCenter().getX()) <= Utility.FLOAT_ACCURACY)
                 {
                     if (Math.abs(intersectionPoint.getX() - ballNew.getCenter().getX()) <= Utility.FLOAT_ACCURACY)
@@ -506,7 +509,7 @@ public class GameController {
     }
 
 
-    public int isCollisionAndUpdate(Rectangle rectangle, Circle ball, Circle ballNew, Coordinate center)
+    public int isCollisionAndUpdate(RectangleObstacle rectangleObstacle, CircleHole ball, CircleHole ballNew, Coordinate center)
     {
         int retVal = 0x0;
         float minDist = Float.MAX_VALUE;
@@ -514,18 +517,18 @@ public class GameController {
         // Carefull there is no movement case.
         //
         Coordinate3D lineCenter = calculateLine(ball.getCenter(), ballNew.getCenter());
-        Coordinate3D lineRectBottom = calculateLine(rectangle.getBotomLeft(), rectangle.getBottomRight());
-        Coordinate3D lineRectTop = calculateLine(rectangle.getTopLeft(), rectangle.getTopRight());
-        Coordinate3D lineRectLeft = calculateLine(rectangle.getBotomLeft(), rectangle.getTopLeft());
-        Coordinate3D lineRectRight = calculateLine(rectangle.getBottomRight(), rectangle.getTopRight());
+        Coordinate3D lineRectBottom = calculateLine(rectangleObstacle.getBotomLeft(), rectangleObstacle.getBottomRight());
+        Coordinate3D lineRectTop = calculateLine(rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight());
+        Coordinate3D lineRectLeft = calculateLine(rectangleObstacle.getBotomLeft(), rectangleObstacle.getTopLeft());
+        Coordinate3D lineRectRight = calculateLine(rectangleObstacle.getBottomRight(), rectangleObstacle.getTopRight());
 
         Coordinate centerBottomIntersection = intersectionLines(lineCenter, lineRectBottom);
         Coordinate centerTopIntersection = intersectionLines(lineCenter, lineRectTop);
         Coordinate centerLeftIntersection = intersectionLines(lineCenter, lineRectLeft);
         Coordinate centerRightIntersection = intersectionLines(lineCenter, lineRectRight);
 
-        if (doesBallCenterHitsLine(centerBottomIntersection, rectangle.getBotomLeft(),
-                rectangle.getBottomRight(), minDist, ball, ballNew, lineCenter, lineRectBottom, true))
+        if (doesBallCenterHitsLine(centerBottomIntersection, rectangleObstacle.getBotomLeft(),
+                rectangleObstacle.getBottomRight(), minDist, ball, ballNew, lineCenter, lineRectBottom, true))
         {
             float val;
             if (centerBottomIntersection == null)
@@ -544,7 +547,7 @@ public class GameController {
             }
         }
 
-        if (doesBallCenterHitsLine(centerTopIntersection, rectangle.getTopLeft(), rectangle.getTopRight(),
+        if (doesBallCenterHitsLine(centerTopIntersection, rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight(),
                 minDist, ball, ballNew, lineCenter, lineRectTop, true))
         {
             float val;
@@ -563,7 +566,7 @@ public class GameController {
             }
         }
 
-        if (doesBallCenterHitsLine(centerLeftIntersection, rectangle.getTopLeft(), rectangle.getBotomLeft(),
+        if (doesBallCenterHitsLine(centerLeftIntersection, rectangleObstacle.getTopLeft(), rectangleObstacle.getBotomLeft(),
                 minDist, ball, ballNew, lineCenter, lineRectTop, false))
         {
             float val;
@@ -584,7 +587,7 @@ public class GameController {
             }
         }
 
-        if (doesBallCenterHitsLine(centerRightIntersection, rectangle.getTopRight(), rectangle.getBottomRight(), minDist,
+        if (doesBallCenterHitsLine(centerRightIntersection, rectangleObstacle.getTopRight(), rectangleObstacle.getBottomRight(), minDist,
                 ball, ballNew, lineCenter, lineRectRight, false))
         {
             float val;
@@ -613,16 +616,16 @@ public class GameController {
             // Min dist needs to be added.
             //
             float distBottom =  distanceHitFromBeginPosition(centerBottomIntersection, ball,
-                    ballNew, rectangle.getBotomLeft(), rectangle.getBottomRight(),
+                    ballNew, rectangleObstacle.getBotomLeft(), rectangleObstacle.getBottomRight(),
                     lineCenter, minDist, true);
             float distTop =  distanceHitFromBeginPosition(centerTopIntersection, ball,
-                    ballNew, rectangle.getTopLeft(), rectangle.getTopRight(),
+                    ballNew, rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight(),
                     lineCenter, minDist, true);
             float distLeft = distanceHitFromBeginPosition(centerLeftIntersection, ball,
-                    ballNew, rectangle.getTopLeft(), rectangle.getBotomLeft(),
+                    ballNew, rectangleObstacle.getTopLeft(), rectangleObstacle.getBotomLeft(),
                     lineCenter, minDist, false);
             float distRight = distanceHitFromBeginPosition(centerRightIntersection, ball,
-                    ballNew, rectangle.getTopRight(), rectangle.getBottomRight(),
+                    ballNew, rectangleObstacle.getTopRight(), rectangleObstacle.getBottomRight(),
                     lineCenter, minDist, false);
 
             if  ( (distTop >= 0) && (distTop <= minDist))
@@ -671,22 +674,22 @@ public class GameController {
 
         if ( (retVal & GameModel.BIT_LEFT_COLISION) != 0)
         {
-            center.setX(rectangle.getLeftX() - dist);
+            center.setX(rectangleObstacle.getLeftX() - dist);
         }
 
         if ( (retVal & GameModel.BIT_RIGHT_COLISION) != 0)
         {
-            center.setX(rectangle.getRightX() + dist);
+            center.setX(rectangleObstacle.getRightX() + dist);
         }
 
         if ( (retVal & GameModel.BIT_BOTTOM_COLISION) != 0)
         {
-            center.setY(rectangle.getBottomY() + dist);
+            center.setY(rectangleObstacle.getBottomY() + dist);
         }
 
         if ( (retVal & GameModel.BIT_TOP_COLISION) != 0)
         {
-            center.setY(rectangle.getTopY() - dist);
+            center.setY(rectangleObstacle.getTopY() - dist);
         }
 
 

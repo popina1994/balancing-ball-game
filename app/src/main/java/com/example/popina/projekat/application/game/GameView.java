@@ -11,8 +11,8 @@ import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.circle.Circle;
-import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
+import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
+import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
 
 import java.util.LinkedList;
@@ -123,7 +123,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                 if (it instanceof StartHole) {
                     if (null == model.getBall()) {
-                        model.setBall((Circle) it);
+                        model.setBall((CircleHole) it);
                     }
                     listFigures.remove(it);
                     break;

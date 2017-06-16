@@ -8,10 +8,10 @@ import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.model.ShapeModel;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.circle.FinishHole;
-import com.example.popina.projekat.logic.shape.figure.circle.StartHole;
-import com.example.popina.projekat.logic.shape.figure.circle.WrongHole;
-import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
+import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
+import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
+import com.example.popina.projekat.logic.shape.figure.hole.WrongHole;
+import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -72,7 +72,7 @@ public class ShapeParser {
                 );
                 break;
             case ShapeModel.TYPE_OBSTACLE:
-                figure = new Rectangle(
+                figure = new RectangleObstacle(
                         Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_X_IDX]),
                         Float.parseFloat(tokens[ShapeModel.FIGURE_COORDINATE_Y_IDX]),
                         Float.parseFloat(tokens[ShapeModel.FIGURE_RECT_WIDTH_IDX]),

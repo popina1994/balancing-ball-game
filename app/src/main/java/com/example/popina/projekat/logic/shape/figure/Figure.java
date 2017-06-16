@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.model.ShapeModel;
-import com.example.popina.projekat.logic.shape.figure.circle.Circle;
+import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
@@ -86,12 +86,10 @@ public abstract class Figure {
 
     public abstract  Figure scaleReverse(UtilScale utilScale);
 
-    public abstract boolean hits(Circle ball);
+    public abstract boolean hits(CircleHole ball);
 
 
     public abstract boolean isGameOver();
 
     public abstract boolean isWon();
-
-    public abstract void collide();
 }

@@ -13,7 +13,7 @@ import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
-import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
+import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
 
 import java.util.LinkedList;
@@ -99,9 +99,9 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
     private void initWalls()
     {
         ShapeBorderFactory shapeBorderFactory = (ShapeBorderFactory) model.getShapeFactory();
-        LinkedList<Rectangle> listWalls = shapeBorderFactory.createBorders();
+        LinkedList<RectangleObstacle> listWalls = shapeBorderFactory.createBorders();
 
-        for (Rectangle it : listWalls)
+        for (RectangleObstacle it : listWalls)
         {
             model.getListFigures().addLast(it);
         }

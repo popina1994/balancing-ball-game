@@ -1,12 +1,9 @@
 package com.example.popina.projekat.application.create;
 
-import android.graphics.drawable.shapes.Shape;
 import android.widget.Toast;
 
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.rectangle.Rectangle;
 import com.example.popina.projekat.logic.shape.model.ShapeModel;
 
 import java.util.LinkedList;
