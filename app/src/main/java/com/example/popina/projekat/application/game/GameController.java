@@ -189,6 +189,7 @@ public class GameController {
                         playSound(GameModel.SOUND_ID_COLLISION);
                         RectangleObstacle rectangleObstacle = (RectangleObstacle) itFigure;
 
+                        // TODO : add multiple impulses (move to getSpeedChangeAfterCollision)
                         int val = isCollisionAndUpdate(rectangleObstacle, ball, newBallPos, center, model.getSpeed());
                         if ((val & (GameModel.BIT_LEFT_COLISION | GameModel.BIT_RIGHT_COLISION)) != 0)
                         {
@@ -346,23 +347,7 @@ public class GameController {
     public int isCollisionAndUpdate(RectangleObstacle rectangleObstacle, CircleHole ball, CircleHole ballNew, Coordinate center, Coordinate3D speed)
     {
         int retVal = 0x0;
-        /*
-        float minDist = Float.MAX_VALUE;
 
-        // Carefull there is no movement case.
-        //
-
-        Coordinate3D lineCenter = calculateLine(ball.getCenter(), ballNew.getCenter());
-        Coordinate3D lineRectBottom = calculateLine(rectangleObstacle.getBotomLeft(), rectangleObstacle.getBottomRight());
-        Coordinate3D lineRectTop = calculateLine(rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight());
-        Coordinate3D lineRectLeft = calculateLine(rectangleObstacle.getBotomLeft(), rectangleObstacle.getTopLeft());
-        Coordinate3D lineRectRight = calculateLine(rectangleObstacle.getBottomRight(), rectangleObstacle.getTopRight());
-
-        Coordinate centerBottomIntersection = intersectionLines(lineCenter, lineRectBottom);
-        Coordinate centerTopIntersection = intersectionLines(lineCenter, lineRectTop);
-        Coordinate centerLeftIntersection = intersectionLines(lineCenter, lineRectLeft);
-        Coordinate centerRightIntersection = intersectionLines(lineCenter, lineRectRight);
-        */
         if (doesBallCenterHitsLine(rectangleObstacle.getBotomLeft(), rectangleObstacle.getBottomRight(), ball, ballNew, true) && speed.getY() <= 0)
         {
             retVal = GameModel.BIT_BOTTOM_COLISION;

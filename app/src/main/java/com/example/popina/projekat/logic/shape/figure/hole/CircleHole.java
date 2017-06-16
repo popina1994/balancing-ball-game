@@ -13,14 +13,26 @@ import com.example.popina.projekat.logic.shape.figure.Figure;
 public abstract  class CircleHole extends Figure {
     private float radius;
 
-    protected CircleHole(float x, float y, float radius, String figureType) {
-        super(new Coordinate(x, y), figureType);
+    public CircleHole(float x, float y, float radius, String figureType, int color) {
+        super(new Coordinate(x, y), figureType, color);
+        this.radius = radius;
+    }
+
+    public CircleHole(Coordinate c, float radius, String figureType, int color)
+    {
+        super(c.clone(), figureType, color);
+        this.radius = radius;
+    }
+
+
+    public CircleHole(float x, float y, float radius, String figureType) {
+        super(new Coordinate(x, y), figureType, 0);
         this.radius = radius;
     }
 
     public CircleHole(Coordinate c, float radius, String figureType)
     {
-        super(c.clone(), figureType);
+        super(c.clone(), figureType, 0);
         this.radius = radius;
     }
 

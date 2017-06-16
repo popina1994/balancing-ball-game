@@ -11,6 +11,7 @@ import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.figure.hole.WrongHole;
+import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 
 import java.io.BufferedReader;
@@ -71,13 +72,18 @@ public class ShapeParser {
                         Float.parseFloat(tokens[ShapeConst.FIGURE_CIRCLE_RADIUS_IDX])
                 );
                 break;
-            case ShapeConst.TYPE_OBSTACLE:
+            case ShapeConst.TYPE_OBSTACLE_RECTANGLE:
                 figure = new RectangleObstacle(
                         Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_X_IDX]),
                         Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_Y_IDX]),
                         Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_WIDTH_IDX]),
-                        Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_HEIGHT_IDX])
-                );
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_HEIGHT_IDX]));
+                break;
+            case ShapeConst.TYPE_OBSTACLE_CIRCLE:
+                figure = new CircleObstacle(
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_X_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_Y_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_CIRCLE_RADIUS_IDX]));
         }
 
         figure.setColor(Integer.parseInt(tokens[ShapeConst.FIGURE_COLOR_IDX]));

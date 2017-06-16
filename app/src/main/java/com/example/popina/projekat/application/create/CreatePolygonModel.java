@@ -18,7 +18,8 @@ public class CreatePolygonModel extends CommonModel {
     public static final int CREATE_START_HOLE = 0;
     public static final int CREATE_FINISH_HOLE = 1;
     public static final int CREATE_WRONG_HOLE = 2;
-    public static final int CREATE_OBSTACLE = 3;
+    public static final int CREATE_OBSTACLE_RECTANGLE = 3;
+    public static final int CREATE_OBSTACLE_CIRCLE = 4;
 
 
     // List of unscaled figures.

@@ -3,6 +3,7 @@ package com.example.popina.projekat.logic.shape.factory;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
+import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.figure.hole.WrongHole;
@@ -54,12 +55,19 @@ public class ShapeFactory {
         return wrongHole;
     }
 
-    public RectangleObstacle createObstacle()
+    public RectangleObstacle createObstacleRectangle()
     {
         final RectangleObstacle DEFAULT_OBSTACLE_RECT = new RectangleObstacle(ShapeConst.DEFAULT_OBSTACLE_X, ShapeConst.DEFAULT_OBSTACLE_Y, ShapeConst.DEFAULT_RECT_WIDTH, ShapeConst.DEFAULT_RECT_HEIGHT);
         RectangleObstacle rect = DEFAULT_OBSTACLE_RECT.scale(utilScale);
 
         return rect;
+    }
+
+    public Figure createObstacleCircle()
+    {
+        final CircleObstacle DEFAULT_OBSTACLE_CIRC = new CircleObstacle(ShapeConst.DEFAULT_OBSTACLE_X, ShapeConst.DEFAULT_OBSTACLE_Y, ShapeConst.DEFAULT_RECT_RADIUS);
+        CircleObstacle circ = DEFAULT_OBSTACLE_CIRC.scale(utilScale);
+        return circ;
     }
 
     public Figure scaleFigure(Figure f)
@@ -93,5 +101,6 @@ public class ShapeFactory {
         }
         return  list;
     }
+
 
 }

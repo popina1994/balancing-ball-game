@@ -11,13 +11,11 @@ import com.example.popina.projekat.logic.shape.scale.UtilScale;
 public class FinishHole extends CircleHole
 {
     public FinishHole(float x, float y, float radius) {
-        super(x, y, radius, ShapeConst.TYPE_FINISH_HOLE);
-        color = ShapeConst.COLOR_HOLE_FINISH;
+        super(x, y, radius, ShapeConst.TYPE_FINISH_HOLE, ShapeConst.COLOR_HOLE_FINISH);
     }
 
     public FinishHole(Coordinate c, float radius) {
-        super(c, radius, ShapeConst.TYPE_FINISH_HOLE);
-        color = ShapeConst.COLOR_HOLE_FINISH;
+        super(c, radius, ShapeConst.TYPE_FINISH_HOLE, ShapeConst.COLOR_HOLE_FINISH);
     }
 
     @Override

@@ -16,7 +16,8 @@ public class ShapeConst
     public static final String TYPE_START_HOLE = "START_HOLE";
     public static final String TYPE_FINISH_HOLE = "FINISH_HOLE";
     public static final String TYPE_WRONG_HOLE = "WRONG_HOLE";
-    public static final String TYPE_OBSTACLE = "OBSTACLE";
+    public static final String TYPE_OBSTACLE_RECTANGLE = "OBSTACLE_RECTANGLE";
+    public static final String TYPE_OBSTACLE_CIRCLE = "OBSTACLE_CIRCLE";
 
     public static final String FIGURE_TYPE = "FIGURE_TYPE";
     public static final String FIGURE_COLOR= "FIGURE_COLOR";
@@ -28,6 +29,7 @@ public class ShapeConst
     public static final float DEFAULT_RADIUS = 0.1f;
     public static final float DEFAULT_RECT_WIDTH = 0.2f;
     public static final float DEFAULT_RECT_HEIGHT = 0.2f;
+    public static final float DEFAULT_RECT_RADIUS = 0.2f;
     public static final float DEFAULT_START_X = 0.1f;
     public static final float DEFAULT_START_Y = 0.1f;
     public static final float DEFAULT_FINISH_X = 0.9f;
@@ -38,8 +40,6 @@ public class ShapeConst
 
     public static final float WIDTH_RECT_WALL = 1.2f;
     public static final float HEIGHT_RECT_WALL = 1.2f;
-    public static final float BORDER_LEFT_X = -1f;
-    public static final float BORDER_LEFT_Y = -1f;
 
     public static final float WALL_LEFT_X = -WIDTH_RECT_WALL / 2;
     public static final float WALL_LEFT_Y = HEIGHT_RECT_WALL / 2;

@@ -1,9 +1,7 @@
 package com.example.popina.projekat.application.create;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.common.CommonActivity;
@@ -64,8 +62,11 @@ public class CreatePolygonActivity extends CommonActivity{
             case R.id.buttonWrongHole:
                 controller.createFigure(CreatePolygonModel.CREATE_WRONG_HOLE);
                 break;
-            case R.id.buttonObstacle:
-                controller.createFigure(CreatePolygonModel.CREATE_OBSTACLE);
+            case R.id.buttonObstacleRectangle:
+                controller.createFigure(CreatePolygonModel.CREATE_OBSTACLE_RECTANGLE);
+                break;
+            case R.id.buttonObstacleCircle:
+                controller.createFigure(CreatePolygonModel.CREATE_OBSTACLE_CIRCLE);
                 break;
             case  R.id.buttonSavePolygon:
                 controller.savePolygon();

@@ -11,13 +11,11 @@ import com.example.popina.projekat.logic.shape.scale.UtilScale;
 public class WrongHole extends CircleHole
 {
     public WrongHole(float x, float y, float radius) {
-        super(x, y, radius, ShapeConst.TYPE_WRONG_HOLE);
-        color = ShapeConst.COLOR_HOLE_WRONG;
+        super(x, y, radius, ShapeConst.TYPE_WRONG_HOLE, ShapeConst.COLOR_HOLE_WRONG);
     }
 
     public WrongHole(Coordinate c, float radius) {
-        super(c, radius, ShapeConst.TYPE_WRONG_HOLE);
-        color = ShapeConst.COLOR_HOLE_WRONG;
+        super(c, radius, ShapeConst.TYPE_WRONG_HOLE, ShapeConst.COLOR_HOLE_WRONG);
     }
 
     @Override

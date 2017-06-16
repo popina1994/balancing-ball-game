@@ -12,9 +12,9 @@ import java.util.LinkedList;
 
 public abstract class Obstacle extends Figure
 {
-    protected Obstacle(Coordinate center, String figureType)
+    protected Obstacle(Coordinate center, String figureType, int color)
     {
-        super(center, figureType);
+        super(center, figureType, color);
     }
     public abstract Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew,  Coordinate speed);
 }

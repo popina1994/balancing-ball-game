@@ -18,9 +18,10 @@ public abstract class Figure {
     protected int color;
     protected String figureType;
 
-    protected Figure(Coordinate center, String figureType) {
+    protected Figure(Coordinate center, String figureType, int color) {
         this.center = center;
         this.figureType = figureType;
+        this.color = color;
     }
 
     public Coordinate getCenter() {

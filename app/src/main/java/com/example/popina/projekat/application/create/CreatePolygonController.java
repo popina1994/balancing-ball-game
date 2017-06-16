@@ -110,8 +110,11 @@ public class CreatePolygonController {
             case CreatePolygonModel.CREATE_FINISH_HOLE:
                 f = model.getShapeFactory().createFinishHole();
                 break;
-            case CreatePolygonModel.CREATE_OBSTACLE:
-                f = model.getShapeFactory().createObstacle();
+            case CreatePolygonModel.CREATE_OBSTACLE_RECTANGLE:
+                f = model.getShapeFactory().createObstacleRectangle();
+                break;
+            case CreatePolygonModel.CREATE_OBSTACLE_CIRCLE:
+                f = model.getShapeFactory().createObstacleCircle();
                 break;
         }
 
