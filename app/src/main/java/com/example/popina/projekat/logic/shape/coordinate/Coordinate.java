@@ -38,4 +38,18 @@ public class Coordinate implements Cloneable{
     public String toString() {
         return Float.toString(x) + " " + Float.toString(y) + " ";
     }
+
+    public Coordinate addCoordinate(Coordinate coordinate)
+    {
+        x += coordinate.getX();
+        y += coordinate.getY();
+        return  this;
+    }
+
+    public Coordinate mulScalar(float scalar)
+    {
+        x *= scalar;
+        y *= scalar;
+        return this;
+    }
 }

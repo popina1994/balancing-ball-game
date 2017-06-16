@@ -59,4 +59,41 @@ public class Utility {
         return  ns / S_NS;
     }
 
+    public static boolean doesSegmentIntersectsCircle(Coordinate beginSegment, Coordinate endSegment, Coordinate center, float radius,
+                                                boolean isXLine)
+    {
+
+        // End/begin segment circle intersection.
+        //
+        if (Utility.isDistanceBetweenCoordLesThan(beginSegment, center, radius, false)
+            || Utility.isDistanceBetweenCoordLesThan(endSegment, center, radius, false))
+        {
+            return true;
+        }
+
+        // "Inside" segment circle intersection
+        //
+        if (isXLine)
+        {
+            return Utility.isDimBetweenDims(beginSegment.getX(), endSegment.getX(), center.getX())
+                    && Math.abs(center.getY() - beginSegment.getY()) <= Utility.FLOAT_ACCURACY + radius;
+        }
+        else
+        {
+            return Utility.isDimBetweenDims(beginSegment.getY(), endSegment.getY(), center.getY())
+                    && Math.abs(center.getX() - beginSegment.getX()) <= Utility.FLOAT_ACCURACY + radius;
+        }
+    }
+
+    public static float opositeSign(float val) {
+        if (val < 0) {
+            return 1;
+        } else if (val > 0) {
+            return -1;
+        }
+
+        return 0;
+
+    }
+
 }

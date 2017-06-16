@@ -3,12 +3,17 @@ package com.example.popina.projekat.logic.shape.figure.obstacle;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
+
+import java.util.LinkedList;
+
+import static com.example.popina.projekat.logic.game.utility.Utility.doesSegmentIntersectsCircle;
 
 /**
  * Created by popina on 05.03.2017..
@@ -178,9 +183,28 @@ public class RectangleObstacle extends Obstacle {
         return false;
     }
 
-    @Override
-    public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate speed)
+    private boolean doesBallHitLine(Coordinate beginSegment, Coordinate endSegment, CircleHole ball, CircleHole ballNew, boolean isXLine)
     {
-        return null;
+        return doesSegmentIntersectsCircle(beginSegment, endSegment, ballNew.getCenter(), ball.getRadius(), isXLine);
+    }
+
+    @Override
+    public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate3D speed)
+    {
+        Coordinate speedChange = new Coordinate(0, 0);
+
+        if ( (doesBallHitLine(getBotomLeft(), getBottomRight(), ballOld, ballNew, true) && speed.getY() <= 0)
+            || (doesBallHitLine(getTopLeft(), getTopRight(), ballOld, ballNew, true) && speed.getY() >= 0))
+        {
+            speedChange.setY(-speed.getY());
+        }
+
+        if ((doesBallHitLine(getTopLeft(), getBotomLeft(), ballOld, ballNew, false) && speed.getX() >= 0)
+            || (doesBallHitLine( getTopRight(), getBottomRight(), ballOld, ballNew, false) && speed.getX() <= 0))
+        {
+            speedChange.setX(-speed.getX());
+        }
+
+        return speedChange;
     }
 }

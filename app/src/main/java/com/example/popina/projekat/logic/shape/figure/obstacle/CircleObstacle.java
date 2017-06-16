@@ -3,6 +3,8 @@ package com.example.popina.projekat.logic.shape.figure.obstacle;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.example.popina.projekat.logic.game.utility.Coordinate3D;
+import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
@@ -40,7 +42,7 @@ public class CircleObstacle extends Obstacle
     }
 
     @Override
-    public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate speed)
+    public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate3D speed)
     {
         return null;
     }
@@ -86,7 +88,7 @@ public class CircleObstacle extends Obstacle
     @Override
     public boolean doesCollide(CircleHole ball)
     {
-        return false;
+        return Utility.isDistanceBetweenCoordLesThan(center, ball.getCenter(), radius + ball.getRadius(), false);
     }
 
     @Override

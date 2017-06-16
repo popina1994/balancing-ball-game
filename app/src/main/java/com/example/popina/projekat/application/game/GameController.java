@@ -7,7 +7,6 @@ import android.hardware.SensorManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.popina.projekat.R;
@@ -19,9 +18,14 @@ import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
+import com.example.popina.projekat.logic.shape.figure.obstacle.Obstacle;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 
 import java.util.LinkedList;
+
+import static com.example.popina.projekat.logic.game.utility.Utility.doesSegmentIntersectsCircle;
+import static com.example.popina.projekat.logic.game.utility.Utility.isDimBetweenDims;
+import static com.example.popina.projekat.logic.game.utility.Utility.opositeSign;
 
 /**
  * Created by popina on 09.03.2017..
@@ -122,16 +126,7 @@ public class GameController {
         }
     }
 
-    private float opositeSign(float val) {
-        if (val < 0) {
-            return 1;
-        } else if (val > 0) {
-            return -1;
-        }
 
-        return 0;
-
-    }
 
     private void updatePosition(Coordinate3D filteredAcc, long time) {
 
@@ -142,21 +137,14 @@ public class GameController {
 
             float deltaT = Utility.convertNsToS(time - model.getLastTime());
             CircleHole ball = model.getBall();
-            Coordinate center = ball.getCenter().clone();
 
-
-            // TODO : separate friction to one which is done via x and one via y, and in case if direction is changed via some
-            // axis, then do not add friction in that case.
-
-            float newX = possibleMove(model.getSpeed().getX(), center.getX(), deltaT);
-            float newY = possibleMove(model.getSpeed().getY(), center.getY(), deltaT);
+            float newX = possibleMove(model.getSpeed().getX(), ball.getCenter().getX(), deltaT);
+            float newY = possibleMove(model.getSpeed().getY(), ball.getCenter().getY(), deltaT);
             float vX = model.getSpeed().getX();
             float vY = model.getSpeed().getY();
 
-            boolean rightLeftCollision = false;
-            boolean topBottomCollision = false;
-
             StartHole newBallPos = new StartHole(newX, newY, ball.getRadius());
+            Coordinate speedChange = new Coordinate(0, 0);
 
             for (Figure itFigure : model.getListFigures())
             {
@@ -187,37 +175,55 @@ public class GameController {
                         // In case of obstacle collision.
                         //
                         playSound(GameModel.SOUND_ID_COLLISION);
-                        RectangleObstacle rectangleObstacle = (RectangleObstacle) itFigure;
 
-                        // TODO : add multiple impulses (move to getSpeedChangeAfterCollision)
-                        int val = isCollisionAndUpdate(rectangleObstacle, ball, newBallPos, center, model.getSpeed());
-                        if ((val & (GameModel.BIT_LEFT_COLISION | GameModel.BIT_RIGHT_COLISION)) != 0)
-                        {
-                            model.getSpeed().setX(reverseDir(vX));
-                            rightLeftCollision = true;
-                        }
-                        if ((val & (GameModel.BIT_TOP_COLISION | GameModel.BIT_BOTTOM_COLISION)) != 0)
-                        {
-                            model.getSpeed().setY(reverseDir(vY));
-                            topBottomCollision = true;
-                        }
+                        Obstacle obstacle = (Obstacle)itFigure;
 
+                        Coordinate speedChangeFigure = obstacle.getSpeedChangeAfterCollision((StartHole)ball, newBallPos, model.getSpeed());
+                        speedChangeFigure.mulScalar(2);
+                        speedChange.addCoordinate(speedChangeFigure);
                     }
-                    break;
                 }
             }
 
-            if (!rightLeftCollision)
+            boolean xAxisChange = false;
+            boolean yAxisChange = false;
+
+            // It is faster to update without neccessary copying of center of ball, but it is not safe. (vsync...)
+            // if there is no collison on x axis.
+            //
+            if (isDimBetweenDims(0, 0, speedChange.getX()))
             {
-                center.setX(newX);
+                ball.getCenter().setX(newX);
+            }
+            else
+            {
+                xAxisChange = true;
             }
 
-            if (!topBottomCollision)
+            // If there is no collsion on y axis.
+            //
+            if (isDimBetweenDims(0, 0, speedChange.getY()))
             {
-                center.setY(newY);
+                ball.getCenter().setY(newY);
+            }
+            else
+            {
+                yAxisChange = true;
             }
 
-            ball.setCenter(center);
+            speedChange.addCoordinate(new Coordinate(vX, vY));
+
+            if (xAxisChange)
+            {
+                speedChange.setX(model.getCoeficient().getReverseSlowDown() * speedChange.getX());
+                model.getSpeed().setX(speedChange.getX());
+            }
+
+            if (yAxisChange)
+            {
+                speedChange.setY(model.getCoeficient().getReverseSlowDown() * speedChange.getY());
+                model.getSpeed().setY(speedChange.getY());
+            }
 
             scaleAcceleration(filteredAcc);
             addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
@@ -276,16 +282,7 @@ public class GameController {
         return new Coordinate((B2 * C1 - B1 * C2) / det, (A1 * C2 - A2 * C1) / det);
     }
 
-    private boolean doesBallCenterHitsLine(Coordinate beginSegment, Coordinate endSegment, CircleHole ball, CircleHole ballNew, boolean isXLine)
-    {
-        boolean doesIntersect = doesSegmentIntersectsCircle(beginSegment, endSegment, ballNew.getCenter(), ball.getRadius(), isXLine);
-        if (!doesIntersect)
-        {
-            return  false;
-        }
 
-        return doesIntersect;
-    }
 
     private float calculateX(Coordinate3D line, float y)
     {
@@ -307,68 +304,6 @@ public class GameController {
         // Carefull exception!!!
         //
         return (-C - A * x) / B;
-    }
-
-    private boolean isFirstHit(Coordinate intersectionPoint, Coordinate potentialPointOfCollision, float minDist)
-    {
-        return Utility.isDistanceBetweenCoordLesThan(intersectionPoint, potentialPointOfCollision, minDist, true);
-    }
-
-    private boolean doesSegmentIntersectsCircle(Coordinate beginSegment, Coordinate endSegment, Coordinate center, float radius,
-                                          boolean isXLine)
-    {
-
-        // End/begin segment circle intersection.
-        //
-        if (Utility.isDistanceBetweenCoordLesThan(beginSegment, center, radius, false)
-                || Utility.isDistanceBetweenCoordLesThan(endSegment, center, radius, false))
-        {
-            //Log.d("GameController", "Begin/End");
-            return true;
-        }
-
-        // "Inside" segment circle intersection
-        //
-        if (isXLine)
-        {
-            //Log.d("GameController", "X");
-            return Utility.isDimBetweenDims(beginSegment.getX(), endSegment.getX(), center.getX())
-                    && Math.abs(center.getY() - beginSegment.getY()) <= Utility.FLOAT_ACCURACY + radius;
-        }
-        else
-        {
-            //Log.d("GameController", "Y");
-            return Utility.isDimBetweenDims(beginSegment.getY(), endSegment.getY(), center.getY())
-                    && Math.abs(center.getX() - beginSegment.getX()) <= Utility.FLOAT_ACCURACY + radius;
-        }
-
-    }
-
-    public int isCollisionAndUpdate(RectangleObstacle rectangleObstacle, CircleHole ball, CircleHole ballNew, Coordinate center, Coordinate3D speed)
-    {
-        int retVal = 0x0;
-
-        if (doesBallCenterHitsLine(rectangleObstacle.getBotomLeft(), rectangleObstacle.getBottomRight(), ball, ballNew, true) && speed.getY() <= 0)
-        {
-            retVal = GameModel.BIT_BOTTOM_COLISION;
-        }
-
-        if (doesBallCenterHitsLine(rectangleObstacle.getTopLeft(), rectangleObstacle.getTopRight(), ball, ballNew, true) && speed.getY() >= 0)
-        {
-            retVal = GameModel.BIT_TOP_COLISION;
-        }
-
-        if (doesBallCenterHitsLine(rectangleObstacle.getTopLeft(), rectangleObstacle.getBotomLeft(), ball, ballNew, false) && speed.getX() >= 0)
-        {
-            retVal |= GameModel.BIT_LEFT_COLISION;
-        }
-
-        if (doesBallCenterHitsLine( rectangleObstacle.getTopRight(), rectangleObstacle.getBottomRight(), ball, ballNew, false) && speed.getX() <= 0)
-        {
-            retVal = (retVal & ~GameModel.BIT_LEFT_COLISION) | GameModel.BIT_RIGHT_COLISION;
-        }
-
-        return retVal;
     }
 
     private void addFrictionToAcc(Coordinate3D filteredAcc,  Coordinate3D speed, float deltaT) {
@@ -435,15 +370,9 @@ public class GameController {
         return posDir + speedDir * time;
     }
 
-    private float updateSpeed(float v0, float acc, float deltatT, int dir)
+    private float updateSpeed(float v0, float acc, float deltaT, int dir)
     {
-        return v0 + dir * acc * deltatT;
+        return v0 + dir * acc * deltaT;
     }
-
-    private float reverseDir(float speed)
-    {
-        return speed * - model.getCoeficient().getReverseSlowDown();
-    }
-
 
 }
