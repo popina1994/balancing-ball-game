@@ -40,6 +40,7 @@ public class CreatePolygonController
                 if (figure.isCoordinateInside(c))
                 {
                     model.setSelectedFigure(figure);
+                    model.setStartAngleOfRotation(figure.calculateAngle(c));
                 }
             }
             view.invalidateSurfaceView();
@@ -68,6 +69,7 @@ public class CreatePolygonController
             case CreatePolygonModel.MODE_RESIZE:
             case CreatePolygonModel.MODE_ROTATE:
                 model.setSelectedFigure(null);
+                model.setStartAngleOfRotation(null);
                 break;
             default:
                 return;
@@ -105,9 +107,10 @@ public class CreatePolygonController
                 Figure figure = model.getSelectedFigure();
                 if (null != figure)
                 {
-                    figure.rotate();
+                    figure.rotate(c, model.getStartAngleOfRotation());
                 }
             }
+            break;
             default:
                 return;
         }

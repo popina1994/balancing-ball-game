@@ -108,4 +108,32 @@ public class Utility
         return 360 * rad / (2 * Math.PI);
     }
 
+    public static float calculateAngle(Coordinate center, Coordinate point)
+    {
+        float angle = (float)Math.atan2(point.getY() - center.getY(), point.getX() - center.getX());
+        if (angle < 0)
+        {
+            angle += 2 * Math.PI;
+        }
+        return  angle;
+    }
+
+    public static Coordinate rotatePointAroundCenter(Coordinate center, float angle, Coordinate point)
+    {
+        double cosine = Math.cos(angle);
+        double sinus = Math.sin(angle);
+
+        float pointTranX = point.getX() - center.getX();
+        float pointTranY = point.getY()  - center.getY();
+
+        double rotatedX = pointTranX * cosine - pointTranY * sinus;
+        double rotatedY = pointTranX * sinus - pointTranY* cosine;
+
+        float rotatedTranBackX = (float)rotatedX + center.getX();
+        float rotatedTranBackY = (float)rotatedY + center.getY();
+
+        return new Coordinate(rotatedTranBackX, rotatedTranBackY);
+
+    }
+
 }

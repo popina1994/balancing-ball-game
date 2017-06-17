@@ -103,13 +103,19 @@ public class RectangleObstacle extends Obstacle
     {
         Paint p = new Paint();
         p.setColor(color);
+
+        canvas.save();
+        canvas.rotate((float)Utility.radianToDeg(angle), getCenter().getX(), getCenter().getY());
         canvas.drawRect(getLeftX(), getTopY(), getRightX(), getBottomY(), p);
+        canvas.restore();
     }
 
     @Override
     public boolean isCoordinateInside(Coordinate c)
     {
-        if ((c.getX() >= getLeftX()) && (c.getX() <= getRightX()) && (c.getY() <= getBottomY()) && (c.getY() >= getTopY()))
+        Coordinate rotatedPoint = Utility.rotatePointAroundCenter(center, -angle, c);
+        if ((rotatedPoint .getX() >= getLeftX()) && (rotatedPoint .getX() <= getRightX())
+                && (rotatedPoint .getY() <= getBottomY()) && (rotatedPoint .getY() >= getTopY()))
         {
             return true;
         }
@@ -200,9 +206,9 @@ public class RectangleObstacle extends Obstacle
     }
 
     @Override
-    public void rotate()
+    public void rotate(Coordinate c, float startAngle)
     {
-
+        this.angle = Utility.calculateAngle(center, c) - startAngle;
     }
 
     private boolean doesBallHitLine(Coordinate beginSegment, Coordinate endSegment, CircleHole ball, CircleHole ballNew, boolean isXLine)
@@ -228,5 +234,11 @@ public class RectangleObstacle extends Obstacle
         }
 
         return speedChange;
+    }
+
+    @Override
+    public float calculateAngle(Coordinate point)
+    {
+        return super.calculateAngle(point) - angle;
     }
 }

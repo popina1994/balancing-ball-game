@@ -2,6 +2,7 @@ package com.example.popina.projekat.logic.shape.figure;
 
 import android.graphics.Canvas;
 
+import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
@@ -107,5 +108,10 @@ public abstract class Figure
 
     public abstract boolean isWon();
 
-    public abstract void rotate();
+    public abstract void rotate(Coordinate c, float angle);
+
+    public float calculateAngle(Coordinate point)
+    {
+        return Utility.calculateAngle(getCenter(), point);
+    }
 }

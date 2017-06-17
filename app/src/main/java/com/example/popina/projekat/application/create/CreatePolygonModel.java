@@ -1,6 +1,7 @@
 package com.example.popina.projekat.application.create;
 
 import com.example.popina.projekat.application.common.CommonModel;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 
 import java.util.LinkedList;
@@ -31,6 +32,18 @@ public class CreatePolygonModel extends CommonModel
     private int curMode = MODE_MOVE;
 
     private Figure selectedFigure = null;
+
+    public Float getStartAngleOfRotation()
+    {
+        return startAngleOfRotation;
+    }
+
+    public void setStartAngleOfRotation(Float startAngleOfRotation)
+    {
+        this.startAngleOfRotation = startAngleOfRotation;
+    }
+
+    private Float startAngleOfRotation = null;
 
     public Figure getSelectedFigure()
     {

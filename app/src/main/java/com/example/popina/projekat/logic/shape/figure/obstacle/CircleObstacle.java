@@ -111,7 +111,7 @@ public class CircleObstacle extends Obstacle
     }
 
     @Override
-    public void rotate()
+    public void rotate(Coordinate c, float angle)
     {
 
     }

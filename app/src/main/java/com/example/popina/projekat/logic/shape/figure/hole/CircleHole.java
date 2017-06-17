@@ -87,7 +87,7 @@ public abstract class CircleHole extends Figure
     }
 
     @Override
-    public void rotate()
+    public void rotate(Coordinate c, float angle)
     {
     }
 }
