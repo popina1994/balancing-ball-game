@@ -136,4 +136,16 @@ public class Utility
 
     }
 
+    public static float convertRadianAngleTo2PiRange(float angle)
+    {
+        float cnt = (float)Math.abs(Math.floor(angle / (2 * Math.PI))) ;
+
+
+        if ( (angle < 0) || (angle >= 2 * Math.PI))
+        {
+            angle += opositeSign(angle) * 2 * Math.PI * cnt;
+        }
+        return angle;
+    }
+
 }

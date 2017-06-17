@@ -2,6 +2,7 @@ package com.example.popina.projekat.logic.shape.figure.obstacle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Utility;
@@ -208,7 +209,8 @@ public class RectangleObstacle extends Obstacle
     @Override
     public void rotate(Coordinate c, float startAngle)
     {
-        this.angle = Utility.calculateAngle(center, c) - startAngle;
+        this.angle = Utility.convertRadianAngleTo2PiRange(Utility.calculateAngle(center, c) - startAngle);
+        Log.d("Angle", Float.toString(this.angle));
     }
 
     private boolean doesBallHitLine(Coordinate beginSegment, Coordinate endSegment, CircleHole ball, CircleHole ballNew, boolean isXLine)
