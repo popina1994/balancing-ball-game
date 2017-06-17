@@ -86,4 +86,8 @@ public abstract class CircleHole extends Figure
         return super.toString() + " " + Float.toString(radius) + " ";
     }
 
+    @Override
+    public void rotate()
+    {
+    }
 }

@@ -199,6 +199,12 @@ public class RectangleObstacle extends Obstacle
         return false;
     }
 
+    @Override
+    public void rotate()
+    {
+
+    }
+
     private boolean doesBallHitLine(Coordinate beginSegment, Coordinate endSegment, CircleHole ball, CircleHole ballNew, boolean isXLine)
     {
         return doesSegmentIntersectsCircle(beginSegment, endSegment, ballNew.getCenter(), ball.getRadius(), isXLine);

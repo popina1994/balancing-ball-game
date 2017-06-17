@@ -15,6 +15,7 @@ public class CreatePolygonModel extends CommonModel
     public static final int MODE_MOVE = 0;
     public static final int MODE_RESIZE = 1;
     public static final int MODE_DELETE = 2;
+    public static final int MODE_ROTATE = 3;
 
     public static final int CREATE_START_HOLE = 0;
     public static final int CREATE_FINISH_HOLE = 1;

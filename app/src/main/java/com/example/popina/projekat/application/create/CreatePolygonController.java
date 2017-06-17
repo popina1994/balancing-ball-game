@@ -31,9 +31,8 @@ public class CreatePolygonController
     public void actionDownExecute(Coordinate c)
     {
 
-        // Only for MOVE and RESIZE remember figure.
-        //
-        if ((model.getCurMode() == CreatePolygonModel.MODE_MOVE) || (model.getCurMode() == CreatePolygonModel.MODE_RESIZE))
+        if ((model.getCurMode() == CreatePolygonModel.MODE_MOVE) || (model.getCurMode() == CreatePolygonModel.MODE_RESIZE)
+            || (model.getCurMode() == CreatePolygonModel.MODE_ROTATE))
         {
             LinkedList<Figure> listFigures = model.getListFigures();
             for (Figure figure : listFigures)
@@ -67,6 +66,7 @@ public class CreatePolygonController
                 break;
             case CreatePolygonModel.MODE_MOVE:
             case CreatePolygonModel.MODE_RESIZE:
+            case CreatePolygonModel.MODE_ROTATE:
                 model.setSelectedFigure(null);
                 break;
             default:
@@ -100,6 +100,14 @@ public class CreatePolygonController
                 }
             }
             break;
+            case CreatePolygonModel.MODE_ROTATE:
+            {
+                Figure figure = model.getSelectedFigure();
+                if (null != figure)
+                {
+                    figure.rotate();
+                }
+            }
             default:
                 return;
         }
@@ -137,8 +145,6 @@ public class CreatePolygonController
         view.invalidateSurfaceView();
 
     }
-    // Question to think about.
-    //
 
     // Dilaog pops up and asks user to enter name of polygon or if invalid number of start and finish wholes, Toast which warns user to return.
     //
@@ -184,8 +190,6 @@ public class CreatePolygonController
             toast.show();
         } else
         {
-            // Dialog to save
-            // TODO: generate rectangles.
             SaveDialog dialog = new SaveDialog(createPolygonActivity, model);
             dialog.show();
         }

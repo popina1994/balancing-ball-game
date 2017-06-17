@@ -17,10 +17,6 @@ public class CreatePolygonActivity extends CommonActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        // Prevent Title.
-        //
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.activity_create_polygon);
 
         model = new CreatePolygonModel();
@@ -43,6 +39,9 @@ public class CreatePolygonActivity extends CommonActivity
                 break;
             case R.id.radioButtonMove:
                 curMode = CreatePolygonModel.MODE_MOVE;
+                break;
+            case R.id.radioButtonRotate:
+                curMode = CreatePolygonModel.MODE_ROTATE;
                 break;
             default:
                 return;

@@ -109,4 +109,10 @@ public class CircleObstacle extends Obstacle
     {
         return super.toString() + " " + Float.toString(radius) + " ";
     }
+
+    @Override
+    public void rotate()
+    {
+
+    }
 }

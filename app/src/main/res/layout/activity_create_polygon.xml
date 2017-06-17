@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onModeSelected"
-                android:text="@string/pomeri_elemente"/>
+                android:text="Pomeri"/>
 
             <RadioButton
                 android:id="@+id/radioButtonResize"
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onModeSelected"
-                android:text="@string/promeni_velicinu"/>
+                android:text="Povecaj"/>
 
             <RadioButton
                 android:id="@+id/radioButtonDelete"
@@ -51,7 +51,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onModeSelected"
-                android:text="@string/brisi_elemente"/>
+                android:text="Brisi"/>
+            <RadioButton
+                android:id="@+id/radioButtonRotate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onModeSelected"
+                android:text="Rotiraj"/>
         </RadioGroup>
 
         <Button

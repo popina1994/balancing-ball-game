@@ -106,4 +106,6 @@ public abstract class Figure
     public abstract boolean isGameOver();
 
     public abstract boolean isWon();
+
+    public abstract void rotate();
 }
