@@ -96,16 +96,7 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         model.getShapeDraw().drawOnCanvas(model.getListFigures(), canvas);
     }
 
-    private void initWalls()
-    {
-        ShapeBorderFactory shapeBorderFactory = (ShapeBorderFactory) model.getShapeFactory();
-        LinkedList<RectangleObstacle> listWalls = shapeBorderFactory.createBorders();
 
-        for (RectangleObstacle it : listWalls)
-        {
-            model.getListFigures().addLast(it);
-        }
-    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -117,11 +108,8 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
 
         UtilScaleNormal utilScaleNormal = new UtilScaleNormal(width, height);
 
-
-
         ShapeFactory shapeFactory = new ShapeBorderFactory(utilScaleNormal);
         model.setShapeFactory(shapeFactory);
-        initWalls();
 
         ShapeDraw shapeDraw = new ShapeDraw(getContext(), width, height);
         shapeDraw.setCommonModel(model);

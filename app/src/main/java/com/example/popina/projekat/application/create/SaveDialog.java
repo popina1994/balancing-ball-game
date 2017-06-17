@@ -2,6 +2,7 @@ package com.example.popina.projekat.application.create;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.popina.projekat.R;
+import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
+import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 
@@ -37,6 +40,20 @@ public class SaveDialog extends Dialog {
         initDialog();
     }
 
+    private LinkedList<Figure> initWalls()
+    {
+        ShapeBorderFactory shapeBorderFactory = (ShapeBorderFactory) model.getShapeFactory();
+        LinkedList<Figure> listWalls = new LinkedList<>();
+        LinkedList<RectangleObstacle> listWallsRect = shapeBorderFactory.createBorders();
+
+        for (RectangleObstacle itRect : listWallsRect)
+        {
+            listWalls.addLast(itRect);
+        }
+
+        return listWalls;
+    }
+
     private void initDialog()
     {
         setContentView(R.layout.dialog_save_polygon);
@@ -59,10 +76,19 @@ public class SaveDialog extends Dialog {
                     LinkedList<Figure> listFigure = model.getListFigures();
                     listFigure = model.getShapeFactory().scaleReverseFigure(listFigure);
 
+                    LinkedList<Figure> listWalls = initWalls();
+                    listWalls = model.getShapeFactory().scaleReverseFigure(listWalls);
+
                     for (Figure it : listFigure)
                     {
                         stringBuilder.append(it.toString() + "\n");
                     }
+
+                    for (Figure it : listWalls)
+                    {
+                        stringBuilder.append(it.toString() + "\n");
+                    }
+
                     outputStream.write(stringBuilder.toString().getBytes());
 
                     ScoreDatabase database = new ScoreDatabase(activity.getApplicationContext());

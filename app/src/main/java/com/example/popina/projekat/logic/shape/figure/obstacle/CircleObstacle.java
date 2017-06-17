@@ -44,7 +44,7 @@ public class CircleObstacle extends Obstacle
     @Override
     public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate3D speed)
     {
-        return null;
+        return new Coordinate(0, 0);
     }
 
     @Override
