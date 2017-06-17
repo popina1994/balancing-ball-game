@@ -6,28 +6,34 @@ import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
  * Created by popina on 08.03.2017..
  */
 
-public abstract class UtilScale {
+public abstract class UtilScale
+{
     public float screenWidth;
     public float screenHeight;
 
-    public UtilScale(float screenWidth, float screenHeight) {
+    public UtilScale(float screenWidth, float screenHeight)
+    {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
     }
 
-    public float getScreenWidth() {
+    public float getScreenWidth()
+    {
         return screenWidth;
     }
 
-    public void setScreenWidth(float screenWidth) {
+    public void setScreenWidth(float screenWidth)
+    {
         this.screenWidth = screenWidth;
     }
 
-    public float getScreenHeight() {
+    public float getScreenHeight()
+    {
         return screenHeight;
     }
 
-    public void setScreenHeight(float screenHeight) {
+    public void setScreenHeight(float screenHeight)
+    {
         this.screenHeight = screenHeight;
     }
 

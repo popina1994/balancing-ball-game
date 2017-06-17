@@ -20,7 +20,7 @@ public class ShapeConst
     public static final String TYPE_OBSTACLE_CIRCLE = "OBSTACLE_CIRCLE";
 
     public static final String FIGURE_TYPE = "FIGURE_TYPE";
-    public static final String FIGURE_COLOR= "FIGURE_COLOR";
+    public static final String FIGURE_COLOR = "FIGURE_COLOR";
     public static final String FIGURE_CENTER = "FIGURE_CENTER";
     // Default position for created circle rectangle.
     //

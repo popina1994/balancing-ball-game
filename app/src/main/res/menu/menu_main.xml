@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Kreiraj novi poligon"
-        android:id="@+id/menuItemCreatePoligon" />
-    <item android:title="Rezultati"
-        android:id="@+id/menuItemStatistics" />
-    <item android:title="Podesavanja"
-        android:id="@+id/menuItemSettings" />
+    <item
+        android:id="@+id/menuItemCreatePoligon"
+        android:title="Kreiraj novi poligon"/>
+    <item
+        android:id="@+id/menuItemStatistics"
+        android:title="Rezultati"/>
+    <item
+        android:id="@+id/menuItemSettings"
+        android:title="Podesavanja"/>
 </menu>

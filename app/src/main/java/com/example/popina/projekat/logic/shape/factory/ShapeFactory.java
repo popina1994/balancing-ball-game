@@ -3,10 +3,10 @@ package com.example.popina.projekat.logic.shape.factory;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
-import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
-import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.figure.hole.WrongHole;
+import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
+import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 import java.util.LinkedList;
@@ -15,23 +15,27 @@ import java.util.LinkedList;
  * Created by popina on 08.03.2017..
  */
 
-public class ShapeFactory {
+public class ShapeFactory
+{
 
     private UtilScale utilScale;
 
-    public ShapeFactory(UtilScale utilScale) {
+    public ShapeFactory(UtilScale utilScale)
+    {
         this.utilScale = utilScale;
     }
 
-    public UtilScale getUtilScale() {
+    public UtilScale getUtilScale()
+    {
         return utilScale;
     }
 
-    public void setUtilScale(UtilScale utilScale) {
+    public void setUtilScale(UtilScale utilScale)
+    {
         this.utilScale = utilScale;
     }
 
-    public  StartHole createStartHole()
+    public StartHole createStartHole()
     {
         final StartHole DEFAULT_START = new StartHole(ShapeConst.DEFAULT_START_X, ShapeConst.DEFAULT_START_Y, ShapeConst.DEFAULT_RADIUS);
         StartHole startHole = DEFAULT_START.scale(utilScale);
@@ -82,24 +86,24 @@ public class ShapeFactory {
 
     public LinkedList<Figure> scaleFigure(LinkedList<Figure> listFigures)
     {
-        LinkedList <Figure> list = new LinkedList<>();
+        LinkedList<Figure> list = new LinkedList<>();
 
         for (Figure f : listFigures)
         {
             list.addLast(f.scale(utilScale));
         }
-        return  list;
+        return list;
     }
 
     public LinkedList<Figure> scaleReverseFigure(LinkedList<Figure> listFigures)
     {
-        LinkedList <Figure> list = new LinkedList<>();
+        LinkedList<Figure> list = new LinkedList<>();
 
         for (Figure f : listFigures)
         {
             list.addLast(f.scaleReverse(utilScale));
         }
-        return  list;
+        return list;
     }
 
 

@@ -5,52 +5,55 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 
-import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
-import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
-
-import java.util.LinkedList;
 
 /**
  * Created by popina on 04.03.2017..
  */
 
-public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
+public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener
+{
 
     private CreatePolygonModel model;
     private CreatePolygonController controller;
     private SurfaceThread surfaceThread = null;
 
-    public CreatePolygonView(Context context) {
+    public CreatePolygonView(Context context)
+    {
         super(context);
         init();
     }
 
-    public CreatePolygonView(Context context, AttributeSet attrs) {
+    public CreatePolygonView(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
         init();
     }
 
 
-    public CreatePolygonView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CreatePolygonView(Context context, AttributeSet attrs, int defStyleAttr)
+    {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public CreatePolygonView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CreatePolygonView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
 
-    private void init() {
+    private void init()
+    {
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
     }
@@ -61,45 +64,14 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         surfaceThread.interrupt();
     }
 
-    public class SurfaceThread extends Thread {
-        private boolean running = true;
-
-        @Override
-        public void run() {
-            SurfaceHolder surfaceHolder = CreatePolygonView.this.getHolder();
-            while (running)
-            {
-                try {
-                    while (!interrupted()) {
-                        sleep(100000000);
-                    }
-                }catch (InterruptedException e)
-                {
-
-                }
-                if (running) {
-                    Log.d("Sufrace view", "Drawing");
-                    Canvas canvas = surfaceHolder.lockCanvas();
-                    try {
-                        CreatePolygonView.this.renderSurfaceView(canvas);
-                    } finally {
-                        surfaceHolder.unlockCanvasAndPost(canvas);
-                    }
-                }
-
-
-            }
-        }
-    }
-
-    private void renderSurfaceView(Canvas canvas) {
+    private void renderSurfaceView(Canvas canvas)
+    {
         model.getShapeDraw().drawOnCanvas(model.getListFigures(), canvas);
     }
 
-
-
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
+    public void surfaceCreated(SurfaceHolder holder)
+    {
         Log.d("Surface View", "Created surface");
 
         Canvas canvas = holder.lockCanvas();
@@ -124,36 +96,44 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+    {
 
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        surfaceThread.running  = false;
+    public void surfaceDestroyed(SurfaceHolder holder)
+    {
+        surfaceThread.running = false;
         surfaceThread.interrupt();
-        try {
+        try
+        {
             surfaceThread.join();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
         Log.d("Surface View", "Uspesno unisten surface View");
     }
 
-    public void setModel(CreatePolygonModel model) {
+    public void setModel(CreatePolygonModel model)
+    {
         this.model = model;
     }
 
-    public void setController(CreatePolygonController controller) {
+    public void setController(CreatePolygonController controller)
+    {
         this.controller = controller;
     }
 
     // Prevent multitouch
     //
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouch(View v, MotionEvent event)
+    {
 
-        float x =   event.getX();
+        float x = event.getX();
         float y = event.getY();
 
         Coordinate c = new Coordinate(x, y);
@@ -180,5 +160,45 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         }
 
         return true;
+    }
+
+    public class SurfaceThread extends Thread
+    {
+        private boolean running = true;
+
+        @Override
+        public void run()
+        {
+            SurfaceHolder surfaceHolder = CreatePolygonView.this.getHolder();
+            while (running)
+            {
+                try
+                {
+                    while (!interrupted())
+                    {
+                        sleep(100000000);
+                    }
+                }
+                catch (InterruptedException e)
+                {
+
+                }
+                if (running)
+                {
+                    Log.d("Sufrace view", "Drawing");
+                    Canvas canvas = surfaceHolder.lockCanvas();
+                    try
+                    {
+                        CreatePolygonView.this.renderSurfaceView(canvas);
+                    }
+                    finally
+                    {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    }
+                }
+
+
+            }
+        }
     }
 }

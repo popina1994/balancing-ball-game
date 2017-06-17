@@ -1,7 +1,7 @@
 package com.example.popina.projekat.logic.shape.factory;
 
-import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
+import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 import java.util.LinkedList;
@@ -10,8 +10,10 @@ import java.util.LinkedList;
  * Created by popina on 14.06.2017..
  */
 
-public class ShapeBorderFactory extends ShapeFactory {
-    public ShapeBorderFactory(UtilScale utilScale) {
+public class ShapeBorderFactory extends ShapeFactory
+{
+    public ShapeBorderFactory(UtilScale utilScale)
+    {
         super(utilScale);
     }
 
@@ -33,7 +35,7 @@ public class ShapeBorderFactory extends ShapeFactory {
         listBorders.addLast(rectangleObstacleBottomWall);
         listBorders.addLast(rectangleObstacleTopWall);
 
-        return  listBorders;
+        return listBorders;
     }
 
 

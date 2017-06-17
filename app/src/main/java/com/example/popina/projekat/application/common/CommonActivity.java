@@ -2,20 +2,22 @@ package com.example.popina.projekat.application.common;
 
 import android.app.Activity;
 import android.os.Bundle;
-//import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
+
+//import android.support.annotation.Nullable;
 
 /**
  * Created by popina on 10.03.2017..
  */
 
-public class CommonActivity extends Activity {
+public class CommonActivity extends Activity
+{
 
     private boolean isMainMenu;
 
-    public CommonActivity(boolean isMainMenu) {
+    public CommonActivity(boolean isMainMenu)
+    {
         this.isMainMenu = isMainMenu;
     }
 
@@ -25,7 +27,8 @@ public class CommonActivity extends Activity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         int uiOptions;
         super.onCreate(savedInstanceState);
         if (!isMainMenu)
@@ -37,8 +40,8 @@ public class CommonActivity extends Activity {
         {
             uiOptions = CommonModel.UI_OPTIONS_NON_MAIN;
 
-        }
-        else {
+        } else
+        {
             uiOptions = CommonModel.UI_OPTIONS_MAIN;
         }
 
@@ -48,26 +51,28 @@ public class CommonActivity extends Activity {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
+    public void onWindowFocusChanged(boolean hasFocus)
+    {
         super.onWindowFocusChanged(hasFocus);
 
         View decorView = getWindow().getDecorView();
-        if (hasFocus) {
+        if (hasFocus)
+        {
             int uiOptions;
             if (!isMainMenu)
             {
                 uiOptions = CommonModel.UI_OPTIONS_NON_MAIN;
 
-            }
-            else {
+            } else
+            {
                 uiOptions = CommonModel.UI_OPTIONS_MAIN;
             }
 
 
-            decorView.setSystemUiVisibility(uiOptions);}
+            decorView.setSystemUiVisibility(uiOptions);
+        }
 
     }
-
 
 
 }

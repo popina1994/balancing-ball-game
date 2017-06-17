@@ -1,119 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_create_polygon"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".application.create.CreatePolygonActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_create_polygon"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".application.create.CreatePolygonActivity">
 
 
     <com.example.popina.projekat.application.create.CreatePolygonView
+        android:id="@+id/surfaceViewCreatePolygon"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/surfaceViewCreatePolygon"
-        android:layout_weight="0.9" />
+        android:layout_weight="0.9"/>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.05"
+        android:orientation="horizontal"
         >
+
         <RadioGroup
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:checkedButton="@+id/radioButtonMove"
             android:layout_weight="0.75"
+            android:checkedButton="@+id/radioButtonMove"
+            android:orientation="horizontal"
             >
 
             <RadioButton
-                android:text="@string/pomeri_elemente"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
                 android:id="@+id/radioButtonMove"
-                android:layout_weight="1"
-                android:onClick="onModeSelected"/>
-
-            <RadioButton
-                android:text="@string/promeni_velicinu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onModeSelected"
+                android:text="@string/pomeri_elemente"/>
+
+            <RadioButton
                 android:id="@+id/radioButtonResize"
-                android:layout_weight="1"
-                android:onClick="onModeSelected"/>
-
-            <RadioButton
-                android:text="@string/brisi_elemente"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/radioButtonDelete"
                 android:layout_weight="1"
-                android:onClick="onModeSelected"/>
+                android:onClick="onModeSelected"
+                android:text="@string/promeni_velicinu"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonDelete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onModeSelected"
+                android:text="@string/brisi_elemente"/>
         </RadioGroup>
 
         <Button
-            android:text="@string/sacuvaj_poligon"
+            android:id="@+id/buttonSavePolygon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/buttonSavePolygon"
             android:layout_weight="0.25"
-            android:textSize="13sp"
-            android:onClick="onButtonClicked"/>
+            android:onClick="onButtonClicked"
+            android:text="@string/sacuvaj_poligon"
+            android:textSize="13sp"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.05">
+        android:layout_weight="0.05"
+        android:orientation="horizontal">
 
         <Button
-            android:text="POCETAK"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:id="@+id/buttonStartHole"
-            android:textSize="13sp"
-            android:onClick="onButtonClicked"/>
-
-        <Button
-            android:text="KRAJ"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onButtonClicked"
+            android:text="POCETAK"
+            android:textSize="13sp"/>
+
+        <Button
             android:id="@+id/buttonFinishHole"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="13sp"
-            android:onClick="onButtonClicked"/>
+            android:onClick="onButtonClicked"
+            android:text="KRAJ"
+            android:textSize="13sp"/>
 
 
         <Button
-            android:text="ZID"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:id="@+id/buttonObstacleRectangle"
-            android:layout_weight="1"
-            android:textSize="13sp"
-            android:onClick="onButtonClicked"/>
-        <Button
-            android:text="STUB"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/buttonObstacleCircle"
             android:layout_weight="1"
-            android:textSize="13sp"
-            android:onClick="onButtonClicked"/>
+            android:onClick="onButtonClicked"
+            android:text="ZID"
+            android:textSize="13sp"/>
 
         <Button
-            android:text="@string/ambis"
+            android:id="@+id/buttonObstacleCircle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/buttonWrongHole"
             android:layout_weight="1"
-            android:textSize="13sp"
-            android:onClick="onButtonClicked"/>
+            android:onClick="onButtonClicked"
+            android:text="STUB"
+            android:textSize="13sp"/>
+
+        <Button
+            android:id="@+id/buttonWrongHole"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onButtonClicked"
+            android:text="@string/ambis"
+            android:textSize="13sp"/>
     </LinearLayout>
 
 </LinearLayout>

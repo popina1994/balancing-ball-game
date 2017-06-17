@@ -19,11 +19,9 @@ import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.figure.obstacle.Obstacle;
-import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 
 import java.util.LinkedList;
 
-import static com.example.popina.projekat.logic.game.utility.Utility.doesSegmentIntersectsCircle;
 import static com.example.popina.projekat.logic.game.utility.Utility.isDimBetweenDims;
 import static com.example.popina.projekat.logic.game.utility.Utility.opositeSign;
 
@@ -31,12 +29,14 @@ import static com.example.popina.projekat.logic.game.utility.Utility.opositeSign
  * Created by popina on 09.03.2017..
  */
 
-public class GameController {
+public class GameController
+{
     GameActivity gameActivity;
     GameModel model;
     GameView view;
 
-    public GameController(GameActivity gameActivity, GameModel model, GameView view) {
+    public GameController(GameActivity gameActivity, GameModel model, GameView view)
+    {
         this.gameActivity = gameActivity;
         this.model = model;
         this.view = view;
@@ -48,18 +48,21 @@ public class GameController {
         //
     }
 
-    private void initActivity() {
+    private void initActivity()
+    {
         Coeficient coeficient = new Coeficient(gameActivity);
         model.setCoeficient(coeficient);
-        SensorManager sensorManager = (SensorManager)gameActivity.getSystemService(Context.SENSOR_SERVICE);
+        SensorManager sensorManager = (SensorManager) gameActivity.getSystemService(Context.SENSOR_SERVICE);
         model.setSensorManager(sensorManager);
     }
 
-    public void destructor() {
+    public void destructor()
+    {
         model.getSoundPool().release();
     }
 
-    public void resume() {
+    public void resume()
+    {
         SensorManager sensorManager = model.getSensorManager();
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
@@ -73,13 +76,15 @@ public class GameController {
 
     }
 
-    public void pause() {
+    public void pause()
+    {
         model.getSensorManager().unregisterListener(gameActivity);
         model.getListTimes().getLast().setEnd(System.currentTimeMillis());
         model.setPaused(true);
     }
 
-    private void loadSounds() {
+    private void loadSounds()
+    {
         int sounds[] = new int[GameModel.SOUND_MAX];
         model.setSoundsId(sounds);
 
@@ -93,14 +98,15 @@ public class GameController {
     private void playSound(int idSound)
     {
         model.getSoundPool().play(model.getSoundsId()[idSound],
-                                    GameModel.SOUND_LEFT_VOLUME,
-                                    GameModel.SOUND_RIGHT_VOLUME,
-                                    GameModel.SOUND_PRIORITY_STREAM,
-                                    GameModel.SOUND_NO_LOOP,
-                                    GameModel.SOUND_RATE_PLAYBACK);
+                GameModel.SOUND_LEFT_VOLUME,
+                GameModel.SOUND_RIGHT_VOLUME,
+                GameModel.SOUND_PRIORITY_STREAM,
+                GameModel.SOUND_NO_LOOP,
+                GameModel.SOUND_RATE_PLAYBACK);
     }
 
-    private void initGameSound() {
+    private void initGameSound()
+    {
         AudioAttributes attributes = new AudioAttributes.Builder().
                 setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -116,9 +122,12 @@ public class GameController {
 
 
     // Time is ns
-    public void onNewValues(float[] newAcc, long time) {
-        if (!model.isGameOver()) {
-            if (model.getLastTime() != Long.MAX_VALUE) {
+    public void onNewValues(float[] newAcc, long time)
+    {
+        if (!model.isGameOver())
+        {
+            if (model.getLastTime() != Long.MAX_VALUE)
+            {
                 Coordinate3D filteredAcc = model.getFilter().filter(new Coordinate3D(newAcc[0], newAcc[1], newAcc[2]));
                 updatePosition(filteredAcc, time);
             }
@@ -127,13 +136,14 @@ public class GameController {
     }
 
 
-
-    private void updatePosition(Coordinate3D filteredAcc, long time) {
+    private void updatePosition(Coordinate3D filteredAcc, long time)
+    {
 
 
         // This is in case if surface view hasn't been initialized.
         //
-        if (model.isSufraceInitialized()) {
+        if (model.isSufraceInitialized())
+        {
 
             float deltaT = Utility.convertNsToS(time - model.getLastTime());
             CircleHole ball = model.getBall();
@@ -169,16 +179,15 @@ public class GameController {
                             playSound(GameModel.SOUND_ID_MISS);
                             Toast.makeText(gameActivity, "Izgubio si igru", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else
+                    } else
                     {
                         // In case of obstacle collision.
                         //
                         playSound(GameModel.SOUND_ID_COLLISION);
 
-                        Obstacle obstacle = (Obstacle)itFigure;
+                        Obstacle obstacle = (Obstacle) itFigure;
 
-                        Coordinate speedChangeFigure = obstacle.getSpeedChangeAfterCollision((StartHole)ball, newBallPos, model.getSpeed());
+                        Coordinate speedChangeFigure = obstacle.getSpeedChangeAfterCollision((StartHole) ball, newBallPos, model.getSpeed());
                         speedChangeFigure.mulScalar(2);
                         speedChange.addCoordinate(speedChangeFigure);
                     }
@@ -194,8 +203,7 @@ public class GameController {
             if (isDimBetweenDims(0, 0, speedChange.getX()))
             {
                 ball.getCenter().setX(newX);
-            }
-            else
+            } else
             {
                 xAxisChange = true;
             }
@@ -205,8 +213,7 @@ public class GameController {
             if (isDimBetweenDims(0, 0, speedChange.getY()))
             {
                 ball.getCenter().setY(newY);
-            }
-            else
+            } else
             {
                 yAxisChange = true;
             }
@@ -241,18 +248,20 @@ public class GameController {
 
     }
 
-    private long calcTime(LinkedList<Time> listTimes) {
+    private long calcTime(LinkedList<Time> listTimes)
+    {
         long timeAll = 0;
         for (Time time : listTimes)
         {
             timeAll += time.timeInt();
         }
-        return  timeAll;
+        return timeAll;
     }
 
     // A * X + B * Y = Z
     //
-    private Coordinate3D calculateLine(Coordinate point1, Coordinate point2) {
+    private Coordinate3D calculateLine(Coordinate point1, Coordinate point2)
+    {
         float A = point1.getY() - point2.getY();
         float B = point2.getX() - point1.getX();
         float C = point1.getX() * point2.getY() - point1.getY() * point2.getX();
@@ -261,7 +270,8 @@ public class GameController {
         return line;
     }
 
-    private Coordinate intersectionLines(Coordinate3D line1, Coordinate3D line2) {
+    private Coordinate intersectionLines(Coordinate3D line1, Coordinate3D line2)
+    {
         float A1 = line1.getX();
         float B1 = line1.getY();
         float C1 = line1.getZ();
@@ -275,13 +285,13 @@ public class GameController {
         //
         float det = -A1 * B2 + A2 * B1;
         if (Math.abs(det)
-                < Utility.FLOAT_ACCURACY) {
+                < Utility.FLOAT_ACCURACY)
+        {
             return null;
         }
 
         return new Coordinate((B2 * C1 - B1 * C2) / det, (A1 * C2 - A2 * C1) / det);
     }
-
 
 
     private float calculateX(Coordinate3D line, float y)
@@ -295,7 +305,7 @@ public class GameController {
         return (-C - B * y) / A;
     }
 
-    private  float calculateY(Coordinate3D line, float x)
+    private float calculateY(Coordinate3D line, float x)
     {
         float A = line.getX();
         float B = line.getY();
@@ -306,9 +316,10 @@ public class GameController {
         return (-C - A * x) / B;
     }
 
-    private void addFrictionToAcc(Coordinate3D filteredAcc,  Coordinate3D speed, float deltaT) {
+    private void addFrictionToAcc(Coordinate3D filteredAcc, Coordinate3D speed, float deltaT)
+    {
 
-        float frictionAccX =  -1 * opositeSign(speed.getX()) * model.getCoeficient().getMi() * filteredAcc.getZ();
+        float frictionAccX = -1 * opositeSign(speed.getX()) * model.getCoeficient().getMi() * filteredAcc.getZ();
         float frictionAccY = opositeSign(speed.getY()) * model.getCoeficient().getMi() * filteredAcc.getZ();
 
         float frictatedAccX = filteredAcc.getX() + frictionAccX;
@@ -320,12 +331,12 @@ public class GameController {
         float newSpeedX = updateSpeed(speed.getX(), frictatedAccX, deltaT, -1);
         float newSpeedY = updateSpeed(speed.getY(), frictatedAccY, deltaT, 1);
 
-        if ( (newSpeedX * speed.getX() <= 0) && frictionMakeAccX)
+        if ((newSpeedX * speed.getX() <= 0) && frictionMakeAccX)
         {
             newSpeedX = 0;
         }
 
-        if ( (newSpeedY * speed.getY() <= 0) && frictionMakeAccY)
+        if ((newSpeedY * speed.getY() <= 0) && frictionMakeAccY)
         {
             newSpeedY = 0;
         }
@@ -351,7 +362,7 @@ public class GameController {
     {
         if (accDir * frictionDir > 0)
             return false;
-        return  (Math.abs(frictionDir) -
+        return (Math.abs(frictionDir) -
                 Math.abs(accDir) > 0);
     }
 
@@ -361,11 +372,12 @@ public class GameController {
         acc.setY(scaleAcceleration(acc.getY()));
     }
 
-    private float scaleAcceleration(float accDir) {
-        return  model.getCoeficient().getScaleAcc() * accDir;
+    private float scaleAcceleration(float accDir)
+    {
+        return model.getCoeficient().getScaleAcc() * accDir;
     }
 
-    private  float possibleMove(float speedDir, float posDir, float time)
+    private float possibleMove(float speedDir, float posDir, float time)
     {
         return posDir + speedDir * time;
     }

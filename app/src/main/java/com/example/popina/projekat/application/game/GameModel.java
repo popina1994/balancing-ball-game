@@ -4,8 +4,8 @@ import android.hardware.SensorManager;
 import android.media.SoundPool;
 
 import com.example.popina.projekat.application.common.CommonModel;
-import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.coeficient.Coeficient;
+import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
@@ -16,17 +16,26 @@ import java.util.LinkedList;
  * Created by popina on 09.03.2017..
  */
 
-public class GameModel extends CommonModel {
+public class GameModel extends CommonModel
+{
 
     public static final int BIT_LEFT_COLISION = 0x1 << 0;
     public static final int BIT_RIGHT_COLISION = 0x1 << 1;
     public static final int BIT_TOP_COLISION = 0x1 << 2;
     public static final int BIT_BOTTOM_COLISION = 0x1 << 3;
-
+    public static final int MAX_STREAMS = 10;
+    public static final int SOUND_PRIORITY = 1;
+    public static final float SOUND_LEFT_VOLUME = 1;
+    public static final float SOUND_RIGHT_VOLUME = 1;
+    public static final int SOUND_PRIORITY_STREAM = 1;
+    public static final int SOUND_NO_LOOP = 0;
+    public static final float SOUND_RATE_PLAYBACK = 1;
+    public static final int SOUND_ID_COLLISION = 0;
+    public static final int SOUND_ID_MISS = 1;
+    public static final int SOUND_ID_SUCCESS = 2;
+    public static final int SOUND_MAX = 3;
+    public static final String POLYGON_NAME = "POLYGON_NAME";
     public static float ALPHA = 0.9f;
-
-    public  static final int MAX_STREAMS = 10;
-
     private LinkedList<Figure> listFigures = new LinkedList<>();
     private String fileName;
     private CircleHole ball;
@@ -41,153 +50,168 @@ public class GameModel extends CommonModel {
     private Coeficient coeficient;
     private boolean gameOver = false;
     private boolean paused = false;
-
     private SoundPool soundPool;
     private int soundsId[];
-
     private LinkedList<Time> listTimes = new LinkedList<>();
-
-    public static final int SOUND_PRIORITY = 1;
-    public static final float SOUND_LEFT_VOLUME = 1;
-    public static final float SOUND_RIGHT_VOLUME = 1;
-    public static final int SOUND_PRIORITY_STREAM = 1;
-    public static final int SOUND_NO_LOOP = 0;
-    public static final float SOUND_RATE_PLAYBACK = 1;
-
-    public static final int SOUND_ID_COLLISION = 0;
-    public static final int SOUND_ID_MISS = 1;
-    public static final int SOUND_ID_SUCCESS = 2;
-    public static final int SOUND_MAX = 3;
-
     private SensorManager sensorManager;
 
-    public static final String POLYGON_NAME = "POLYGON_NAME";
-
-    public LinkedList<Figure> getListFigures() {
+    public LinkedList<Figure> getListFigures()
+    {
         return listFigures;
     }
 
-    public void setListFigures(LinkedList<Figure> listFigures) {
+    public void setListFigures(LinkedList<Figure> listFigures)
+    {
         this.listFigures = listFigures;
     }
 
-    public String getFileName() {
+    public String getFileName()
+    {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
+    public void setFileName(String fileName)
+    {
         this.fileName = fileName;
     }
 
-    public CircleHole getBall() {
+    public CircleHole getBall()
+    {
         return ball;
     }
 
-    public void setBall(CircleHole ball) {
+    public void setBall(CircleHole ball)
+    {
         this.ball = ball;
     }
 
-    public Filter getFilter() {
+    public Filter getFilter()
+    {
         return filter;
     }
 
-    public void setFilter(Filter filter) {
+    public void setFilter(Filter filter)
+    {
         this.filter = filter;
     }
 
-    public long getLastTime() {
+    public long getLastTime()
+    {
         return lastTime;
     }
 
-    public void setLastTime(long lastTime) {
+    public void setLastTime(long lastTime)
+    {
         this.lastTime = lastTime;
     }
 
-    public Coordinate3D getSpeed() {
+    public Coordinate3D getSpeed()
+    {
         return speed;
     }
 
-    public void setSpeed(Coordinate3D speed) {
+    public void setSpeed(Coordinate3D speed)
+    {
         this.speed = speed;
     }
 
-    public int getHeight() {
+    public int getHeight()
+    {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(int height)
+    {
         this.height = height;
     }
 
-    public int getWidth() {
+    public int getWidth()
+    {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(int width)
+    {
         this.width = width;
     }
 
-    public boolean isSufraceInitialized() {
+    public boolean isSufraceInitialized()
+    {
         return sufraceInitialized;
     }
 
-    public void setSufraceInitialized(boolean sufraceInitialized) {
+    public void setSufraceInitialized(boolean sufraceInitialized)
+    {
         this.sufraceInitialized = sufraceInitialized;
     }
 
-    public Coeficient getCoeficient() {
+    public Coeficient getCoeficient()
+    {
         return coeficient;
     }
 
-    public void setCoeficient(Coeficient coeficient) {
+    public void setCoeficient(Coeficient coeficient)
+    {
         this.coeficient = coeficient;
     }
 
-    public boolean isGameOver() {
+    public boolean isGameOver()
+    {
         return gameOver;
     }
 
-    public void setGameOver(boolean gameOver) {
+    public void setGameOver(boolean gameOver)
+    {
         this.gameOver = gameOver;
     }
 
-    public boolean isPaused() {
+    public boolean isPaused()
+    {
         return paused;
     }
 
-    public void setPaused(boolean paused) {
+    public void setPaused(boolean paused)
+    {
         this.paused = paused;
     }
 
-    public SoundPool getSoundPool() {
+    public SoundPool getSoundPool()
+    {
         return soundPool;
     }
 
-    public void setSoundPool(SoundPool soundPool) {
+    public void setSoundPool(SoundPool soundPool)
+    {
         this.soundPool = soundPool;
     }
 
-    public int[] getSoundsId() {
+    public int[] getSoundsId()
+    {
         return soundsId;
     }
 
-    public void setSoundsId(int[] soundsId) {
+    public void setSoundsId(int[] soundsId)
+    {
         this.soundsId = soundsId;
     }
 
-    public SensorManager getSensorManager() {
+    public SensorManager getSensorManager()
+    {
         return sensorManager;
     }
 
-    public void setSensorManager(SensorManager sensorManager) {
+    public void setSensorManager(SensorManager sensorManager)
+    {
         this.sensorManager = sensorManager;
     }
 
-    public LinkedList<Time> getListTimes() {
+    public LinkedList<Time> getListTimes()
+    {
         return listTimes;
     }
 
-    public void setListTimes(LinkedList<Time> listTimes) {
+    public void setListTimes(LinkedList<Time> listTimes)
+    {
         this.listTimes = listTimes;
     }
 

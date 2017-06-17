@@ -3,7 +3,6 @@ package com.example.popina.projekat.application.statistics;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,14 +16,14 @@ import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 import com.example.popina.projekat.logic.statistics.database.table.LevelTable;
 import com.example.popina.projekat.logic.statistics.database.table.UserScoreTable;
 
-import java.util.logging.Level;
-
-public class StatisticsActivity extends CommonActivity {
+public class StatisticsActivity extends CommonActivity
+{
     private StatisticsModel model;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
@@ -42,19 +41,23 @@ public class StatisticsActivity extends CommonActivity {
         loadSpinner();
 
 
-        Button buttonResetCurrent = (Button)findViewById(R.id.buttonResetCurrentHighScore);
-        buttonResetCurrent.setOnClickListener(new View.OnClickListener() {
+        Button buttonResetCurrent = (Button) findViewById(R.id.buttonResetCurrentHighScore);
+        buttonResetCurrent.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 model.getDatabase().deleteHighScore(model.getSelectedLevel());
                 loadListView(model.getSelectedLevel());
             }
         });
 
-        Button buttonResetAll = (Button)findViewById(R.id.buttonResetAllHighScore);
-        buttonResetAll.setOnClickListener(new View.OnClickListener() {
+        Button buttonResetAll = (Button) findViewById(R.id.buttonResetAllHighScore);
+        buttonResetAll.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 model.getDatabase().deleteHighScore(null);
                 loadListView(model.getSelectedLevel());
             }
@@ -66,7 +69,7 @@ public class StatisticsActivity extends CommonActivity {
     private void loadListView(String selectedLevel)
     {
 
-        final String columnList[] = new String[] {UserScoreTable.TABLE_COLUMN_USER_NAME,
+        final String columnList[] = new String[]{UserScoreTable.TABLE_COLUMN_USER_NAME,
                 UserScoreTable.TABLE_COLUMN_TIME,
                 UserScoreTable._ID};
         final int viewIdList[] = new int[]{R.id.textViewStatisticsUser,
@@ -80,15 +83,14 @@ public class StatisticsActivity extends CommonActivity {
         if (selectedLevel == null)
         {
             model.setSelectedLevel(model.getDatabase().getFirstLevel());
-        }
-        else
+        } else
         {
             model.setSelectedLevel(selectedLevel);
         }
 
-        ListView listView = (ListView)findViewById(R.id.listViewHighScore);
+        ListView listView = (ListView) findViewById(R.id.listViewHighScore);
 
-        SimpleCursorAdapter simpleCursorAdapter =  new SimpleCursorAdapter(this,
+        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(this,
                 R.layout.list_item_highscore_polygon,
                 cursor,
                 columnList,
@@ -104,16 +106,17 @@ public class StatisticsActivity extends CommonActivity {
 
     private void loadSpinner()
     {
-        Spinner spinner = (Spinner)findViewById(R.id.spinnerPolygon);
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerPolygon);
         Cursor cursor = model.getDatabase().queryLevels();
         final String[] columnFromLevel = new String[]{LevelTable._ID,
-                                      LevelTable.TABLE_COLUMN_LEVEL_NAME};
-        final int[] idToSpinner = new int[]{ R.id.textViewStatisticsSpinnerId,
-                                            R.id.textViewStatisticsSpinnerLevelName
-                                        };
+                LevelTable.TABLE_COLUMN_LEVEL_NAME};
+        final int[] idToSpinner = new int[]{R.id.textViewStatisticsSpinnerId,
+                R.id.textViewStatisticsSpinnerLevelName
+        };
         cursor.moveToFirst();
         int idx = 0;
-        if (!cursor.isBeforeFirst()) {
+        if (!cursor.isBeforeFirst())
+        {
             while (!cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME)).equals(model.getSelectedLevel()))
             {
                 cursor.moveToNext();
@@ -129,16 +132,19 @@ public class StatisticsActivity extends CommonActivity {
             );
 
             spinner.setAdapter(adapter);
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                {
                     Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                     String selectedLevelName = cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME));
                     loadListView(selectedLevelName);
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+                public void onNothingSelected(AdapterView<?> parent)
+                {
 
                 }
             });

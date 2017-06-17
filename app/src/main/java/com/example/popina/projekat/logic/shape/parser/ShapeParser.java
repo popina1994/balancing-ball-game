@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 
-import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
+import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
@@ -24,23 +24,27 @@ import java.util.LinkedList;
  * Created by popina on 08.03.2017..
  */
 
-public class ShapeParser {
+public class ShapeParser
+{
     private ShapeFactory shapeFactory;
     private ShapeDraw shapeDraw;
-    private  Context context;
+    private Context context;
 
 
-    public ShapeParser(ShapeFactory shapeFactory, ShapeDraw shapeDraw, Context context) {
+    public ShapeParser(ShapeFactory shapeFactory, ShapeDraw shapeDraw, Context context)
+    {
         this.shapeFactory = shapeFactory;
         this.shapeDraw = shapeDraw;
         this.context = context;
     }
 
-    public ShapeFactory getShapeFactory() {
+    public ShapeFactory getShapeFactory()
+    {
         return shapeFactory;
     }
 
-    public void setShapeFactory(ShapeFactory shapeFactory) {
+    public void setShapeFactory(ShapeFactory shapeFactory)
+    {
         this.shapeFactory = shapeFactory;
     }
 
@@ -88,43 +92,51 @@ public class ShapeParser {
 
         figure.setColor(Integer.parseInt(tokens[ShapeConst.FIGURE_COLOR_IDX]));
 
-        return  figure;
+        return figure;
     }
 
     public LinkedList<Figure> parseFile(String fileName)
     {
         FileInputStream file = null;
         LinkedList<Figure> listFigures = new LinkedList<>();
-        try {
+        try
+        {
             file = context.openFileInput(fileName);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file));
             String curLine = null;
-            while ( (curLine = bufferedReader.readLine()) != null)
+            while ((curLine = bufferedReader.readLine()) != null)
             {
                 listFigures.addLast(shapeFactory.scaleFigure(parseLine(curLine)));
             }
 
-        } catch (java.io.IOException e) {
+        }
+        catch (java.io.IOException e)
+        {
             e.printStackTrace();
         }
-        finally {
+        finally
+        {
             if (file != null)
             {
-                try {
+                try
+                {
                     file.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     Log.d("Shape Parser", " Neko te prokleo");
                 }
             }
         }
 
-        return  listFigures;
+        return listFigures;
     }
 
-    public void drawImageFromFile(Canvas canvas, String fileName) {
+    public void drawImageFromFile(Canvas canvas, String fileName)
+    {
         LinkedList<Figure> list = parseFile(fileName);
 
-        shapeDraw.drawOnCanvas(list,canvas);
+        shapeDraw.drawOnCanvas(list, canvas);
     }
 
 

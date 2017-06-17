@@ -6,21 +6,23 @@ import com.example.popina.projekat.logic.game.utility.Coordinate3D;
  * Created by popina on 12.03.2017..
  */
 
-public class Filter {
+public class Filter
+{
 
     private Coordinate3D oldVals;
     private float alpha;
 
-    public Filter(float alpha) {
+    public Filter(float alpha)
+    {
         this.alpha = alpha;
     }
 
-    public Coordinate3D filter(Coordinate3D newVals) {
+    public Coordinate3D filter(Coordinate3D newVals)
+    {
         if (null == oldVals)
         {
             oldVals = newVals;
-        }
-        else
+        } else
         {
             oldVals.setX(filterVal(oldVals.getX(), newVals.getX()));
             oldVals.setY(filterVal(oldVals.getY(), newVals.getY()));

@@ -1,7 +1,7 @@
 package com.example.popina.projekat.logic.shape.figure.hole;
 
-import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 /**
@@ -10,33 +10,39 @@ import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 public class FinishHole extends CircleHole
 {
-    public FinishHole(float x, float y, float radius) {
+    public FinishHole(float x, float y, float radius)
+    {
         super(x, y, radius, ShapeConst.TYPE_FINISH_HOLE, ShapeConst.COLOR_HOLE_FINISH);
     }
 
-    public FinishHole(Coordinate c, float radius) {
+    public FinishHole(Coordinate c, float radius)
+    {
         super(c, radius, ShapeConst.TYPE_FINISH_HOLE, ShapeConst.COLOR_HOLE_FINISH);
     }
 
     @Override
-    public FinishHole scale(UtilScale utilScale) {
+    public FinishHole scale(UtilScale utilScale)
+    {
         FinishHole finishHole = new FinishHole(utilScale.scaleCoordinate(getCenter()), utilScale.scaleWidth(getRadius()));
         return finishHole;
     }
 
     @Override
-    public FinishHole scaleReverse(UtilScale utilScale) {
+    public FinishHole scaleReverse(UtilScale utilScale)
+    {
         FinishHole finishHole = new FinishHole(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getRadius()));
-        return  finishHole;
+        return finishHole;
     }
 
     @Override
-    public boolean isWon() {
+    public boolean isWon()
+    {
         return true;
     }
 
     @Override
-    public boolean isGameOver() {
+    public boolean isGameOver()
+    {
         return true;
     }
 }

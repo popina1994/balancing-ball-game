@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="ACCELERATION_COEFICIENT_DEFAULT" format="float" type="dimen">
-    64.3
+        64.3
     </item>
     <item name="MI_COEFICIENT_DEFAULT" format="float" type="dimen">
         5.02

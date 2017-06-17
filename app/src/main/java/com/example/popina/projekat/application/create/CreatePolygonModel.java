@@ -9,7 +9,8 @@ import java.util.LinkedList;
  * Created by popina on 04.03.2017..
  */
 
-public class CreatePolygonModel extends CommonModel {
+public class CreatePolygonModel extends CommonModel
+{
 
     public static final int MODE_MOVE = 0;
     public static final int MODE_RESIZE = 1;
@@ -30,28 +31,34 @@ public class CreatePolygonModel extends CommonModel {
 
     private Figure selectedFigure = null;
 
-    public Figure getSelectedFigure() {
+    public Figure getSelectedFigure()
+    {
         return selectedFigure;
     }
 
-    public void setSelectedFigure(Figure selectedFigure) {
+    public void setSelectedFigure(Figure selectedFigure)
+    {
         this.selectedFigure = selectedFigure;
     }
 
 
-    public int getCurMode() {
+    public int getCurMode()
+    {
         return curMode;
     }
 
-    public void setCurMode(int curMode) {
+    public void setCurMode(int curMode)
+    {
         this.curMode = curMode;
     }
 
-    public LinkedList<Figure> getListFigures() {
+    public LinkedList<Figure> getListFigures()
+    {
         return listFigures;
     }
 
-    public void setListFigures(LinkedList<Figure> listFigures) {
+    public void setListFigures(LinkedList<Figure> listFigures)
+    {
         this.listFigures = listFigures;
     }
 

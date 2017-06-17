@@ -11,23 +11,26 @@ import com.example.popina.projekat.R;
  * Created by popina on 12.03.2017..
  */
 
-public class Coeficient {
+public class Coeficient
+{
     private float scaleAccDefault;
     private float miDefault;
-    private  float reverseSlowDownDefault;
+    private float reverseSlowDownDefault;
     private float scaleAcc;
     private float mi;
-    private  float reverseSlowDown;
+    private float reverseSlowDown;
     private Activity activity;
 
-    public Coeficient(Activity activity) {
+    public Coeficient(Activity activity)
+    {
         this.activity = activity;
 
         readDefaultValues();
         readValues();
     }
 
-    private void readValues() {
+    private void readValues()
+    {
         SharedPreferences sharedPreferences = activity.getApplicationContext().getSharedPreferences(CoeficientModel.PREFERENCE_SETTINGS, Context.MODE_PRIVATE);
         scaleAcc = sharedPreferences.getFloat(CoeficientModel.ACCELERATION_COEFICIENT, scaleAccDefault);
         reverseSlowDown = sharedPreferences.getFloat(CoeficientModel.REVERSE_DLOW_DOWN_DEFAULT, reverseSlowDownDefault);
@@ -59,51 +62,63 @@ public class Coeficient {
         editor.commit();
     }
 
-    public float getScaleAcc() {
+    public float getScaleAcc()
+    {
         return scaleAcc;
     }
 
-    public void setScaleAcc(float scaleAcc) {
+    public void setScaleAcc(float scaleAcc)
+    {
         this.scaleAcc = scaleAcc;
     }
 
-    public float getMi() {
+    public float getMi()
+    {
         return mi;
     }
 
-    public void setMi(float mi) {
+    public void setMi(float mi)
+    {
         this.mi = mi;
     }
 
-    public float getReverseSlowDown() {
+    public float getReverseSlowDown()
+    {
         return reverseSlowDown;
     }
 
-    public void setReverseSlowDown(float reverseSlowDown) {
+    public void setReverseSlowDown(float reverseSlowDown)
+    {
         this.reverseSlowDown = reverseSlowDown;
     }
 
-    public float getScaleAccDefault() {
+    public float getScaleAccDefault()
+    {
         return scaleAccDefault;
     }
 
-    public void setScaleAccDefault(float scaleAccDefault) {
+    public void setScaleAccDefault(float scaleAccDefault)
+    {
         this.scaleAccDefault = scaleAccDefault;
     }
 
-    public float getMiDefault() {
+    public float getMiDefault()
+    {
         return miDefault;
     }
 
-    public void setMiDefault(float miDefault) {
+    public void setMiDefault(float miDefault)
+    {
         this.miDefault = miDefault;
     }
 
-    public float getReverseSlowDownDefault() {
+    public float getReverseSlowDownDefault()
+    {
         return reverseSlowDownDefault;
     }
 
-    public void setReverseSlowDownDefault(float reverseSlowDownDefault) {
+    public void setReverseSlowDownDefault(float reverseSlowDownDefault)
+    {
         this.reverseSlowDownDefault = reverseSlowDownDefault;
     }
 }

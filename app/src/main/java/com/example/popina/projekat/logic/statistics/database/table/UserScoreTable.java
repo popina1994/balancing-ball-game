@@ -6,7 +6,8 @@ import android.provider.BaseColumns;
  * Created by popina on 05.04.2017..
  */
 
-public class UserScoreTable implements BaseColumns{
+public class UserScoreTable implements BaseColumns
+{
 
     public static final String TABLE_NAME = "user_score";
     public static final String TABLE_COLUMN_USER_NAME = "user_name";
@@ -18,9 +19,9 @@ public class UserScoreTable implements BaseColumns{
             + TABLE_COLUMN_USER_NAME + " TEXT,"
             + TABLE_COLUMN_TIME + " INTEGER, "
             + TABLE_COLUMN_FK_LEVEL + " INTEGER REFERENCES "
-            + LevelTable.TABLE_NAME +"(" + _ID + ")"
+            + LevelTable.TABLE_NAME + "(" + _ID + ")"
             + " ON UPDATE CASCADE ON DELETE CASCADE);";
 
 
-    public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME +";";
+    public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 }

@@ -1,10 +1,6 @@
 package com.example.popina.projekat.application.settings;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -12,7 +8,8 @@ import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.common.CommonActivity;
 import com.example.popina.projekat.logic.game.coeficient.Coeficient;
 
-public class SettingsActivity extends CommonActivity {
+public class SettingsActivity extends CommonActivity
+{
 
     // Some kind of Shared model.
     // Better design can be done.
@@ -24,8 +21,10 @@ public class SettingsActivity extends CommonActivity {
     SeekBarUpgrade seekBarUpgradeAcc;
     SeekBarUpgrade seekBarUpgradeMi;
     SeekBarUpgrade seekBarUpgradeReverseSlowDown;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -43,7 +42,7 @@ public class SettingsActivity extends CommonActivity {
                 SettingsModel.MAX_SEEK_BAR_ACC,
                 coeficient.getScaleAccDefault(),
                 coeficient.getScaleAcc()
-                );
+        );
         seekBarUpgradeMi = new SeekBarUpgrade(
                 this,
                 R.id.seekBarCoeficientMi,
@@ -53,7 +52,7 @@ public class SettingsActivity extends CommonActivity {
                 SettingsModel.MAX_SEEK_BAR_MI,
                 coeficient.getMiDefault(),
                 coeficient.getMi()
-            );
+        );
         seekBarUpgradeReverseSlowDown = new SeekBarUpgrade(
                 this,
                 R.id.seekBarCoeficientReverseSlowDown,
@@ -63,11 +62,12 @@ public class SettingsActivity extends CommonActivity {
                 SettingsModel.MAX_SEEK_BAR_REVERSE_SLOW_DOWN,
                 coeficient.getReverseSlowDownDefault(),
                 coeficient.getReverseSlowDown()
-            );
+        );
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         super.onBackPressed();
         coeficient.setScaleAcc(seekBarUpgradeAcc.getVal());
         coeficient.setMi(seekBarUpgradeMi.getVal());

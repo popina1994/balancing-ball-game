@@ -20,10 +20,10 @@ import android.widget.Toast;
 
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.common.CommonActivity;
-import com.example.popina.projekat.application.game.GameActivity;
-import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.application.create.CreatePolygonActivity;
+import com.example.popina.projekat.application.game.GameActivity;
 import com.example.popina.projekat.application.settings.SettingsActivity;
+import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.parser.ShapeParser;
@@ -36,16 +36,20 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends CommonActivity {
+public class MainActivity extends CommonActivity
+{
 
 
-    private  MainModel model;
-    public MainActivity() {
+    private MainModel model;
+
+    public MainActivity()
+    {
         super(true);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -54,7 +58,8 @@ public class MainActivity extends CommonActivity {
         loadList();
     }
 
-    private void initList(){
+    private void initList()
+    {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -65,26 +70,29 @@ public class MainActivity extends CommonActivity {
         ShapeFactory shapeFactory = new ShapeFactory(utilScaleNormal);
         model.setShapeFactory(shapeFactory);
 
-        ShapeDraw shapeDraw = new ShapeDraw(this, (int)width, (int)height);
+        ShapeDraw shapeDraw = new ShapeDraw(this, (int) width, (int) height);
         model.setShapeDraw(shapeDraw);
         ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, this);
         model.setShapeParser(shapeParser);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         Intent intent = null;
 
-        Class <?> classStart = null;
+        Class<?> classStart = null;
         int requestCode = 0;
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.menuItemCreatePoligon:
                 classStart = CreatePolygonActivity.class;
                 requestCode = MainModel.REQUEST_CODE_CREATE_POLYGON;
@@ -100,7 +108,7 @@ public class MainActivity extends CommonActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-        intent  = new Intent(this, classStart);
+        intent = new Intent(this, classStart);
         startActivityForResult(intent, requestCode);
         return true;
     }
@@ -108,17 +116,19 @@ public class MainActivity extends CommonActivity {
 
     private void loadList()
     {
-        ListView listView = (ListView)findViewById(R.id.listViewPolygons);
+        ListView listView = (ListView) findViewById(R.id.listViewPolygons);
 
-        String [] from = new String[]{MainModel.POLYGON_NAME, MainModel.POLYGON_IMAGE};
-        int [] to = new int[] {R.id.textViewListItemPolygonName, R.id.imageViewPolygon};
+        String[] from = new String[]{MainModel.POLYGON_NAME, MainModel.POLYGON_IMAGE};
+        int[] to = new int[]{R.id.textViewListItemPolygonName, R.id.imageViewPolygon};
 
-        String[] createdPolygons = getFilesDir().list(new FilenameFilter() {
+        String[] createdPolygons = getFilesDir().list(new FilenameFilter()
+        {
             @Override
-            public boolean accept(File dir, String name) {
+            public boolean accept(File dir, String name)
+            {
                 if (!name.equals(MainModel.INSTANT_RUN))
                 {
-                    return  true;
+                    return true;
                 }
                 return false;
             }
@@ -142,20 +152,23 @@ public class MainActivity extends CommonActivity {
                 to
         );
 
-        adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+        adapter.setViewBinder(new SimpleAdapter.ViewBinder()
+        {
             @Override
-            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                if (view.getId() == R.id.imageViewPolygon) {
-                    ImageView imageViewPolygon = (ImageView)view;
+            public boolean setViewValue(View view, Object data, String textRepresentation)
+            {
+                if (view.getId() == R.id.imageViewPolygon)
+                {
+                    ImageView imageViewPolygon = (ImageView) view;
 
                     Bitmap bmp = Bitmap.createBitmap(
-                            (int)model.getShapeFactory().getUtilScale().getScreenWidth(),
-                            (int)model.getShapeFactory().getUtilScale().getScreenHeight(),
+                            (int) model.getShapeFactory().getUtilScale().getScreenWidth(),
+                            (int) model.getShapeFactory().getUtilScale().getScreenHeight(),
                             Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(bmp);
-                    model.getShapeParser().drawImageFromFile(canvas, (String)data);
+                    model.getShapeParser().drawImageFromFile(canvas, (String) data);
                     imageViewPolygon.setImageBitmap(bmp);
-                    return  true;
+                    return true;
                 }
 
                 return false;
@@ -164,15 +177,17 @@ public class MainActivity extends CommonActivity {
 
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView=(TextView)view.findViewById(R.id.textViewListItemPolygonName);
-                String fileName=textView.getText().toString();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                TextView textView = (TextView) view.findViewById(R.id.textViewListItemPolygonName);
+                String fileName = textView.getText().toString();
 
-                Intent intent= new Intent(MainActivity.this,GameActivity.class);
-                intent.putExtra(MainModel.POLYGON_NAME,fileName);
-                startActivityForResult(intent,MainModel.REQUEST_CODE_NEW_GAME);
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                intent.putExtra(MainModel.POLYGON_NAME, fileName);
+                startActivityForResult(intent, MainModel.REQUEST_CODE_NEW_GAME);
             }
         });
 
@@ -180,16 +195,18 @@ public class MainActivity extends CommonActivity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Izaberite opciju");
         menu.add(0, v.getId(), 0, MainModel.SELECT_DELETE);
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item)
+    {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int id = (int)menuInfo.id;
+        int id = (int) menuInfo.id;
         if (item.getTitle().equals(MainModel.SELECT_DELETE))
         {
             File file = new File(getFilesDir(), model.getCreatedPolygons()[id]);
@@ -198,18 +215,19 @@ public class MainActivity extends CommonActivity {
             initDatabase();
             model.getScoreDatabase().deleteLevel(model.getCreatedPolygons()[id]);
 
-            Toast.makeText(getApplicationContext(),"Izbrisan poilgon" +
+            Toast.makeText(getApplicationContext(), "Izbrisan poilgon" +
                     model.getCreatedPolygons()[id], Toast.LENGTH_LONG).show();
 
             initList();
             loadList();
             return false;
         }
-        return  true;
+        return true;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         switch (requestCode)
         {
             case MainModel.REQUEST_CODE_CREATE_POLYGON:

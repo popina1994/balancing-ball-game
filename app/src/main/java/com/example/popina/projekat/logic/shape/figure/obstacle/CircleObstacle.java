@@ -19,6 +19,7 @@ import com.example.popina.projekat.logic.shape.scale.UtilScale;
 public class CircleObstacle extends Obstacle
 {
     private float radius;
+
     public CircleObstacle(float x, float y, float radius)
     {
         super(new Coordinate(x, y), ShapeConst.TYPE_OBSTACLE_CIRCLE, ShapeConst.COLOR_OBSTACLE);
@@ -58,7 +59,7 @@ public class CircleObstacle extends Obstacle
     @Override
     public boolean isCoordinateInside(Coordinate c)
     {
-        if ( (c.getX() - center.getX()) * (c.getX() - center.getX()) +  (c.getY() - center.getY()) * (c.getY() - center.getY()) <= radius  * radius)
+        if ((c.getX() - center.getX()) * (c.getX() - center.getX()) + (c.getY() - center.getY()) * (c.getY() - center.getY()) <= radius * radius)
         {
             return true;
         }
@@ -68,7 +69,7 @@ public class CircleObstacle extends Obstacle
     @Override
     public void resize(Coordinate c)
     {
-        radius = (float)Math.sqrt( (c.getX() - center.getX()) * (c.getX() - center.getX()) +  (c.getY() - center.getY()) * (c.getY() - center.getY()));
+        radius = (float) Math.sqrt((c.getX() - center.getX()) * (c.getX() - center.getX()) + (c.getY() - center.getY()) * (c.getY() - center.getY()));
     }
 
     @Override

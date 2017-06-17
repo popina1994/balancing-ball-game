@@ -7,8 +7,10 @@ import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
  * Singleton pattern would be best, but this solves small issues.
  */
 
-public class UtilScaleNormal extends UtilScale{
-    public UtilScaleNormal(float screenWidth, float screenHeight) {
+public class UtilScaleNormal extends UtilScale
+{
+    public UtilScaleNormal(float screenWidth, float screenHeight)
+    {
         super(screenWidth, screenHeight);
     }
 
@@ -30,9 +32,15 @@ public class UtilScaleNormal extends UtilScale{
         return new Coordinate(scaledX, sclaedY);
     }
 
-    public float scaleReverseWidth(float width) { return width / screenWidth; }
+    public float scaleReverseWidth(float width)
+    {
+        return width / screenWidth;
+    }
 
-    public float scaleReverseHeight(float height) { return height / screenHeight; }
+    public float scaleReverseHeight(float height)
+    {
+        return height / screenHeight;
+    }
 
     public Coordinate scaleReverseCoordinate(Coordinate coordinate)
     {

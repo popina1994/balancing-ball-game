@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textViewPlayerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unesite vase ime"
-        android:textSize="18sp"
         android:layout_alignBaseline="@+id/editTextPlayerName"
         android:layout_alignBottom="@+id/editTextPlayerName"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="22dp" />
+        android:layout_marginStart="22dp"
+        android:text="Unesite vase ime"
+        android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/editTextPlayerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textViewPlayerTime"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        android:textSize="18sp"
-        android:layout_below="@+id/textViewPlayerTime"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp" />
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/textViewPlayerTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tekst"
-        android:textSize="18sp"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/editTextPlayerName" />
+        android:layout_toStartOf="@+id/editTextPlayerName"
+        android:text="Tekst"
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/buttonSaveResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/editTextPlayerName"
         android:layout_marginTop="34dp"
-        android:text="Sacuvaj rezultat"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:text="Sacuvaj rezultat"/>
 
 </RelativeLayout>

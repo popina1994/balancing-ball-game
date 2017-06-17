@@ -9,10 +9,10 @@ import android.view.SurfaceView;
 
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
-import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
+import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
 
 import java.util.LinkedList;
@@ -21,28 +21,33 @@ import java.util.LinkedList;
  * Created by popina on 09.03.2017..
  */
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback{
+public class GameView extends SurfaceView implements SurfaceHolder.Callback
+{
 
     private GameModel model;
     private GameController controller;
     private SurfaceThread surfaceThread = null;
 
-    public GameView(Context context) {
+    public GameView(Context context)
+    {
         super(context);
         init();
     }
 
-    public GameView(Context context, AttributeSet attrs) {
+    public GameView(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
         init();
     }
 
-    public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GameView(Context context, AttributeSet attrs, int defStyleAttr)
+    {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public GameView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public GameView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
@@ -63,41 +68,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     }
 
-    public class SurfaceThread extends Thread {
-        private boolean running = true;
-
-        @Override
-        public void run() {
-            SurfaceHolder surfaceHolder = GameView.this.getHolder();
-            while (running)
-            {
-                try {
-                    while (!interrupted()) {
-                        sleep(100000000);
-                    }
-                }catch (InterruptedException e)
-                {
-
-                }
-                if (running) {
-                    //Log.d("Sufrace view", "Drawing");
-                    Canvas canvas = surfaceHolder.lockCanvas();
-                    try {
-                        GameView.this.renderSurfaceView(canvas);
-                    } finally {
-                        surfaceHolder.unlockCanvasAndPost(canvas);
-                    }
-                }
-            }
-        }
-    }
-
-    private void renderSurfaceView(Canvas canvas) {
+    private void renderSurfaceView(Canvas canvas)
+    {
         model.getShapeDraw().drawOnCanvas(model.getBall(), canvas);
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
+    public void surfaceCreated(SurfaceHolder holder)
+    {
         Canvas canvas = holder.lockCanvas();
         int height = canvas.getHeight();
         int width = canvas.getWidth();
@@ -114,15 +92,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         //
         model.setShapeDraw(shapeDraw);
 
-        if ( (null == model.getBall()) ||(model.isPaused())) {
+        if ((null == model.getBall()) || (model.isPaused()))
+        {
             ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
             model.setShapeParser(shapeParser);
 
             LinkedList<Figure> listFigures = shapeParser.parseFile(model.getFileName());
-            for (Figure it : listFigures) {
+            for (Figure it : listFigures)
+            {
 
-                if (it instanceof StartHole) {
-                    if (null == model.getBall()) {
+                if (it instanceof StartHole)
+                {
+                    if (null == model.getBall())
+                    {
                         model.setBall((CircleHole) it);
                     }
                     listFigures.remove(it);
@@ -147,32 +129,78 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+    {
 
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
+    public void surfaceDestroyed(SurfaceHolder holder)
+    {
         model.setSufraceInitialized(false);
-        surfaceThread.running  = false;
+        surfaceThread.running = false;
         surfaceThread.interrupt();
-        try {
+        try
+        {
             surfaceThread.join();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
         Log.d("Surface View", "Uspesno unisten surface View");
     }
 
-    public void setController(GameController controller) {
+    public void setController(GameController controller)
+    {
         this.controller = controller;
     }
 
-    public GameModel getModel() {
+    public GameModel getModel()
+    {
         return model;
     }
 
-    public void setModel(GameModel model) {
+    public void setModel(GameModel model)
+    {
         this.model = model;
+    }
+
+    public class SurfaceThread extends Thread
+    {
+        private boolean running = true;
+
+        @Override
+        public void run()
+        {
+            SurfaceHolder surfaceHolder = GameView.this.getHolder();
+            while (running)
+            {
+                try
+                {
+                    while (!interrupted())
+                    {
+                        sleep(100000000);
+                    }
+                }
+                catch (InterruptedException e)
+                {
+
+                }
+                if (running)
+                {
+                    //Log.d("Sufrace view", "Drawing");
+                    Canvas canvas = surfaceHolder.lockCanvas();
+                    try
+                    {
+                        GameView.this.renderSurfaceView(canvas);
+                    }
+                    finally
+                    {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    }
+                }
+            }
+        }
     }
 }

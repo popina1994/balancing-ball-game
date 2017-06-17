@@ -4,38 +4,46 @@ package com.example.popina.projekat.logic.shape.coordinate;
  * Created by popina on 05.03.2017..
  */
 
-public class Coordinate implements Cloneable{
+public class Coordinate implements Cloneable
+{
     private float x;
     private float y;
 
-    public Coordinate(float x, float y) {
+    public Coordinate(float x, float y)
+    {
         this.x = x;
         this.y = y;
     }
 
-    public float getX() {
+    public float getX()
+    {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(float x)
+    {
         this.x = x;
     }
 
-    public float getY() {
+    public float getY()
+    {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(float y)
+    {
         this.y = y;
     }
 
     @Override
-    public Coordinate clone() {
+    public Coordinate clone()
+    {
         return new Coordinate(x, y);
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return Float.toString(x) + " " + Float.toString(y) + " ";
     }
 
@@ -43,7 +51,7 @@ public class Coordinate implements Cloneable{
     {
         x += coordinate.getX();
         y += coordinate.getY();
-        return  this;
+        return this;
     }
 
     public Coordinate mulScalar(float scalar)

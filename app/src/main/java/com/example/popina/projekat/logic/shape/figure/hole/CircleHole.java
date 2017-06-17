@@ -10,10 +10,12 @@ import com.example.popina.projekat.logic.shape.figure.Figure;
  * Created by popina on 05.03.2017..
  */
 
-public abstract  class CircleHole extends Figure {
+public abstract class CircleHole extends Figure
+{
     private float radius;
 
-    public CircleHole(float x, float y, float radius, String figureType, int color) {
+    public CircleHole(float x, float y, float radius, String figureType, int color)
+    {
         super(new Coordinate(x, y), figureType, color);
         this.radius = radius;
     }
@@ -25,7 +27,8 @@ public abstract  class CircleHole extends Figure {
     }
 
 
-    public CircleHole(float x, float y, float radius, String figureType) {
+    public CircleHole(float x, float y, float radius, String figureType)
+    {
         super(new Coordinate(x, y), figureType, 0);
         this.radius = radius;
     }
@@ -36,24 +39,28 @@ public abstract  class CircleHole extends Figure {
         this.radius = radius;
     }
 
-    public float getRadius() {
+    public float getRadius()
+    {
         return radius;
     }
 
-    public void setRadius(float radius) {
+    public void setRadius(float radius)
+    {
         this.radius = radius;
     }
 
     @Override
-    public void drawOnCanvas(Canvas canvas) {
+    public void drawOnCanvas(Canvas canvas)
+    {
         Paint p = new Paint();
         p.setColor(color);
         canvas.drawCircle(getCenter().getX(), getCenter().getY(), radius, p);
     }
 
     @Override
-    public boolean isCoordinateInside(Coordinate c) {
-        if ( (c.getX() - center.getX()) * (c.getX() - center.getX()) +  (c.getY() - center.getY()) * (c.getY() - center.getY()) <= radius  * radius)
+    public boolean isCoordinateInside(Coordinate c)
+    {
+        if ((c.getX() - center.getX()) * (c.getX() - center.getX()) + (c.getY() - center.getY()) * (c.getY() - center.getY()) <= radius * radius)
         {
             return true;
         }
@@ -61,18 +68,21 @@ public abstract  class CircleHole extends Figure {
     }
 
     @Override
-    public void resize(Coordinate c) {
-        radius = (float)Math.sqrt( (c.getX() - center.getX()) * (c.getX() - center.getX()) +  (c.getY() - center.getY()) * (c.getY() - center.getY()));
+    public void resize(Coordinate c)
+    {
+        radius = (float) Math.sqrt((c.getX() - center.getX()) * (c.getX() - center.getX()) + (c.getY() - center.getY()) * (c.getY() - center.getY()));
     }
 
     @Override
-    public boolean doesCollide(CircleHole ball) {
-        return  isCoordinateInside(ball.getCenter());
+    public boolean doesCollide(CircleHole ball)
+    {
+        return isCoordinateInside(ball.getCenter());
     }
 
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return super.toString() + " " + Float.toString(radius) + " ";
     }
 

@@ -17,9 +17,10 @@ import java.util.LinkedList;
  * Created by popina on 08.03.2017..
  */
 
-public class ShapeDraw {
+public class ShapeDraw
+{
     private Context context;
-    private  Bitmap background;
+    private Bitmap background;
     private CommonModel commonModel;
     private int height;
     private int width;
@@ -27,7 +28,8 @@ public class ShapeDraw {
     // I have chosen width/height constructor instead of canvas
     // So that background can be resized in canvas.
     //
-    public ShapeDraw(Context context, int width, int height) {
+    public ShapeDraw(Context context, int width, int height)
+    {
         this.context = context;
         this.width = width;
         this.height = height;
@@ -39,11 +41,13 @@ public class ShapeDraw {
         canvas.drawBitmap(bmpBack, 0, 0, null);
     }
 
-    public CommonModel getCommonModel() {
+    public CommonModel getCommonModel()
+    {
         return commonModel;
     }
 
-    public void setCommonModel(CommonModel commonModel) {
+    public void setCommonModel(CommonModel commonModel)
+    {
         this.commonModel = commonModel;
     }
 
@@ -51,25 +55,29 @@ public class ShapeDraw {
     {
         Canvas canvas = new Canvas(background);
         canvas.drawBitmap(background, 0, 0, null);
-        for (Figure it : listFigures) {
+        for (Figure it : listFigures)
+        {
             it.drawOnCanvas(canvas);
         }
     }
 
-    public  void drawOnCanvas(LinkedList<Figure> listFigures, Canvas canvas)
+    public void drawOnCanvas(LinkedList<Figure> listFigures, Canvas canvas)
     {
         canvas.drawBitmap(background, 0, 0, null);
 
-        if (commonModel != null) {
-            synchronized (commonModel) {
-                for (Figure it : listFigures) {
+        if (commonModel != null)
+        {
+            synchronized (commonModel)
+            {
+                for (Figure it : listFigures)
+                {
                     it.drawOnCanvas(canvas);
                 }
             }
-        }
-        else
+        } else
         {
-            for (Figure it : listFigures) {
+            for (Figure it : listFigures)
+            {
                 it.drawOnCanvas(canvas);
             }
         }
@@ -84,8 +92,7 @@ public class ShapeDraw {
             {
                 figure.drawOnCanvas(canvas);
             }
-        }
-        else
+        } else
         {
             figure.drawOnCanvas(canvas);
         }

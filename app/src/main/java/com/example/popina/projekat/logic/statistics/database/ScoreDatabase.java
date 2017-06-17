@@ -13,12 +13,18 @@ import com.example.popina.projekat.logic.statistics.database.table.UserScoreTabl
  * Created by popina on 05.04.2017..
  */
 
-public class ScoreDatabase {
-    public static final  int OK = 0x0;
+public class ScoreDatabase
+{
+    public static final int OK = 0x0;
     public static final int NO_LEVEL = 0x1;
     public static final int INSERT_ERROR = 0x2;
 
     ScoreDatabaseHelper databaseHelper;
+
+    public ScoreDatabase(Context context)
+    {
+        databaseHelper = new ScoreDatabaseHelper(context);
+    }
 
     public String getFirstLevel()
     {
@@ -26,7 +32,8 @@ public class ScoreDatabase {
         String levelName = null;
 
         Cursor cursor = null;
-        try {
+        try
+        {
             cursor = database.query(
                     LevelTable.TABLE_NAME,
                     new String[]{LevelTable._ID, LevelTable.TABLE_COLUMN_LEVEL_NAME},
@@ -43,7 +50,8 @@ public class ScoreDatabase {
         {
             e.printStackTrace();
         }
-        finally {
+        finally
+        {
             cursor.close();
         }
         return levelName;
@@ -58,15 +66,15 @@ public class ScoreDatabase {
 
         if (levelName != null)
         {
-            selectionArg = LevelTable.TABLE_COLUMN_LEVEL_NAME + "=\"" + levelName +"\"";
-        }
-        else
+            selectionArg = LevelTable.TABLE_COLUMN_LEVEL_NAME + "=\"" + levelName + "\"";
+        } else
         {
             selectionArg = "";
         }
 
         Cursor cursor = null;
-        try {
+        try
+        {
             cursor = database.query(
                     LevelTable.TABLE_NAME,
                     new String[]{LevelTable._ID, LevelTable.TABLE_COLUMN_LEVEL_NAME},
@@ -88,14 +96,11 @@ public class ScoreDatabase {
         {
             e.printStackTrace();
         }
-        finally {
+        finally
+        {
             cursor.close();
         }
         return id;
-    }
-
-    public ScoreDatabase(Context context) {
-        databaseHelper = new ScoreDatabaseHelper(context);
     }
 
     public int insertUser(String user, String levelName, long time)
@@ -111,7 +116,7 @@ public class ScoreDatabase {
 
         if (-1 == id)
         {
-            return  NO_LEVEL;
+            return NO_LEVEL;
         }
 
         values.put(UserScoreTable.TABLE_COLUMN_FK_LEVEL, id);
@@ -132,24 +137,25 @@ public class ScoreDatabase {
 
         if (-1 == database.insert(LevelTable.TABLE_NAME, null, values))
         {
-            return  INSERT_ERROR;
+            return INSERT_ERROR;
         }
 
         return OK;
     }
 
-    public  Cursor queryHighScore(String levelName)
+    public Cursor queryHighScore(String levelName)
     {
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
         int id = getIdLevelName(database, levelName);
 
         Cursor cursor = null;
-        try {
+        try
+        {
             cursor = database.query(
                     UserScoreTable.TABLE_NAME,
                     new String[]{UserScoreTable.TABLE_COLUMN_USER_NAME,
-                                 UserScoreTable.TABLE_COLUMN_TIME,
-                                 UserScoreTable._ID},
+                            UserScoreTable.TABLE_COLUMN_TIME,
+                            UserScoreTable._ID},
                     UserScoreTable.TABLE_COLUMN_FK_LEVEL + " = " + id,
                     null,
                     null,
@@ -166,11 +172,13 @@ public class ScoreDatabase {
 
     }
 
-    public Cursor queryLevels() {
+    public Cursor queryLevels()
+    {
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
         Cursor cursor = null;
-        try {
+        try
+        {
             cursor = database.query(
                     LevelTable.TABLE_NAME,
                     new String[]{LevelTable._ID, LevelTable.TABLE_COLUMN_LEVEL_NAME},
@@ -195,26 +203,26 @@ public class ScoreDatabase {
 
         if (null == level)
         {
-            selectionArg  = null;
-        }
-        else
+            selectionArg = null;
+        } else
         {
             int id = getIdLevelName(database, level);
-            selectionArg = UserScoreTable.TABLE_COLUMN_FK_LEVEL +"=" + id;
+            selectionArg = UserScoreTable.TABLE_COLUMN_FK_LEVEL + "=" + id;
         }
 
         // TODO : Add more checks
         //
         database.delete(UserScoreTable.TABLE_NAME,
-                        selectionArg,
-                        null);
+                selectionArg,
+                null);
         return OK;
     }
 
-    public int deleteLevel(String level) {
+    public int deleteLevel(String level)
+    {
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
         database.delete(LevelTable.TABLE_NAME,
-                LevelTable.TABLE_COLUMN_LEVEL_NAME  + "=" + "\"" + level + "\"",
+                LevelTable.TABLE_COLUMN_LEVEL_NAME + "=" + "\"" + level + "\"",
                 null);
         return OK;
     }

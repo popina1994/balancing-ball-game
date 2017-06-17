@@ -2,7 +2,6 @@ package com.example.popina.projekat.application.create;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +10,9 @@ import android.widget.EditText;
 
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
+import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
-import com.example.popina.projekat.logic.shape.figure.Figure;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +22,8 @@ import java.util.LinkedList;
  * Created by popina on 07.03.2017..
  */
 
-public class SaveDialog extends Dialog {
+public class SaveDialog extends Dialog
+{
     private CreatePolygonActivity activity;
     private CreatePolygonModel model;
 
@@ -35,7 +35,8 @@ public class SaveDialog extends Dialog {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         initDialog();
     }
@@ -60,18 +61,21 @@ public class SaveDialog extends Dialog {
 
         // In future add check if file exists (maybe).
         //
-        Button buttonSave = (Button)findViewById(R.id.buttonDialogSavePolygon);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
+        Button buttonSave = (Button) findViewById(R.id.buttonDialogSavePolygon);
+        buttonSave.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                EditText editTextFileName = (EditText)SaveDialog.this.findViewById(R.id.editTextNewNameOfPolygon);
+            public void onClick(View v)
+            {
+                EditText editTextFileName = (EditText) SaveDialog.this.findViewById(R.id.editTextNewNameOfPolygon);
                 String fileName = editTextFileName.getText().toString();
                 Log.d("Save dialog", fileName);
 
                 FileOutputStream outputStream = null;
 
-                try {
-                    outputStream =  activity.openFileOutput(fileName, Context.MODE_PRIVATE);
+                try
+                {
+                    outputStream = activity.openFileOutput(fileName, Context.MODE_PRIVATE);
                     StringBuilder stringBuilder = new StringBuilder();
                     LinkedList<Figure> listFigure = model.getListFigures();
                     listFigure = model.getShapeFactory().scaleReverseFigure(listFigure);
@@ -94,15 +98,21 @@ public class SaveDialog extends Dialog {
                     ScoreDatabase database = new ScoreDatabase(activity.getApplicationContext());
                     database.insertLevel(fileName);
 
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     e.printStackTrace();
                 }
-                finally {
+                finally
+                {
                     if (null != outputStream)
                     {
-                        try {
+                        try
+                        {
                             outputStream.close();
-                        } catch (IOException e) {
+                        }
+                        catch (IOException e)
+                        {
                             Log.d("Save dialog", "Neko te prokleo");
                             e.printStackTrace();
                         }
