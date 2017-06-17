@@ -63,5 +63,6 @@ public class ShapeConst
     public static int FIGURE_CIRCLE_RADIUS_IDX = 7;
     public static int FIGURE_RECT_WIDTH_IDX = 7;
     public static int FIGURE_RECT_HEIGHT_IDX = 8;
+    public static int FIGURE_RECT_ANGLE_IDX = 9;
 
 }

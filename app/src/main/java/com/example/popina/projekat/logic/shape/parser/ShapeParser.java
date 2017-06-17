@@ -81,7 +81,8 @@ public class ShapeParser
                         Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_X_IDX]),
                         Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_Y_IDX]),
                         Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_WIDTH_IDX]),
-                        Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_HEIGHT_IDX]));
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_HEIGHT_IDX]),
+                        Float.parseFloat(tokens[ShapeConst.FIGURE_RECT_ANGLE_IDX]));
                 break;
             case ShapeConst.TYPE_OBSTACLE_CIRCLE:
                 figure = new CircleObstacle(

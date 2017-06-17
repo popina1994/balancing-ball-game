@@ -22,21 +22,37 @@ public class RectangleObstacle extends Obstacle
 {
     private float height;
     private float width;
-    private float angle;
+    private float angle = 0.0f;
 
     public RectangleObstacle(float xCenter, float yCenter, float width, float height)
     {
         super(new Coordinate(xCenter, yCenter), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
         this.height = height;
         this.width = width;
-
     }
+
+    public RectangleObstacle(float xCenter, float yCenter, float width, float height, float angle)
+    {
+        super(new Coordinate(xCenter, yCenter), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
+        this.height = height;
+        this.width = width;
+        this.angle = angle;
+    }
+
 
     public RectangleObstacle(Coordinate c, float width, float height)
     {
         super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
         this.height = height;
         this.width = width;
+    }
+
+    public RectangleObstacle(Coordinate c, float width, float height, float angle)
+    {
+        super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
+        this.height = height;
+        this.width = width;
+        this.angle = angle;
     }
 
     public float getWidth()
@@ -115,8 +131,8 @@ public class RectangleObstacle extends Obstacle
     public boolean isCoordinateInside(Coordinate c)
     {
         Coordinate rotatedPoint = Utility.rotatePointAroundCenter(center, -angle, c);
-        if ((rotatedPoint .getX() >= getLeftX()) && (rotatedPoint .getX() <= getRightX())
-                && (rotatedPoint .getY() <= getBottomY()) && (rotatedPoint .getY() >= getTopY()))
+        if ((rotatedPoint.getX() >= getLeftX()) && (rotatedPoint.getX() <= getRightX())
+                && (rotatedPoint.getY() <= getBottomY()) && (rotatedPoint.getY() >= getTopY()))
         {
             return true;
         }
@@ -126,6 +142,8 @@ public class RectangleObstacle extends Obstacle
     @Override
     public void resize(Coordinate c)
     {
+        // TODO : if time is left update this.
+
         width = 2 * Math.abs(c.getX() - center.getX());
         height = 2 * Math.abs(c.getY() - center.getY());
     }
@@ -133,20 +151,26 @@ public class RectangleObstacle extends Obstacle
     @Override
     public String toString()
     {
-        return super.toString() + " " + width + " " + height + " ";
+        return super.toString() + " " + width + " " + height + " " + angle  + " ";
     }
 
     @Override
     public RectangleObstacle scale(UtilScale utilScale)
     {
-        RectangleObstacle rect = new RectangleObstacle(utilScale.scaleCoordinate(getCenter()), utilScale.scaleWidth(getWidth()), utilScale.scaleHeight(getHeight()));
+        RectangleObstacle rect = new RectangleObstacle( utilScale.scaleCoordinate(getCenter()),
+                                                        utilScale.scaleWidth(getWidth()),
+                                                        utilScale.scaleHeight(getHeight()),
+                                                        angle);
         return rect;
     }
 
     @Override
     public RectangleObstacle scaleReverse(UtilScale utilScale)
     {
-        RectangleObstacle rectPer = new RectangleObstacle(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getWidth()), utilScale.scaleReverseHeight(getHeight()));
+        RectangleObstacle rectPer = new RectangleObstacle(  utilScale.scaleReverseCoordinate(getCenter()),
+                                                            utilScale.scaleReverseWidth(getWidth()),
+                                                            utilScale.scaleReverseHeight(getHeight()),
+                                                            angle);
         return rectPer;
     }
 
