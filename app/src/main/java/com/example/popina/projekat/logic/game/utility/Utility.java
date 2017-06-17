@@ -96,7 +96,16 @@ public class Utility
         }
 
         return 0;
+    }
 
+    public static double degToRadian(float deg)
+    {
+        return deg * 2 * Math.PI / 360;
+    }
+
+    public static double radianToDeg(float rad)
+    {
+        return 360 * rad / (2 * Math.PI);
     }
 
 }

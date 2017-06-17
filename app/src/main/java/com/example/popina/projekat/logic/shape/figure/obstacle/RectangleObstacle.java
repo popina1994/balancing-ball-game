@@ -21,6 +21,7 @@ public class RectangleObstacle extends Obstacle
 {
     private float height;
     private float width;
+    private float angle;
 
     public RectangleObstacle(float xCenter, float yCenter, float width, float height)
     {
