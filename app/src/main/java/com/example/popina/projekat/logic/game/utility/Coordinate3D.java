@@ -1,5 +1,7 @@
 package com.example.popina.projekat.logic.game.utility;
 
+import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+
 /**
  * Created by popina on 12.03.2017..
  */
@@ -51,5 +53,10 @@ public class Coordinate3D implements Cloneable
     public Coordinate3D clone()
     {
         return new Coordinate3D(x, y, z);
+    }
+
+    public Coordinate generate2dCoordinate()
+    {
+        return new Coordinate(x, y);
     }
 }

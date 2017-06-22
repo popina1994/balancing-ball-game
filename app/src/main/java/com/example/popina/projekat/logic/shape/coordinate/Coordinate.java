@@ -60,4 +60,20 @@ public class Coordinate implements Cloneable
         y *= scalar;
         return this;
     }
+
+    public float scalarProduct(Coordinate coord)
+    {
+        return x * coord.x + y * coord.y;
+    }
+
+    public Coordinate subCoordinate(Coordinate coordinate)
+    {
+        return new Coordinate(x - coordinate.x, y - coordinate.y);
+    }
+
+    public float magnitudeSquared()
+    {
+        return x * x + y * y;
+    }
+
 }

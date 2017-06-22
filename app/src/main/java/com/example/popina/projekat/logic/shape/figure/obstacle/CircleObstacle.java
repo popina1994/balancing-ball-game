@@ -20,16 +20,16 @@ public class CircleObstacle extends Obstacle
 {
     private float radius;
 
-    public CircleObstacle(float x, float y, float radius)
-    {
-        super(new Coordinate(x, y), ShapeConst.TYPE_OBSTACLE_CIRCLE, ShapeConst.COLOR_OBSTACLE);
-        this.radius = radius;
-    }
 
     public CircleObstacle(Coordinate coordinate, float radius)
     {
         super(coordinate.clone(), ShapeConst.TYPE_OBSTACLE_CIRCLE, ShapeConst.COLOR_OBSTACLE);
         this.radius = radius;
+    }
+
+    public CircleObstacle(float x, float y, float radius)
+    {
+        this(new Coordinate(x, y), radius);
     }
 
     public float getRadius()
@@ -45,7 +45,15 @@ public class CircleObstacle extends Obstacle
     @Override
     public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate3D speed)
     {
-        return new Coordinate(0, 0);
+        // x1 - x2
+        Coordinate x1Subx2  = ballNew.getCenter().subCoordinate(getCenter());
+        // v1 - v2
+        Coordinate v1Subv2 = speed.generate2dCoordinate();
+        float scalarProduct = v1Subv2.scalarProduct(x1Subx2);
+        x1Subx2.mulScalar(2 * scalarProduct / x1Subx2.magnitudeSquared());
+        Coordinate neededspeed = speed.generate2dCoordinate().subCoordinate(x1Subx2);
+        return new Coordinate( (neededspeed.getX() - speed.getX())/2, (neededspeed.getY() - speed.getY())/2);
+
     }
 
     @Override
