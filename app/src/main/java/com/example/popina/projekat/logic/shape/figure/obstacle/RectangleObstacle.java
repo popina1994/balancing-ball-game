@@ -13,6 +13,7 @@ import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 import static com.example.popina.projekat.logic.game.utility.Utility.doesSegmentIntersectsCircle;
+import static com.example.popina.projekat.logic.game.utility.Utility.rotatePointAroundCenter;
 
 /**
  * Created by popina on 05.03.2017..
@@ -183,8 +184,25 @@ public class RectangleObstacle extends Obstacle
 
         // Translation.
         //
-        float newX = Math.abs(ball.getCenter().getX() - center.getX());
-        float newY = Math.abs(ball.getCenter().getY() - center.getY());
+        float newX = -1;
+        float newY = -1;
+
+        //if (!Utility.isDimBetweenDims(0f, 0f, angle))
+        //{
+            Coordinate rotatedPoint = Utility.rotatePointAroundCenter(getCenter(), -angle, ball.getCenter());;
+            newX = rotatedPoint.getX();
+            newY = rotatedPoint.getY();
+        //}
+        /*
+        else
+        {
+            newX = ball.getCenter().getX();
+            newY = ball.getCenter().getY();
+        }
+        */
+
+        newX = Math.abs(newX - center.getX());
+        newY = Math.abs(newY - center.getY());
 
         if ((newX <= widthHalf) && (newY <= heighHalf))
         {
@@ -237,9 +255,12 @@ public class RectangleObstacle extends Obstacle
         Log.d("Angle", Float.toString(this.angle));
     }
 
-    private boolean doesBallHitLine(Coordinate beginSegment, Coordinate endSegment, CircleHole ball, CircleHole ballNew, boolean isXLine)
+    // TODO : refactor, remove unecessary things.
+    //
+
+    private boolean doesBallHitLine(Coordinate beginSegment, Coordinate endSegment, Coordinate ballCenter, float radius, boolean isXLine)
     {
-        return doesSegmentIntersectsCircle(beginSegment, endSegment, ballNew.getCenter(), ball.getRadius(), isXLine);
+        return doesSegmentIntersectsCircle(beginSegment, endSegment, ballCenter, radius, isXLine);
     }
 
     @Override
@@ -247,19 +268,22 @@ public class RectangleObstacle extends Obstacle
     {
         Coordinate speedChange = new Coordinate(0, 0);
 
-        if ((doesBallHitLine(getBotomLeft(), getBottomRight(), ballOld, ballNew, true) && speed.getY() <= 0)
-                || (doesBallHitLine(getTopLeft(), getTopRight(), ballOld, ballNew, true) && speed.getY() >= 0))
+        Coordinate speedRot = rotatePointAroundCenter(-angle, new Coordinate(speed.getX(), speed.getY()));
+        Coordinate centerBallRot = rotatePointAroundCenter(getCenter(), -angle, ballNew.getCenter());
+
+        if ((doesBallHitLine(getBotomLeft(), getBottomRight(), centerBallRot, ballNew.getRadius(), true) && speedRot.getY() <= 0)
+                || (doesBallHitLine(getTopLeft(), getTopRight(), centerBallRot, ballNew.getRadius(), true) && speedRot.getY() >= 0))
         {
-            speedChange.setY(-speed.getY());
+            speedChange.setY(-speedRot.getY());
         }
 
-        if ((doesBallHitLine(getTopLeft(), getBotomLeft(), ballOld, ballNew, false) && speed.getX() >= 0)
-                || (doesBallHitLine(getTopRight(), getBottomRight(), ballOld, ballNew, false) && speed.getX() <= 0))
+        if ((doesBallHitLine(getTopLeft(), getBotomLeft(), centerBallRot, ballNew.getRadius(), false) && speedRot.getX() >= 0)
+                || (doesBallHitLine(getTopRight(), getBottomRight(), centerBallRot, ballNew.getRadius(), false) && speedRot.getX() <= 0))
         {
-            speedChange.setX(-speed.getX());
+            speedChange.setX(-speedRot.getX());
         }
 
-        return speedChange;
+        return rotatePointAroundCenter(angle, speedChange);
     }
 
     @Override

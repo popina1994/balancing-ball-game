@@ -127,13 +127,18 @@ public class Utility
         float pointTranY = point.getY()  - center.getY();
 
         double rotatedX = pointTranX * cosine - pointTranY * sinus;
-        double rotatedY = pointTranX * sinus - pointTranY* cosine;
+        double rotatedY = pointTranX * sinus + pointTranY* cosine;
 
         float rotatedTranBackX = (float)rotatedX + center.getX();
         float rotatedTranBackY = (float)rotatedY + center.getY();
 
         return new Coordinate(rotatedTranBackX, rotatedTranBackY);
+    }
 
+
+    public static Coordinate rotatePointAroundCenter(float angle, Coordinate point)
+    {
+        return rotatePointAroundCenter(new Coordinate(0, 0), angle, point);
     }
 
     public static float convertRadianAngleTo2PiRange(float angle)
