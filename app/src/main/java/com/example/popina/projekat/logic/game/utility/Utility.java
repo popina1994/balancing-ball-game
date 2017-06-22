@@ -118,16 +118,13 @@ public class Utility
         return  angle;
     }
 
-    public static Coordinate rotatePointAroundCenter(Coordinate center, float angle, Coordinate point)
+    public static  Coordinate rotatePointAroundCenter(Coordinate center, double sine, double cosine, Coordinate point)
     {
-        double cosine = Math.cos(angle);
-        double sinus = Math.sin(angle);
-
         float pointTranX = point.getX() - center.getX();
         float pointTranY = point.getY()  - center.getY();
 
-        double rotatedX = pointTranX * cosine - pointTranY * sinus;
-        double rotatedY = pointTranX * sinus + pointTranY* cosine;
+        double rotatedX = pointTranX * cosine - pointTranY * sine;
+        double rotatedY = pointTranX * sine + pointTranY* cosine;
 
         float rotatedTranBackX = (float)rotatedX + center.getX();
         float rotatedTranBackY = (float)rotatedY + center.getY();
@@ -136,9 +133,22 @@ public class Utility
     }
 
 
+    public static Coordinate rotatePointAroundCenter(Coordinate center, float angle, Coordinate point)
+    {
+        double cosine = Math.cos(angle);
+        double sine = Math.sin(angle);
+
+        return rotatePointAroundCenter(center, sine, cosine, point);
+    }
+
     public static Coordinate rotatePointAroundCenter(float angle, Coordinate point)
     {
         return rotatePointAroundCenter(new Coordinate(0, 0), angle, point);
+    }
+
+    public static Coordinate rotatePointAroundCenter(double sine, double cosine, Coordinate point)
+    {
+        return rotatePointAroundCenter(new Coordinate(0, 0), sine, cosine, point);
     }
 
     public static float convertRadianAngleTo2PiRange(float angle)

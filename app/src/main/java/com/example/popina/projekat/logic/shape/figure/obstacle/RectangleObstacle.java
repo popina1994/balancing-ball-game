@@ -24,20 +24,26 @@ public class RectangleObstacle extends Obstacle
     private float height;
     private float width;
     private float angle = 0.0f;
+    private double sine;
+    private double cosine;
+    private double cosineOfOpositeAngle;
+    private double sineOfOpositeAngle;
 
-    public RectangleObstacle(float xCenter, float yCenter, float width, float height)
+    public RectangleObstacle(Coordinate c, float width, float height, float angle)
     {
-        super(new Coordinate(xCenter, yCenter), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
+        super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
         this.height = height;
         this.width = width;
+        this.angle = angle;
+        sine = Math.sin(angle);
+        cosine = Math.cos(angle);
+        cosineOfOpositeAngle = Math.cos(-angle);
+        sineOfOpositeAngle = Math.sin(-angle);
     }
 
     public RectangleObstacle(float xCenter, float yCenter, float width, float height, float angle)
     {
-        super(new Coordinate(xCenter, yCenter), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
-        this.height = height;
-        this.width = width;
-        this.angle = angle;
+        this(new Coordinate(xCenter, yCenter), width, height, angle);
     }
 
 
@@ -48,13 +54,12 @@ public class RectangleObstacle extends Obstacle
         this.width = width;
     }
 
-    public RectangleObstacle(Coordinate c, float width, float height, float angle)
+    public RectangleObstacle(float xCenter, float yCenter, float width, float height)
     {
-        super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
-        this.height = height;
-        this.width = width;
-        this.angle = angle;
+        this(new Coordinate(xCenter, yCenter), width, height);
     }
+
+
 
     public float getWidth()
     {
@@ -187,19 +192,10 @@ public class RectangleObstacle extends Obstacle
         float newX = -1;
         float newY = -1;
 
-        //if (!Utility.isDimBetweenDims(0f, 0f, angle))
-        //{
-            Coordinate rotatedPoint = Utility.rotatePointAroundCenter(getCenter(), -angle, ball.getCenter());;
-            newX = rotatedPoint.getX();
-            newY = rotatedPoint.getY();
-        //}
-        /*
-        else
-        {
-            newX = ball.getCenter().getX();
-            newY = ball.getCenter().getY();
-        }
-        */
+        //Coordinate rotatedPoint = Utility.rotatePointAroundCenter(getCenter(), -angle, ball.getCenter());;
+        Coordinate rotatedPoint = Utility.rotatePointAroundCenter(getCenter(), sineOfOpositeAngle, cosineOfOpositeAngle, ball.getCenter());;
+        newX = rotatedPoint.getX();
+        newY = rotatedPoint.getY();
 
         newX = Math.abs(newX - center.getX());
         newY = Math.abs(newY - center.getY());
@@ -268,8 +264,10 @@ public class RectangleObstacle extends Obstacle
     {
         Coordinate speedChange = new Coordinate(0, 0);
 
-        Coordinate speedRot = rotatePointAroundCenter(-angle, new Coordinate(speed.getX(), speed.getY()));
-        Coordinate centerBallRot = rotatePointAroundCenter(getCenter(), -angle, ballNew.getCenter());
+        //Coordinate speedRot = rotatePointAroundCenter(-angle, new Coordinate(speed.getX(), speed.getY()));
+        Coordinate speedRot = rotatePointAroundCenter(sineOfOpositeAngle, cosineOfOpositeAngle, new Coordinate(speed.getX(), speed.getY()));
+        //Coordinate centerBallRot = rotatePointAroundCenter(getCenter(), -angle, ballNew.getCenter());
+        Coordinate centerBallRot = rotatePointAroundCenter(getCenter(), sineOfOpositeAngle, cosineOfOpositeAngle, ballNew.getCenter());
 
         if ((doesBallHitLine(getBotomLeft(), getBottomRight(), centerBallRot, ballNew.getRadius(), true) && speedRot.getY() <= 0)
                 || (doesBallHitLine(getTopLeft(), getTopRight(), centerBallRot, ballNew.getRadius(), true) && speedRot.getY() >= 0))
@@ -283,7 +281,8 @@ public class RectangleObstacle extends Obstacle
             speedChange.setX(-speedRot.getX());
         }
 
-        return rotatePointAroundCenter(angle, speedChange);
+        //return rotatePointAroundCenter(angle, speedChange);
+        return rotatePointAroundCenter(sine, cosine, speedChange);
     }
 
     @Override
