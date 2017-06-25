@@ -46,7 +46,7 @@ public class CircleObstacle extends Obstacle
     public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate3D speed)
     {
         // x1 - x2
-        Coordinate x1Subx2  = ballNew.getCenter().subCoordinate(getCenter());
+        Coordinate x1Subx2  = ballOld.getCenter().subCoordinate(getCenter());
         // v1 - v2
         Coordinate v1Subv2 = speed.generate2dCoordinate();
         float scalarProduct = v1Subv2.scalarProduct(x1Subx2);
