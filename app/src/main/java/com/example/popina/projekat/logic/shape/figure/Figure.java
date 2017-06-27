@@ -89,8 +89,6 @@ public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface
         return Utility.calculateAngle(getCenter(), point);
     }
 
-
-
     @Override
     public String toString()
     {
@@ -98,7 +96,6 @@ public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface
                 + ShapeConst.FIGURE_COLOR + " " + color + " "
                 + ShapeConst.FIGURE_CENTER + " " + center;
     }
-
 
     public abstract Figure scale(UtilScale utilScale);
 

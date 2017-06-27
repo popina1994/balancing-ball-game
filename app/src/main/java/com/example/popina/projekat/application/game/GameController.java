@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.popina.projekat.logic.game.coefficient.Coefficient;
@@ -108,6 +109,9 @@ public class GameController
             float deltaT = Utility.convertNsToS(time - model.getLastTime());
             CircleHole ball = model.getBall();
 
+            scaleAcceleration(filteredAcc);
+            addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
+
             float newX = possibleMove(model.getSpeed().getX(), ball.getCenter().getX(), deltaT);
             float newY = possibleMove(model.getSpeed().getY(), ball.getCenter().getY(), deltaT);
             float vX = model.getSpeed().getX();
@@ -117,6 +121,9 @@ public class GameController
             // TODO: remove memory allocation
             // TODO: remove speed change memory allocation
             Coordinate speedChange = new Coordinate(0, 0);
+
+            Log.d("VX", Float.toString(vX));
+            Log.d("VY", Float.toString(vY));
 
             for (Figure itFigure : model.getListFigures())
             {
@@ -147,6 +154,10 @@ public class GameController
 
                         Coordinate speedChangeFigure = obstacle.getSpeedChangeAfterCollision((StartHole) ball, newBallPos, model.getSpeed());
                         speedChangeFigure.mulScalar(2);
+
+                        Log.d("SPEEDCHANGECOLX", Float.toString(speedChangeFigure.getX()));
+                        Log.d("SPEEDCHANGECOLY", Float.toString(speedChangeFigure.getY()));
+
                         speedChange.addCoordinate(speedChangeFigure);
                     }
                     itFigure.playSound(model.getSoundPlayerCallback());
@@ -155,6 +166,9 @@ public class GameController
 
             boolean xAxisChange = false;
             boolean yAxisChange = false;
+
+            Log.d("SPEED CHANGE X", Float.toString(speedChange.getX()));
+            Log.d("SPEED CHANGE Y", Float.toString(speedChange.getY()));
 
             // It is faster to update without neccessary copying of center of ball, but it is not safe. (vsync...)
             // if there is no collison on x axis.
@@ -181,21 +195,65 @@ public class GameController
 
             if (xAxisChange)
             {
+                Log.d("XAXISCHange", "TRUE");
                 speedChange.setX(model.getCoefficient().getReverseSlowDown() * speedChange.getX());
                 model.getSpeed().setX(speedChange.getX());
             }
 
             if (yAxisChange)
             {
+                Log.d("YAXISCHange", "TRUE");
                 speedChange.setY(model.getCoefficient().getReverseSlowDown() * speedChange.getY());
                 model.getSpeed().setY(speedChange.getY());
             }
 
-            scaleAcceleration(filteredAcc);
-            addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
+
 
             view.invalidateSurfaceView();
         }
+    }
+
+    private void addFrictionToAcc(Coordinate3D filteredAcc, Coordinate3D speed, float deltaT)
+    {
+        float frictionAccX = -1 * opositeSign(speed.getX()) * model.getCoefficient().getMi() * filteredAcc.getZ();
+        float frictionAccY = opositeSign(speed.getY()) * model.getCoefficient().getMi() * filteredAcc.getZ();
+
+
+        float frictatedAccX = filteredAcc.getX() + frictionAccX;
+        float frictatedAccY = filteredAcc.getY() + frictionAccY;
+
+        boolean frictionMakeAccX = checkFriction(frictionAccX, filteredAcc.getX());
+        boolean frictionMakeAccY = checkFriction(frictionAccY, filteredAcc.getY());
+
+        float newSpeedX = updateSpeed(speed.getX(), frictatedAccX, deltaT, -1);
+        float newSpeedY = updateSpeed(speed.getY(), frictatedAccY, deltaT, 1);
+
+
+
+        if ((newSpeedX * speed.getX() <= 0) && frictionMakeAccX)
+        {
+            newSpeedX = 0;
+        }
+
+        if ((newSpeedY * speed.getY() <= 0) && frictionMakeAccY)
+        {
+            newSpeedY = 0;
+        }
+
+
+        Log.d("filteredAccX", Float.toString(filteredAcc.getX()));
+        Log.d("filteredAccY", Float.toString(filteredAcc.getY()));
+        Log.d("frictionMakeAccX", Boolean.toString(frictionMakeAccX));
+        Log.d("frictionMakeAccY", Boolean.toString(frictionMakeAccY));
+        Log.d("FRICTATEDACCY", Float.toString(frictatedAccY));
+        Log.d("FRICTATEDACCX", Float.toString(frictatedAccX));
+        Log.d("SPEEDX", Float.toString(speed.getX()));
+        Log.d("SPEEDY", Float.toString(speed.getY()));
+        Log.d("NEWSPEEDX", Float.toString(newSpeedX));
+        Log.d("NEWSPEEDY", Float.toString(newSpeedY));
+        Log.d("********", "********");
+        speed.setX(newSpeedX);
+        speed.setY(newSpeedY);
     }
 
     private long calcTime(LinkedList<Time> listTimes)
@@ -208,33 +266,6 @@ public class GameController
         return timeAll;
     }
 
-    private void addFrictionToAcc(Coordinate3D filteredAcc, Coordinate3D speed, float deltaT)
-    {
-        float frictionAccX = -1 * opositeSign(speed.getX()) * model.getCoefficient().getMi() * filteredAcc.getZ();
-        float frictionAccY = opositeSign(speed.getY()) * model.getCoefficient().getMi() * filteredAcc.getZ();
-
-        float frictatedAccX = filteredAcc.getX() + frictionAccX;
-        float frictatedAccY = filteredAcc.getY() + frictionAccY;
-
-        boolean frictionMakeAccX = checkFriction(frictionAccX, filteredAcc.getX());
-        boolean frictionMakeAccY = checkFriction(frictionAccY, filteredAcc.getY());
-
-        float newSpeedX = updateSpeed(speed.getX(), frictatedAccX, deltaT, -1);
-        float newSpeedY = updateSpeed(speed.getY(), frictatedAccY, deltaT, 1);
-
-        if ((newSpeedX * speed.getX() <= 0) && frictionMakeAccX)
-        {
-            newSpeedX = 0;
-        }
-
-        if ((newSpeedY * speed.getY() <= 0) && frictionMakeAccY)
-        {
-            newSpeedY = 0;
-        }
-
-        speed.setX(newSpeedX);
-        speed.setY(newSpeedY);
-    }
 
     private boolean checkFriction(float frictionDir, float accDir)
     {

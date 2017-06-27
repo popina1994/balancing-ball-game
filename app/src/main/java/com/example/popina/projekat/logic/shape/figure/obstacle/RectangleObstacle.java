@@ -190,7 +190,6 @@ public class RectangleObstacle extends Obstacle
         float newX = -1;
         float newY = -1;
 
-        //Coordinate rotatedPoint = Utility.rotatePointAroundCenter(getCenter(), -angle, ball.getCenter());;
         Coordinate rotatedPoint = Utility.rotatePointAroundCenter(getCenter(), sineOfOpositeAngle, cosineOfOpositeAngle, ball.getCenter());;
         newX = rotatedPoint.getX();
         newY = rotatedPoint.getY();
@@ -262,24 +261,32 @@ public class RectangleObstacle extends Obstacle
     {
         Coordinate speedChange = new Coordinate(0, 0);
 
-        //Coordinate speedRot = rotatePointAroundCenter(-angle, new Coordinate(speed.getX(), speed.getY()));
         Coordinate speedRot = rotatePointAroundCenter(sineOfOpositeAngle, cosineOfOpositeAngle, new Coordinate(speed.getX(), speed.getY()));
-        //Coordinate centerBallRot = rotatePointAroundCenter(getCenter(), -angle, ballNew.getCenter());
+        boolean speedChangeX = false;
+        boolean speedChangeY = false;
+
+        Log.d("SPEEDROTX", Float.toString(speedRot.getX()));
+        Log.d("SPEEDROTY", Float.toString(speedRot.getY()));
         Coordinate centerBallRot = rotatePointAroundCenter(getCenter(), sineOfOpositeAngle, cosineOfOpositeAngle, ballNew.getCenter());
 
         if ((doesBallHitLine(getBotomLeft(), getBottomRight(), centerBallRot, ballNew.getRadius(), true) && speedRot.getY() <= 0)
                 || (doesBallHitLine(getTopLeft(), getTopRight(), centerBallRot, ballNew.getRadius(), true) && speedRot.getY() >= 0))
         {
             speedChange.setY(-speedRot.getY());
+            speedChangeX = true;
         }
 
         if ((doesBallHitLine(getTopLeft(), getBotomLeft(), centerBallRot, ballNew.getRadius(), false) && speedRot.getX() >= 0)
                 || (doesBallHitLine(getTopRight(), getBottomRight(), centerBallRot, ballNew.getRadius(), false) && speedRot.getX() <= 0))
         {
             speedChange.setX(-speedRot.getX());
+            speedChangeY = true;
         }
 
-        //return rotatePointAroundCenter(angle, speedChange);
+        Log.d("SPEEDROTX", Float.toString(speedChange.getX()));
+        Log.d("SPEEDROTY", Float.toString(speedChange.getY()));
+
+
         return rotatePointAroundCenter(sine, cosine, speedChange);
     }
 
