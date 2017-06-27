@@ -1,0 +1,38 @@
+\documentclass[hidelinks,a4paper]{report}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T2A]{fontenc} 
+\usepackage[serbianc]{babel}
+\usepackage[colorlinks = true,urlcolor = blue]{hyperref}
+\usepackage{setspace, amsmath, amsfonts, amssymb, amsthm, enumerate, graphicx, color}
+\usepackage[left=1in, right=1.0in, top=1.0in, bottom=1.0in]{geometry}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\conj}{\overline}
+\newcommand{\trig}{r(\cos\varphi+i\sin\varphi)}	
+\newcommand{\trign}{r^n(\cos(n\varphi)+i\sin(n\varphi))}
+\newcommand{\trigj}{r(\cos\alpha+i\sin\alpha)}
+\renewcommand{\vec}{\overrightarrow}
+
+\begin{document}
+
+
+\include{TitlePage}
+
+
+\tableofcontents
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Дефиниција}[chapter]
+\newtheorem{task}{}[section]
+\renewcommand{\bibname}{Литература и линкови}
+\newtheorem*{solution}{Решење}
+\pagenumbering{arabic}
+\renewcommand{\chaptername}{ }
+
+
+
+\include{Bibliography}
+
+\end{document}
