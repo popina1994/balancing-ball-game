@@ -14,11 +14,14 @@ import com.example.popina.projekat.logic.game.coefficient.Coefficient;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
+import com.example.popina.projekat.logic.shape.constants.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.figure.obstacle.Obstacle;
+import com.example.popina.projekat.logic.shape.sound.SoundPlayer;
+import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
 import java.util.LinkedList;
 
@@ -31,9 +34,9 @@ import static com.example.popina.projekat.logic.game.utility.Utility.opositeSign
 
 public class GameController
 {
-    GameActivity gameActivity;
-    GameModel model;
-    GameView view;
+    private GameActivity gameActivity;
+    private GameModel model;
+    private GameView view;
 
     public GameController(GameActivity gameActivity, GameModel model, GameView view)
     {
@@ -42,21 +45,23 @@ public class GameController
         this.view = view;
 
         initActivity();
-        initGameSound();
-        loadSounds();
     }
 
     private void initActivity()
     {
         Coefficient coefficient = new Coefficient(gameActivity);
         model.setCoefficient(coefficient);
+
         SensorManager sensorManager = (SensorManager) gameActivity.getSystemService(Context.SENSOR_SERVICE);
         model.setSensorManager(sensorManager);
+
+        SoundPlayerCallback soundPlayerCallback = new SoundPlayer(gameActivity);
+        model.setSoundPlayerCallback(soundPlayerCallback);
     }
 
     public void destructor()
     {
-        model.getSoundPool().release();
+        model.getSoundPlayerCallback().destroy();
     }
 
     public void resume()
@@ -81,45 +86,6 @@ public class GameController
         model.setPaused(true);
     }
 
-    private void loadSounds()
-    {
-        int sounds[] = new int[GameModel.SOUND_MAX];
-        model.setSoundsId(sounds);
-
-        // Raw files should start with small letters.
-        //
-        sounds[GameModel.SOUND_ID_COLLISION] = model.getSoundPool().load(gameActivity, R.raw.collision, GameModel.SOUND_PRIORITY);
-        sounds[GameModel.SOUND_ID_MISS] = model.getSoundPool().load(gameActivity, R.raw.miss, GameModel.SOUND_PRIORITY);
-        sounds[GameModel.SOUND_ID_SUCCESS] = model.getSoundPool().load(gameActivity, R.raw.success, GameModel.SOUND_PRIORITY);
-    }
-
-    private void playSound(int idSound)
-    {
-        model.getSoundPool().play(model.getSoundsId()[idSound],
-                GameModel.SOUND_LEFT_VOLUME,
-                GameModel.SOUND_RIGHT_VOLUME,
-                GameModel.SOUND_PRIORITY_STREAM,
-                GameModel.SOUND_NO_LOOP,
-                GameModel.SOUND_RATE_PLAYBACK);
-    }
-
-    private void initGameSound()
-    {
-        AudioAttributes attributes = new AudioAttributes.Builder().
-                setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build();
-        SoundPool soundPool = new SoundPool.Builder()
-                .setMaxStreams(GameModel.MAX_STREAMS)
-                .setAudioAttributes(attributes)
-                .build();
-
-        model.setSoundPool(soundPool);
-        gameActivity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-    }
-
-    // Time is ns
-    //
     public void onNewValues(float[] newAcc, long time)
     {
         if (!model.isGameOver())
@@ -168,7 +134,6 @@ public class GameController
                         //
                         if (itFigure.isWon())
                         {
-                            playSound(GameModel.SOUND_ID_SUCCESS);
                             model.getListTimes().getLast().setEnd(System.currentTimeMillis());
                             Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getListTimes()), model.getFileName());
                             dialog.show();
@@ -177,21 +142,19 @@ public class GameController
                         //
                         else
                         {
-                            playSound(GameModel.SOUND_ID_MISS);
                             Toast.makeText(gameActivity, "Izgubio si igru", Toast.LENGTH_SHORT).show();
                         }
                     } else
                     {
                         // In case of obstacle collision.
                         //
-                        playSound(GameModel.SOUND_ID_COLLISION);
-
                         Obstacle obstacle = (Obstacle) itFigure;
 
                         Coordinate speedChangeFigure = obstacle.getSpeedChangeAfterCollision((StartHole) ball, newBallPos, model.getSpeed());
                         speedChangeFigure.mulScalar(2);
                         speedChange.addCoordinate(speedChangeFigure);
                     }
+                    itFigure.playSound(model.getSoundPlayerCallback());
                 }
             }
 
@@ -282,8 +245,7 @@ public class GameController
     {
         if (accDir * frictionDir > 0)
             return false;
-        return (Math.abs(frictionDir) -
-                Math.abs(accDir) > 0);
+        return (Math.abs(frictionDir) - Math.abs(accDir) > 0);
     }
 
     private void scaleAcceleration(Coordinate3D acc)

@@ -8,10 +8,6 @@ import android.graphics.Color;
 
 public class ShapeConst
 {
-    public static final int COLOR_HOLE_START = Color.RED;
-    public static final int COLOR_HOLE_FINISH = Color.GREEN;
-    public static final int COLOR_HOLE_WRONG = Color.BLACK;
-    public static final int COLOR_OBSTACLE = Color.YELLOW;
 
     public static final String TYPE_START_HOLE = "START_HOLE";
     public static final String TYPE_FINISH_HOLE = "FINISH_HOLE";

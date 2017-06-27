@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Utility;
+import com.example.popina.projekat.logic.shape.constants.ColorConst;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
@@ -31,7 +32,7 @@ public class RectangleObstacle extends Obstacle
 
     public RectangleObstacle(Coordinate c, float width, float height, float angle)
     {
-        super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
+        super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ColorConst.COLOR_OBSTACLE);
         this.height = height;
         this.width = width;
         this.angle = angle;
@@ -49,7 +50,7 @@ public class RectangleObstacle extends Obstacle
 
     public RectangleObstacle(Coordinate c, float width, float height)
     {
-        super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ShapeConst.COLOR_OBSTACLE);
+        super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ColorConst.COLOR_OBSTACLE);
         this.height = height;
         this.width = width;
     }

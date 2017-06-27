@@ -9,16 +9,18 @@ import com.example.popina.projekat.logic.shape.draw.ShapeDrawInterface;
 import com.example.popina.projekat.logic.shape.parser.ShapeParserInterface;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
+import com.example.popina.projekat.logic.shape.sound.SoundInterface;
 
 /**
  * Created by popina on 05.03.2017..
  */
 
-public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface
+public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface, SoundInterface
 {
     protected Coordinate center;
     protected int color;
     protected String figureType;
+    protected int sound;
 
     protected Figure(Coordinate center, String figureType, int color)
     {

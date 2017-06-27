@@ -9,6 +9,7 @@ import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
+import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
 import java.util.LinkedList;
 
@@ -18,30 +19,14 @@ import java.util.LinkedList;
 
 public class GameModel extends CommonModel
 {
-
-    public static final int BIT_LEFT_COLISION = 0x1 << 0;
-    public static final int BIT_RIGHT_COLISION = 0x1 << 1;
-    public static final int BIT_TOP_COLISION = 0x1 << 2;
-    public static final int BIT_BOTTOM_COLISION = 0x1 << 3;
     public static final int MAX_STREAMS = 10;
-    public static final int SOUND_PRIORITY = 1;
-    public static final float SOUND_LEFT_VOLUME = 1;
-    public static final float SOUND_RIGHT_VOLUME = 1;
-    public static final int SOUND_PRIORITY_STREAM = 1;
-    public static final int SOUND_NO_LOOP = 0;
-    public static final float SOUND_RATE_PLAYBACK = 1;
-    public static final int SOUND_ID_COLLISION = 0;
-    public static final int SOUND_ID_MISS = 1;
-    public static final int SOUND_ID_SUCCESS = 2;
-    public static final int SOUND_MAX = 3;
     public static final String POLYGON_NAME = "POLYGON_NAME";
     public static float ALPHA = 0.9f;
     private LinkedList<Figure> listFigures = new LinkedList<>();
     private String fileName;
     private CircleHole ball;
     private Filter filter = new Filter(ALPHA);
-    // OnInit
-    //
+
     private long lastTime = Long.MAX_VALUE;
     private Coordinate3D speed = new Coordinate3D(5, 5, 0);
     private int height;
@@ -52,6 +37,19 @@ public class GameModel extends CommonModel
     private boolean paused = false;
     private SoundPool soundPool;
     private int soundsId[];
+
+    private SoundPlayerCallback soundPlayerCallback;
+
+    public SoundPlayerCallback getSoundPlayerCallback()
+    {
+        return soundPlayerCallback;
+    }
+
+    public void setSoundPlayerCallback(SoundPlayerCallback soundPlayerCallback)
+    {
+        this.soundPlayerCallback = soundPlayerCallback;
+    }
+
     private LinkedList<Time> listTimes = new LinkedList<>();
     private SensorManager sensorManager;
 

@@ -5,6 +5,7 @@ import android.graphics.Paint;
 
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Utility;
+import com.example.popina.projekat.logic.shape.constants.ColorConst;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
@@ -23,7 +24,7 @@ public class CircleObstacle extends Obstacle
 
     public CircleObstacle(Coordinate coordinate, float radius)
     {
-        super(coordinate.clone(), ShapeConst.TYPE_OBSTACLE_CIRCLE, ShapeConst.COLOR_OBSTACLE);
+        super(coordinate.clone(), ShapeConst.TYPE_OBSTACLE_CIRCLE, ColorConst.COLOR_OBSTACLE);
         this.radius = radius;
     }
 

@@ -1,8 +1,11 @@
 package com.example.popina.projekat.logic.shape.figure.hole;
 
+import com.example.popina.projekat.logic.shape.constants.ColorConst;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
+import com.example.popina.projekat.logic.shape.constants.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
+import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
 /**
  * Created by popina on 08.03.2017..
@@ -12,12 +15,12 @@ public class WrongHole extends CircleHole
 {
     public WrongHole(float x, float y, float radius)
     {
-        super(x, y, radius, ShapeConst.TYPE_WRONG_HOLE, ShapeConst.COLOR_HOLE_WRONG);
+        super(x, y, radius, ShapeConst.TYPE_WRONG_HOLE, ColorConst.COLOR_HOLE_WRONG);
     }
 
     public WrongHole(Coordinate c, float radius)
     {
-        super(c, radius, ShapeConst.TYPE_WRONG_HOLE, ShapeConst.COLOR_HOLE_WRONG);
+        super(c, radius, ShapeConst.TYPE_WRONG_HOLE, ColorConst.COLOR_HOLE_WRONG);
     }
 
     @Override
@@ -44,5 +47,11 @@ public class WrongHole extends CircleHole
     public boolean isGameOver()
     {
         return true;
+    }
+
+    @Override
+    public void playSound(SoundPlayerCallback soundPlayerCallback)
+    {
+        soundPlayerCallback.playSound(SoundConst.SOUND_ID_MISS);
     }
 }
