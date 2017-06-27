@@ -24,31 +24,14 @@ import java.util.LinkedList;
  * Created by popina on 08.03.2017..
  */
 
-public class ShapeParser
+public class ShapeParser extends ShapeParserAbstract
 {
-    private ShapeFactory shapeFactory;
-    private ShapeDraw shapeDraw;
-    private Context context;
-
-
     public ShapeParser(ShapeFactory shapeFactory, ShapeDraw shapeDraw, Context context)
     {
-        this.shapeFactory = shapeFactory;
-        this.shapeDraw = shapeDraw;
-        this.context = context;
+        super(shapeFactory, shapeDraw, context);
     }
 
-    public ShapeFactory getShapeFactory()
-    {
-        return shapeFactory;
-    }
-
-    public void setShapeFactory(ShapeFactory shapeFactory)
-    {
-        this.shapeFactory = shapeFactory;
-    }
-
-    private Figure parseLine(String line)
+    public Figure parseLine(String line)
     {
         String[] tokens = line.split("\\s+");
         Figure figure = null;

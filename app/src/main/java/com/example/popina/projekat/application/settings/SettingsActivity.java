@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.common.CommonActivity;
-import com.example.popina.projekat.logic.game.coeficient.Coeficient;
+import com.example.popina.projekat.logic.game.coefficient.Coefficient;
 
 public class SettingsActivity extends CommonActivity
 {
@@ -14,7 +14,7 @@ public class SettingsActivity extends CommonActivity
     // Some kind of Shared model.
     // Better design can be done.
     //
-    Coeficient coeficient;
+    Coefficient coefficient;
 
     TextView textViewAcc;
     SeekBar seekBarAcc;
@@ -28,7 +28,7 @@ public class SettingsActivity extends CommonActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        coeficient = new Coeficient(this);
+        coefficient = new Coefficient(this);
         // Idea for future.
         // Some interface.
         //
@@ -40,8 +40,8 @@ public class SettingsActivity extends CommonActivity
                 R.id.buttonResetCoeficientAcceleration,
                 SettingsModel.SCALE_PROGRES_BAR_ACC,
                 SettingsModel.MAX_SEEK_BAR_ACC,
-                coeficient.getScaleAccDefault(),
-                coeficient.getScaleAcc()
+                coefficient.getScaleAccDefault(),
+                coefficient.getScaleAcc()
         );
         seekBarUpgradeMi = new SeekBarUpgrade(
                 this,
@@ -50,8 +50,8 @@ public class SettingsActivity extends CommonActivity
                 R.id.buttonResetCoeficientMi,
                 SettingsModel.SCALE_PROGRES_BAR_MI,
                 SettingsModel.MAX_SEEK_BAR_MI,
-                coeficient.getMiDefault(),
-                coeficient.getMi()
+                coefficient.getMiDefault(),
+                coefficient.getMi()
         );
         seekBarUpgradeReverseSlowDown = new SeekBarUpgrade(
                 this,
@@ -60,8 +60,8 @@ public class SettingsActivity extends CommonActivity
                 R.id.buttonResetCoeficientReverseSlowDown,
                 SettingsModel.SCALE_PROGRES_BAR_REVERSE_SLOW_DOWN,
                 SettingsModel.MAX_SEEK_BAR_REVERSE_SLOW_DOWN,
-                coeficient.getReverseSlowDownDefault(),
-                coeficient.getReverseSlowDown()
+                coefficient.getReverseSlowDownDefault(),
+                coefficient.getReverseSlowDown()
         );
     }
 
@@ -69,9 +69,9 @@ public class SettingsActivity extends CommonActivity
     public void onBackPressed()
     {
         super.onBackPressed();
-        coeficient.setScaleAcc(seekBarUpgradeAcc.getVal());
-        coeficient.setMi(seekBarUpgradeMi.getVal());
-        coeficient.setReverseSlowDown(seekBarUpgradeReverseSlowDown.getVal());
-        coeficient.updateValues();
+        coefficient.setScaleAcc(seekBarUpgradeAcc.getVal());
+        coefficient.setMi(seekBarUpgradeMi.getVal());
+        coefficient.setReverseSlowDown(seekBarUpgradeReverseSlowDown.getVal());
+        coefficient.updateValues();
     }
 }

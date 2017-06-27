@@ -97,7 +97,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
             ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
             model.setShapeParser(shapeParser);
 
-            LinkedList<Figure> listFigures = shapeParser.parseFile(model.getFileName());
+            LinkedList<Figure> listFigures = (LinkedList<Figure>)shapeParser.parseFile(model.getFileName());
             for (Figure it : listFigures)
             {
 

@@ -4,7 +4,7 @@ import android.hardware.SensorManager;
 import android.media.SoundPool;
 
 import com.example.popina.projekat.application.common.CommonModel;
-import com.example.popina.projekat.logic.game.coeficient.Coeficient;
+import com.example.popina.projekat.logic.game.coefficient.Coefficient;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.shape.figure.Figure;
@@ -47,7 +47,7 @@ public class GameModel extends CommonModel
     private int height;
     private int width;
     private boolean sufraceInitialized;
-    private Coeficient coeficient;
+    private Coefficient coefficient;
     private boolean gameOver = false;
     private boolean paused = false;
     private SoundPool soundPool;
@@ -145,14 +145,14 @@ public class GameModel extends CommonModel
         this.sufraceInitialized = sufraceInitialized;
     }
 
-    public Coeficient getCoeficient()
+    public Coefficient getCoefficient()
     {
-        return coeficient;
+        return coefficient;
     }
 
-    public void setCoeficient(Coeficient coeficient)
+    public void setCoefficient(Coefficient coefficient)
     {
-        this.coeficient = coeficient;
+        this.coefficient = coefficient;
     }
 
     public boolean isGameOver()

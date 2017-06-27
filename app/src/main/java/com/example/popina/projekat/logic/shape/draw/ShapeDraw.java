@@ -51,17 +51,17 @@ public class ShapeDraw
         this.commonModel = commonModel;
     }
 
-    public void spriteOnBackground(LinkedList<Figure> listFigures)
+    public void spriteOnBackground(LinkedList<? extends ShapeDrawInterface> listFigures)
     {
         Canvas canvas = new Canvas(background);
         canvas.drawBitmap(background, 0, 0, null);
-        for (Figure it : listFigures)
+        for (ShapeDrawInterface it : listFigures)
         {
             it.drawOnCanvas(canvas);
         }
     }
 
-    public void drawOnCanvas(LinkedList<Figure> listFigures, Canvas canvas)
+    public void drawOnCanvas(LinkedList<? extends ShapeDrawInterface> listFigures, Canvas canvas)
     {
         canvas.drawBitmap(background, 0, 0, null);
 
@@ -69,32 +69,32 @@ public class ShapeDraw
         {
             synchronized (commonModel)
             {
-                for (Figure it : listFigures)
+                for (ShapeDrawInterface it : listFigures)
                 {
                     it.drawOnCanvas(canvas);
                 }
             }
         } else
         {
-            for (Figure it : listFigures)
+            for (ShapeDrawInterface it : listFigures)
             {
                 it.drawOnCanvas(canvas);
             }
         }
     }
 
-    public void drawOnCanvas(Figure figure, Canvas canvas)
+    public void drawOnCanvas(ShapeDrawInterface shapeDrawInterface, Canvas canvas)
     {
         canvas.drawBitmap(background, 0, 0, null);
         if (commonModel != null)
         {
             synchronized (commonModel)
             {
-                figure.drawOnCanvas(canvas);
+                shapeDrawInterface.drawOnCanvas(canvas);
             }
         } else
         {
-            figure.drawOnCanvas(canvas);
+            shapeDrawInterface.drawOnCanvas(canvas);
         }
     }
 

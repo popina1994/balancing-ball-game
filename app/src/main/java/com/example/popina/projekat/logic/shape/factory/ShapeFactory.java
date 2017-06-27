@@ -7,6 +7,7 @@ import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.figure.hole.WrongHole;
 import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
+import com.example.popina.projekat.logic.shape.parser.ShapeParserInterface;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
 import java.util.LinkedList;

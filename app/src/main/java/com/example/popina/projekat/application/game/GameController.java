@@ -10,7 +10,7 @@ import android.media.SoundPool;
 import android.widget.Toast;
 
 import com.example.popina.projekat.R;
-import com.example.popina.projekat.logic.game.coeficient.Coeficient;
+import com.example.popina.projekat.logic.game.coefficient.Coefficient;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
@@ -44,14 +44,12 @@ public class GameController
         initActivity();
         initGameSound();
         loadSounds();
-        // Maybe put initialization of data from gameModel to here???
-        //
     }
 
     private void initActivity()
     {
-        Coeficient coeficient = new Coeficient(gameActivity);
-        model.setCoeficient(coeficient);
+        Coefficient coefficient = new Coefficient(gameActivity);
+        model.setCoefficient(coefficient);
         SensorManager sensorManager = (SensorManager) gameActivity.getSystemService(Context.SENSOR_SERVICE);
         model.setSensorManager(sensorManager);
     }
@@ -120,8 +118,8 @@ public class GameController
         gameActivity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
-
     // Time is ns
+    //
     public void onNewValues(float[] newAcc, long time)
     {
         if (!model.isGameOver())
@@ -135,16 +133,17 @@ public class GameController
         }
     }
 
-
     private void updatePosition(Coordinate3D filteredAcc, long time)
     {
-
-
         // This is in case if surface view hasn't been initialized.
         //
         if (model.isSufraceInitialized())
         {
 
+            // model.getLastTime
+            // model.getBall
+            // model.getSpeed
+            // model.getLIstFigures
             float deltaT = Utility.convertNsToS(time - model.getLastTime());
             CircleHole ball = model.getBall();
 
@@ -154,6 +153,8 @@ public class GameController
             float vY = model.getSpeed().getY();
 
             StartHole newBallPos = new StartHole(newX, newY, ball.getRadius());
+            // TODO: remove memory allocation
+            // TODO: remove speed change memory allocation
             Coordinate speedChange = new Coordinate(0, 0);
 
             for (Figure itFigure : model.getListFigures())
@@ -222,13 +223,13 @@ public class GameController
 
             if (xAxisChange)
             {
-                speedChange.setX(model.getCoeficient().getReverseSlowDown() * speedChange.getX());
+                speedChange.setX(model.getCoefficient().getReverseSlowDown() * speedChange.getX());
                 model.getSpeed().setX(speedChange.getX());
             }
 
             if (yAxisChange)
             {
-                speedChange.setY(model.getCoeficient().getReverseSlowDown() * speedChange.getY());
+                speedChange.setY(model.getCoefficient().getReverseSlowDown() * speedChange.getY());
                 model.getSpeed().setY(speedChange.getY());
             }
 
@@ -236,16 +237,7 @@ public class GameController
             addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
 
             view.invalidateSurfaceView();
-            //Log.d("GameController", "VX " + Float.toString(model.getSpeed().getX()));
-            //Log.d("GameController", "VY " + Float.toString(model.getSpeed().getY()));
-            //Log.d("GameController", "X " + Float.toString(model.getBall().getCenter().getX()));
-            //Log.d("GameController", "Y " + Float.toString(model.getBall().getCenter().getY()));
-            //Log.d("GameControlle r", "AX " + Float.toString(filteredAcc.getX()));
-            //Log.d("GameController", "AY " + Float.toString(filteredAcc.getY()));
-            //Log.d("GameController", "TIME " + Float.toString(deltaT));
         }
-
-
     }
 
     private long calcTime(LinkedList<Time> listTimes)
@@ -256,6 +248,63 @@ public class GameController
             timeAll += time.timeInt();
         }
         return timeAll;
+    }
+
+    private void addFrictionToAcc(Coordinate3D filteredAcc, Coordinate3D speed, float deltaT)
+    {
+        float frictionAccX = -1 * opositeSign(speed.getX()) * model.getCoefficient().getMi() * filteredAcc.getZ();
+        float frictionAccY = opositeSign(speed.getY()) * model.getCoefficient().getMi() * filteredAcc.getZ();
+
+        float frictatedAccX = filteredAcc.getX() + frictionAccX;
+        float frictatedAccY = filteredAcc.getY() + frictionAccY;
+
+        boolean frictionMakeAccX = checkFriction(frictionAccX, filteredAcc.getX());
+        boolean frictionMakeAccY = checkFriction(frictionAccY, filteredAcc.getY());
+
+        float newSpeedX = updateSpeed(speed.getX(), frictatedAccX, deltaT, -1);
+        float newSpeedY = updateSpeed(speed.getY(), frictatedAccY, deltaT, 1);
+
+        if ((newSpeedX * speed.getX() <= 0) && frictionMakeAccX)
+        {
+            newSpeedX = 0;
+        }
+
+        if ((newSpeedY * speed.getY() <= 0) && frictionMakeAccY)
+        {
+            newSpeedY = 0;
+        }
+
+        speed.setX(newSpeedX);
+        speed.setY(newSpeedY);
+    }
+
+    private boolean checkFriction(float frictionDir, float accDir)
+    {
+        if (accDir * frictionDir > 0)
+            return false;
+        return (Math.abs(frictionDir) -
+                Math.abs(accDir) > 0);
+    }
+
+    private void scaleAcceleration(Coordinate3D acc)
+    {
+        acc.setX(scaleAcceleration(acc.getX()));
+        acc.setY(scaleAcceleration(acc.getY()));
+    }
+
+    private float scaleAcceleration(float accDir)
+    {
+        return model.getCoefficient().getScaleAcc() * accDir;
+    }
+
+    private float possibleMove(float speedDir, float posDir, float time)
+    {
+        return posDir + speedDir * time;
+    }
+
+    private float updateSpeed(float v0, float acc, float deltaT, int dir)
+    {
+        return v0 + dir * acc * deltaT;
     }
 
     // A * X + B * Y = Z
@@ -280,7 +329,6 @@ public class GameController
         float B2 = line2.getY();
         float C2 = line2.getZ();
 
-
         // Parallel lines.
         //
         float det = -A1 * B2 + A2 * B1;
@@ -292,7 +340,6 @@ public class GameController
 
         return new Coordinate((B2 * C1 - B1 * C2) / det, (A1 * C2 - A2 * C1) / det);
     }
-
 
     private float calculateX(Coordinate3D line, float y)
     {
@@ -314,77 +361,6 @@ public class GameController
         // Carefull exception!!!
         //
         return (-C - A * x) / B;
-    }
-
-    private void addFrictionToAcc(Coordinate3D filteredAcc, Coordinate3D speed, float deltaT)
-    {
-
-        float frictionAccX = -1 * opositeSign(speed.getX()) * model.getCoeficient().getMi() * filteredAcc.getZ();
-        float frictionAccY = opositeSign(speed.getY()) * model.getCoeficient().getMi() * filteredAcc.getZ();
-
-        float frictatedAccX = filteredAcc.getX() + frictionAccX;
-        float frictatedAccY = filteredAcc.getY() + frictionAccY;
-
-        boolean frictionMakeAccX = checkFriction(frictionAccX, filteredAcc.getX());
-        boolean frictionMakeAccY = checkFriction(frictionAccY, filteredAcc.getY());
-
-        float newSpeedX = updateSpeed(speed.getX(), frictatedAccX, deltaT, -1);
-        float newSpeedY = updateSpeed(speed.getY(), frictatedAccY, deltaT, 1);
-
-        if ((newSpeedX * speed.getX() <= 0) && frictionMakeAccX)
-        {
-            newSpeedX = 0;
-        }
-
-        if ((newSpeedY * speed.getY() <= 0) && frictionMakeAccY)
-        {
-            newSpeedY = 0;
-        }
-
-        //Log.d("GameController", "VoldX " + Float.toString(model.getSpeed().getX()));
-        //Log.d("GameController", "VoldY " + Float.toString(model.getSpeed().getY()));
-
-        speed.setX(newSpeedX);
-        speed.setY(newSpeedY);
-        /*
-        Log.d("GameController", "VX " + Float.toString(model.getSpeed().getX()));
-        Log.d("GameController", "VY " + Float.toString(model.getSpeed().getY()));
-        Log.d("GameControlle r", "AX " + Float.toString(frictatedAccX));
-        Log.d("GameController", "AY " + Float.toString(frictatedAccY));
-        Log.d("GameController", "TIME " + Float.toString(deltaT));
-        Log.d("GameController", "Friction makes X " + Boolean.toString(frictionMakeAccX));
-        Log.d("GameController", "Friction makes Y " + Boolean.toString(frictionMakeAccY));
-        Log.d("GameController", "********************");
-        */
-    }
-
-    private boolean checkFriction(float frictionDir, float accDir)
-    {
-        if (accDir * frictionDir > 0)
-            return false;
-        return (Math.abs(frictionDir) -
-                Math.abs(accDir) > 0);
-    }
-
-    private void scaleAcceleration(Coordinate3D acc)
-    {
-        acc.setX(scaleAcceleration(acc.getX()));
-        acc.setY(scaleAcceleration(acc.getY()));
-    }
-
-    private float scaleAcceleration(float accDir)
-    {
-        return model.getCoeficient().getScaleAcc() * accDir;
-    }
-
-    private float possibleMove(float speedDir, float posDir, float time)
-    {
-        return posDir + speedDir * time;
-    }
-
-    private float updateSpeed(float v0, float acc, float deltaT, int dir)
-    {
-        return v0 + dir * acc * deltaT;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.popina.projekat.logic.game.coeficient;
+package com.example.popina.projekat.logic.game.coefficient;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import com.example.popina.projekat.R;
  * Created by popina on 12.03.2017..
  */
 
-public class Coeficient
+public class Coefficient
 {
     private float scaleAccDefault;
     private float miDefault;
@@ -21,7 +21,7 @@ public class Coeficient
     private float reverseSlowDown;
     private Activity activity;
 
-    public Coeficient(Activity activity)
+    public Coefficient(Activity activity)
     {
         this.activity = activity;
 
@@ -31,10 +31,10 @@ public class Coeficient
 
     private void readValues()
     {
-        SharedPreferences sharedPreferences = activity.getApplicationContext().getSharedPreferences(CoeficientModel.PREFERENCE_SETTINGS, Context.MODE_PRIVATE);
-        scaleAcc = sharedPreferences.getFloat(CoeficientModel.ACCELERATION_COEFICIENT, scaleAccDefault);
-        reverseSlowDown = sharedPreferences.getFloat(CoeficientModel.REVERSE_DLOW_DOWN_DEFAULT, reverseSlowDownDefault);
-        mi = sharedPreferences.getFloat(CoeficientModel.MI_COEFICIENT, miDefault);
+        SharedPreferences sharedPreferences = activity.getApplicationContext().getSharedPreferences(CoefficientModel.PREFERENCE_SETTINGS, Context.MODE_PRIVATE);
+        scaleAcc = sharedPreferences.getFloat(CoefficientModel.ACCELERATION_COEFICIENT, scaleAccDefault);
+        reverseSlowDown = sharedPreferences.getFloat(CoefficientModel.REVERSE_DLOW_DOWN_DEFAULT, reverseSlowDownDefault);
+        mi = sharedPreferences.getFloat(CoefficientModel.MI_COEFICIENT, miDefault);
     }
 
     private float readFloatValue(int id)
@@ -54,11 +54,11 @@ public class Coeficient
 
     public void updateValues()
     {
-        SharedPreferences sharedPref = activity.getApplicationContext().getSharedPreferences(CoeficientModel.PREFERENCE_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getApplicationContext().getSharedPreferences(CoefficientModel.PREFERENCE_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putFloat(CoeficientModel.ACCELERATION_COEFICIENT, scaleAcc);
-        editor.putFloat(CoeficientModel.MI_COEFICIENT, mi);
-        editor.putFloat(CoeficientModel.REVERSE_DLOW_DOWN_DEFAULT, reverseSlowDown);
+        editor.putFloat(CoefficientModel.ACCELERATION_COEFICIENT, scaleAcc);
+        editor.putFloat(CoefficientModel.MI_COEFICIENT, mi);
+        editor.putFloat(CoefficientModel.REVERSE_DLOW_DOWN_DEFAULT, reverseSlowDown);
         editor.commit();
     }
 

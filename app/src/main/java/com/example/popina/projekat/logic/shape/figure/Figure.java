@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.draw.ShapeDrawInterface;
+import com.example.popina.projekat.logic.shape.parser.ShapeParserInterface;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 
@@ -12,7 +14,7 @@ import com.example.popina.projekat.logic.shape.scale.UtilScale;
  * Created by popina on 05.03.2017..
  */
 
-public abstract class Figure
+public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface
 {
     protected Coordinate center;
     protected int color;
@@ -55,39 +57,16 @@ public abstract class Figure
         this.figureType = figureType;
     }
 
-    /**
-     * @param x - x coordinate of vector
-     * @param y - y coordinate of vectore
-     *          Moves figure for vector whose coordinates are passed. It shouldn't go over 100%.
-     */
-    public void moveFor(float x, float y)
-    {
-        center.setX(center.getX() + x);
-        center.setY(center.getY() + y);
-    }
-
-    public void moveFor(Coordinate coordinate)
-    {
-        center.setX(center.getX() + coordinate.getX());
-        center.setY(center.getY() + coordinate.getY());
-    }
-
-    public void moveTo(float x, float y)
-    {
-        center.setX(x);
-        center.setY(y);
-    }
 
     public void moveTo(Coordinate coordinate)
     {
         center = coordinate.clone();
     }
 
-    public abstract void drawOnCanvas(Canvas canvas);
-
-    public abstract boolean isCoordinateInside(Coordinate c);
-
-    public abstract void resize(Coordinate c);
+    public float calculateAngle(Coordinate point)
+    {
+        return Utility.calculateAngle(getCenter(), point);
+    }
 
     @Override
     public String toString()
@@ -108,10 +87,4 @@ public abstract class Figure
 
     public abstract boolean isWon();
 
-    public abstract void rotate(Coordinate c, float angle);
-
-    public float calculateAngle(Coordinate point)
-    {
-        return Utility.calculateAngle(getCenter(), point);
-    }
 }
