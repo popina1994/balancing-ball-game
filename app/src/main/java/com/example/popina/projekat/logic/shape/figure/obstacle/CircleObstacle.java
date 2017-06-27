@@ -21,7 +21,6 @@ public class CircleObstacle extends Obstacle
 {
     private float radius;
 
-
     public CircleObstacle(Coordinate coordinate, float radius)
     {
         super(coordinate.clone(), ShapeConst.TYPE_OBSTACLE_CIRCLE, ColorConst.COLOR_OBSTACLE);
@@ -96,7 +95,7 @@ public class CircleObstacle extends Obstacle
     }
 
     @Override
-    public boolean doesCollide(CircleHole ball)
+    public boolean doesCollideTemplateMethod(CircleHole ball)
     {
         return Utility.isDistanceBetweenCoordLesThan(center, ball.getCenter(), radius + ball.getRadius(), false);
     }

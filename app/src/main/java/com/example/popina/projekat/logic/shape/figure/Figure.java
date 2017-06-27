@@ -1,20 +1,15 @@
 package com.example.popina.projekat.logic.shape.figure;
 
-import android.content.Intent;
-import android.util.Log;
-
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
-import com.example.popina.projekat.logic.shape.constants.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.draw.ShapeDrawInterface;
+import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.movement.collision.detection.CollisionDetectionInterface;
 import com.example.popina.projekat.logic.shape.parser.ShapeParserInterface;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 import com.example.popina.projekat.logic.shape.sound.SoundInterface;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
-
-import static com.example.popina.projekat.logic.shape.constants.SoundConst.SOUND_PLAY_WAIT_TIME_MS;
 
 /**
  * Created by popina on 05.03.2017..
@@ -25,7 +20,26 @@ public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface
     protected Coordinate center;
     protected int color;
     protected String figureType;
-    private long lastSoundTime = 0;
+    private boolean shouldPlaySound = false;
+    private boolean lastCheckCollision = false;
+
+    @Override
+    public final boolean doesCollide(CircleHole ball)
+    {
+        boolean isThereCollision = doesCollideTemplateMethod(ball);
+        if (isThereCollision && !lastCheckCollision)
+        {
+            shouldPlaySound = true;
+        }
+        else
+        {
+            shouldPlaySound = false;
+        }
+        lastCheckCollision = isThereCollision;
+        return isThereCollision;
+    }
+
+    protected abstract boolean doesCollideTemplateMethod(CircleHole circleHole);
 
     protected Figure(Coordinate center, String figureType, int color)
     {
@@ -75,6 +89,8 @@ public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface
         return Utility.calculateAngle(getCenter(), point);
     }
 
+
+
     @Override
     public String toString()
     {
@@ -91,16 +107,11 @@ public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface
     @Override
     public final void playSound(SoundPlayerCallback soundPlayerCallback)
     {
-        long curTime = System.currentTimeMillis();
-        if ((curTime - lastSoundTime) > SoundConst.SOUND_PLAY_WAIT_TIME_MS)
+        if (shouldPlaySound)
         {
-            playSoundIfItIsNotSoon(soundPlayerCallback);
-            lastSoundTime = curTime;
-            Log.d("SOUND", Long.toString(curTime));
+            playSoundTemplateMethod(soundPlayerCallback);
         }
-
-
     }
 
-    protected abstract void playSoundIfItIsNotSoon(SoundPlayerCallback soundPlayerCallback);
+    protected abstract void playSoundTemplateMethod(SoundPlayerCallback soundPlayerCallback);
 }

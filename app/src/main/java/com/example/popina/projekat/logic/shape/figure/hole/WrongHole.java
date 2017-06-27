@@ -51,7 +51,7 @@ public class WrongHole extends CircleHole
 
 
     @Override
-    protected void playSoundIfItIsNotSoon(SoundPlayerCallback soundPlayerCallback)
+    protected void playSoundTemplateMethod(SoundPlayerCallback soundPlayerCallback)
     {
         soundPlayerCallback.playSound(SoundConst.SOUND_ID_MISS);
     }

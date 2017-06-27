@@ -6,7 +6,6 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 
 import com.example.popina.projekat.R;
-import com.example.popina.projekat.application.game.GameModel;
 import com.example.popina.projekat.logic.shape.constants.SoundConst;
 
 /**
@@ -26,7 +25,7 @@ public class SoundPlayer implements SoundPlayerCallback
                                                         .setUsage(AudioAttributes.USAGE_GAME)
                                                         .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                                                         .build();
-        soundPool = new SoundPool.Builder().setMaxStreams(GameModel.MAX_STREAMS)
+        soundPool = new SoundPool.Builder().setMaxStreams(SoundConst.MAX_STREAMS)
                                                      .setAudioAttributes(attributes)
                                                      .build();
 

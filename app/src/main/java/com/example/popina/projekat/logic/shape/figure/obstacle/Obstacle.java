@@ -21,7 +21,7 @@ public abstract class Obstacle extends Figure implements CollisionHandlingInterf
 
 
     @Override
-    protected void playSoundIfItIsNotSoon(SoundPlayerCallback soundPlayerCallback)
+    protected void playSoundTemplateMethod(SoundPlayerCallback soundPlayerCallback)
     {
         soundPlayerCallback.playSound(SoundConst.SOUND_ID_COLLISION);
     }

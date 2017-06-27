@@ -124,7 +124,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
         surfaceThread = new SurfaceThread();
         surfaceThread.start();
-        model.setSufraceInitialized(true);
+        model.setSurfaceInitialized(true);
         invalidateSurfaceView();
     }
 
@@ -137,7 +137,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceDestroyed(SurfaceHolder holder)
     {
-        model.setSufraceInitialized(false);
+        model.setSurfaceInitialized(false);
         surfaceThread.running = false;
         surfaceThread.interrupt();
         try

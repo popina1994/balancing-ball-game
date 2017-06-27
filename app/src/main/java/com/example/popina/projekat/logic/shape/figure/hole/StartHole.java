@@ -39,7 +39,7 @@ public class StartHole extends CircleHole
     }
 
     @Override
-    protected void playSoundIfItIsNotSoon(SoundPlayerCallback soundPlayerCallback)
+    protected void playSoundTemplateMethod(SoundPlayerCallback soundPlayerCallback)
     {
 
     }

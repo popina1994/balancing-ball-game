@@ -47,7 +47,6 @@ public class RectangleObstacle extends Obstacle
         this(new Coordinate(xCenter, yCenter), width, height, angle);
     }
 
-
     public RectangleObstacle(Coordinate c, float width, float height)
     {
         super(c.clone(), ShapeConst.TYPE_OBSTACLE_RECTANGLE, ColorConst.COLOR_OBSTACLE);
@@ -59,8 +58,6 @@ public class RectangleObstacle extends Obstacle
     {
         this(new Coordinate(xCenter, yCenter), width, height);
     }
-
-
 
     public float getWidth()
     {
@@ -182,7 +179,7 @@ public class RectangleObstacle extends Obstacle
     }
 
     @Override
-    public boolean doesCollide(CircleHole ball)
+    public boolean doesCollideTemplateMethod(CircleHole ball)
     {
         boolean retValue = false;
         float widthHalf = width / 2;

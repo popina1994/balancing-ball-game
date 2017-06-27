@@ -4,17 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.widget.Toast;
 
-import com.example.popina.projekat.R;
 import com.example.popina.projekat.logic.game.coefficient.Coefficient;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
-import com.example.popina.projekat.logic.shape.constants.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
@@ -103,7 +98,7 @@ public class GameController
     {
         // This is in case if surface view hasn't been initialized.
         //
-        if (model.isSufraceInitialized())
+        if (model.isSurfaceInitialized())
         {
 
             // model.getLastTime

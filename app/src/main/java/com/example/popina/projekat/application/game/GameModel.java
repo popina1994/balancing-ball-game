@@ -19,7 +19,6 @@ import java.util.LinkedList;
 
 public class GameModel extends CommonModel
 {
-    public static final int MAX_STREAMS = 10;
     public static final String POLYGON_NAME = "POLYGON_NAME";
     public static float ALPHA = 0.9f;
     private LinkedList<Figure> listFigures = new LinkedList<>();
@@ -31,12 +30,10 @@ public class GameModel extends CommonModel
     private Coordinate3D speed = new Coordinate3D(5, 5, 0);
     private int height;
     private int width;
-    private boolean sufraceInitialized;
+    private boolean surfaceInitialized;
     private Coefficient coefficient;
     private boolean gameOver = false;
     private boolean paused = false;
-    private SoundPool soundPool;
-    private int soundsId[];
 
     private SoundPlayerCallback soundPlayerCallback;
 
@@ -133,14 +130,14 @@ public class GameModel extends CommonModel
         this.width = width;
     }
 
-    public boolean isSufraceInitialized()
+    public boolean isSurfaceInitialized()
     {
-        return sufraceInitialized;
+        return surfaceInitialized;
     }
 
-    public void setSufraceInitialized(boolean sufraceInitialized)
+    public void setSurfaceInitialized(boolean surfaceInitialized)
     {
-        this.sufraceInitialized = sufraceInitialized;
+        this.surfaceInitialized = surfaceInitialized;
     }
 
     public Coefficient getCoefficient()
@@ -173,25 +170,6 @@ public class GameModel extends CommonModel
         this.paused = paused;
     }
 
-    public SoundPool getSoundPool()
-    {
-        return soundPool;
-    }
-
-    public void setSoundPool(SoundPool soundPool)
-    {
-        this.soundPool = soundPool;
-    }
-
-    public int[] getSoundsId()
-    {
-        return soundsId;
-    }
-
-    public void setSoundsId(int[] soundsId)
-    {
-        this.soundsId = soundsId;
-    }
 
     public SensorManager getSensorManager()
     {

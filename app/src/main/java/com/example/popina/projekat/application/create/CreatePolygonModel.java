@@ -12,7 +12,6 @@ import java.util.LinkedList;
 
 public class CreatePolygonModel extends CommonModel
 {
-
     public static final int MODE_MOVE = 0;
     public static final int MODE_RESIZE = 1;
     public static final int MODE_DELETE = 2;
@@ -23,8 +22,6 @@ public class CreatePolygonModel extends CommonModel
     public static final int CREATE_WRONG_HOLE = 2;
     public static final int CREATE_OBSTACLE_RECTANGLE = 3;
     public static final int CREATE_OBSTACLE_CIRCLE = 4;
-
-
     // List of unscaled figures.
     //
     private LinkedList<Figure> listFigures = new LinkedList<>();

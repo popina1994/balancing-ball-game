@@ -19,6 +19,8 @@ public abstract class SoundConst
     public static final int SOUND_ID_MISS = 1;
     public static final int SOUND_ID_SUCCESS = 2;
     public static final int SOUND_MAX = 3;
+    public static final int MAX_STREAMS = 10;
 
     public static final int SOUND_PLAY_WAIT_TIME_MS = 100;
+
 }

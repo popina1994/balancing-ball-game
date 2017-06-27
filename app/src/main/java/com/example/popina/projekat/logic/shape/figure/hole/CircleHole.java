@@ -74,7 +74,7 @@ public abstract class CircleHole extends Figure
     }
 
     @Override
-    public boolean doesCollide(CircleHole ball)
+    public boolean doesCollideTemplateMethod(CircleHole ball)
     {
         return isCoordinateInside(ball.getCenter());
     }
