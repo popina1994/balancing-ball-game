@@ -49,8 +49,9 @@ public class WrongHole extends CircleHole
         return true;
     }
 
+
     @Override
-    public void playSound(SoundPlayerCallback soundPlayerCallback)
+    protected void playSoundIfItIsNotSoon(SoundPlayerCallback soundPlayerCallback)
     {
         soundPlayerCallback.playSound(SoundConst.SOUND_ID_MISS);
     }

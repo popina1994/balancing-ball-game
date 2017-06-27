@@ -39,6 +39,12 @@ public class StartHole extends CircleHole
     }
 
     @Override
+    protected void playSoundIfItIsNotSoon(SoundPlayerCallback soundPlayerCallback)
+    {
+
+    }
+
+    @Override
     public boolean isGameOver()
     {
         return false;
@@ -50,8 +56,5 @@ public class StartHole extends CircleHole
         return false;
     }
 
-    @Override
-    public void playSound(SoundPlayerCallback soundPlayerCallback)
-    {
-    }
+
 }

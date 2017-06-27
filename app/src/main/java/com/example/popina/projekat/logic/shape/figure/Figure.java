@@ -1,26 +1,31 @@
 package com.example.popina.projekat.logic.shape.figure;
 
-import android.graphics.Canvas;
+import android.content.Intent;
+import android.util.Log;
 
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
+import com.example.popina.projekat.logic.shape.constants.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.draw.ShapeDrawInterface;
+import com.example.popina.projekat.logic.shape.movement.collision.detection.CollisionDetectionInterface;
 import com.example.popina.projekat.logic.shape.parser.ShapeParserInterface;
-import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 import com.example.popina.projekat.logic.shape.sound.SoundInterface;
+import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
+
+import static com.example.popina.projekat.logic.shape.constants.SoundConst.SOUND_PLAY_WAIT_TIME_MS;
 
 /**
  * Created by popina on 05.03.2017..
  */
 
-public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface, SoundInterface
+public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface, SoundInterface, CollisionDetectionInterface
 {
     protected Coordinate center;
     protected int color;
     protected String figureType;
-    protected int sound;
+    private long lastSoundTime = 0;
 
     protected Figure(Coordinate center, String figureType, int color)
     {
@@ -78,15 +83,24 @@ public abstract class Figure implements ShapeParserInterface, ShapeDrawInterface
                 + ShapeConst.FIGURE_CENTER + " " + center;
     }
 
+
     public abstract Figure scale(UtilScale utilScale);
 
     public abstract Figure scaleReverse(UtilScale utilScale);
 
-    public abstract boolean doesCollide(CircleHole ball);
+    @Override
+    public final void playSound(SoundPlayerCallback soundPlayerCallback)
+    {
+        long curTime = System.currentTimeMillis();
+        if ((curTime - lastSoundTime) > SoundConst.SOUND_PLAY_WAIT_TIME_MS)
+        {
+            playSoundIfItIsNotSoon(soundPlayerCallback);
+            lastSoundTime = curTime;
+            Log.d("SOUND", Long.toString(curTime));
+        }
 
 
-    public abstract boolean isGameOver();
+    }
 
-    public abstract boolean isWon();
-
+    protected abstract void playSoundIfItIsNotSoon(SoundPlayerCallback soundPlayerCallback);
 }
