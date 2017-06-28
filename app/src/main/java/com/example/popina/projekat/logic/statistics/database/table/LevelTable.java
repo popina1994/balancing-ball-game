@@ -12,6 +12,7 @@ public class LevelTable implements BaseColumns
     //
     public static final String TABLE_NAME = "level";
     public static final String TABLE_COLUMN_LEVEL_NAME = "name";
+    public static final String TABLE_COLUMN_LEVEL_DIFFICULTY = "difficulty";
 
     public static final String TABLE_CREATE = "CREATE TABLE "
             + TABLE_NAME + "(" + _ID + " INTEGER PRIMARY KEY, " +

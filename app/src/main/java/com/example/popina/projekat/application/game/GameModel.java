@@ -21,6 +21,10 @@ public class GameModel extends CommonModel
 {
     public static final String POLYGON_NAME = "POLYGON_NAME";
     public static float ALPHA = 0.9f;
+
+    public static int MAX_LAGGING_COUNTER = 30;
+
+
     private LinkedList<Figure> listFigures = new LinkedList<>();
     private String fileName;
     private CircleHole ball;
@@ -34,6 +38,7 @@ public class GameModel extends CommonModel
     private Coefficient coefficient;
     private boolean gameOver = false;
     private boolean paused = false;
+    private int laggingCount = 0;
 
     private SoundPlayerCallback soundPlayerCallback;
 
@@ -191,4 +196,13 @@ public class GameModel extends CommonModel
         this.listTimes = listTimes;
     }
 
+    public int getLaggingCount()
+    {
+        return laggingCount;
+    }
+
+    public void setLaggingCount(int laggingCount)
+    {
+        this.laggingCount = laggingCount;
+    }
 }
