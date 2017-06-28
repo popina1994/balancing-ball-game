@@ -22,7 +22,7 @@ public class GameModel extends CommonModel
     public static final String POLYGON_NAME = "POLYGON_NAME";
     public static float ALPHA = 0.9f;
 
-    public static int MAX_LAGGING_COUNTER = 30;
+    public static int MAX_LAGGING_COUNTER = 9;
 
 
     private LinkedList<Figure> listFigures = new LinkedList<>();

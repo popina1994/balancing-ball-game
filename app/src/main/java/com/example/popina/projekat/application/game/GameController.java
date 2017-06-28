@@ -111,10 +111,7 @@ public class GameController
             scaleAcceleration(filteredAcc);
             addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
 
-
             CircleHole ball = model.getBall();
-
-
 
             float newX = possibleMove(model.getSpeed().getX(), ball.getCenter().getX(), deltaT);
             float newY = possibleMove(model.getSpeed().getY(), ball.getCenter().getY(), deltaT);
@@ -195,10 +192,10 @@ public class GameController
                 yAxisChange = true;
             }
 
-
+            int laggingCount = 0;
             if (xAxisChange && yAxisChange)
             {
-                int laggingCount = model.getLaggingCount();
+                laggingCount = model.getLaggingCount();
                 laggingCount ++;
                 if (laggingCount > GameModel.MAX_LAGGING_COUNTER)
                 {
@@ -215,8 +212,9 @@ public class GameController
                     }
                     laggingCount = 0;
                 }
-                model.setLaggingCount(laggingCount);
             }
+
+            model.setLaggingCount(laggingCount);
 
             speedChange.addCoordinate(new Coordinate(vX, vY));
 
