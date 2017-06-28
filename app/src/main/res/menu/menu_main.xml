@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menuItemNewGame"
+        android:title="Nova igra"/>
+
+    <item
         android:id="@+id/menuItemCreatePoligon"
         android:title="Kreiraj novi poligon"/>
     <item
@@ -10,4 +14,6 @@
     <item
         android:id="@+id/menuItemSettings"
         android:title="Podesavanja"/>
+
+
 </menu>

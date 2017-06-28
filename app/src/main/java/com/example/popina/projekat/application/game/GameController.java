@@ -232,8 +232,6 @@ public class GameController
                 model.getSpeed().setY(speedChange.getY());
             }
 
-
-
             view.invalidateSurfaceView();
         }
     }

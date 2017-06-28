@@ -28,7 +28,20 @@ public class GameOverDialog extends Dialog
         setContentView(R.layout.dialog_game_over);
         setCancelable(false);
 
-        EditText editTextPlayerName = (EditText) findViewById(R.id.editTextPlayerName);
+        final EditText editTextPlayerName = (EditText) findViewById(R.id.editTextPlayerName);
+        editTextPlayerName.setOnClickListener(new View.OnClickListener()
+        {
+            boolean deleted = false;
+            @Override
+            public void onClick(View v)
+            {
+                if (!deleted)
+                {
+                    deleted = true;
+                    editTextPlayerName.setText("");
+                }
+            }
+        });
         String userName = editTextPlayerName.getText().toString();
 
         TextView textViewTime = (TextView) findViewById(R.id.textViewPlayerTime);

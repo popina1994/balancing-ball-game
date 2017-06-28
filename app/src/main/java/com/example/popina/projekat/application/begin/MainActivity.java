@@ -38,8 +38,6 @@ import java.util.List;
 
 public class MainActivity extends CommonActivity
 {
-
-
     private MainModel model;
 
     public MainActivity()
@@ -54,11 +52,10 @@ public class MainActivity extends CommonActivity
 
         setContentView(R.layout.activity_main);
         model = new MainModel();
-        initList();
-        loadList();
+        listRefresh();
     }
 
-    private void initList()
+    private void listInit()
     {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -105,6 +102,8 @@ public class MainActivity extends CommonActivity
                 classStart = SettingsActivity.class;
                 requestCode = MainModel.REQUEST_CODE_SETTINGS;
                 break;
+            case R.id.menuItemNewGame:
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -114,7 +113,7 @@ public class MainActivity extends CommonActivity
     }
 
 
-    private void loadList()
+    private void listLoad()
     {
         ListView listView = (ListView) findViewById(R.id.listViewPolygons);
 
@@ -194,6 +193,12 @@ public class MainActivity extends CommonActivity
         registerForContextMenu(listView);
     }
 
+    private void listRefresh()
+    {
+        listInit();
+        listLoad();
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {
@@ -218,8 +223,7 @@ public class MainActivity extends CommonActivity
             Toast.makeText(getApplicationContext(), "Izbrisan poilgon" +
                     model.getCreatedPolygons()[id], Toast.LENGTH_LONG).show();
 
-            initList();
-            loadList();
+            listRefresh();
             return false;
         }
         return true;
@@ -233,8 +237,7 @@ public class MainActivity extends CommonActivity
             case MainModel.REQUEST_CODE_CREATE_POLYGON:
                 if (resultCode == RESULT_OK)
                 {
-                    initList();
-                    loadList();
+                    listRefresh();
                 }
         }
     }
