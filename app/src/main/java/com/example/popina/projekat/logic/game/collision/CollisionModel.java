@@ -135,13 +135,15 @@ public class CollisionModel extends CollisionModelAbstract
             localLaggingCount++;
             if (localLaggingCount > MAX_LAGGING_COUNTER)
             {
-                newBallPos = new StartHole(ball.getCenter().getX(), newY, ball.getRadius());
+                newBallPos.getCenter().setX(ball.getCenter().getX());
+                newBallPos.getCenter().setY(newY);
                 if (!doesCollide(newBallPos, listFigures))
                 {
                     ball.getCenter().setY(newY);
                 }
 
-                newBallPos = new StartHole(newX, ball.getCenter().getY(), ball.getRadius());
+                newBallPos.getCenter().setX(newX);
+                newBallPos.getCenter().setY(ball.getCenter().getY());
                 if (!doesCollide(newBallPos, listFigures))
                 {
                     ball.getCenter().setX(newX);
