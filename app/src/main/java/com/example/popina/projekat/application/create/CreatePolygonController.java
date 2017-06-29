@@ -122,13 +122,13 @@ public class CreatePolygonController
         Figure f = null;
         switch (id)
         {
-            case CreatePolygonModel.CREATE_START_HOLE:
+            case CreatePolygonModel.CREATE_HOLE_START:
                 f = model.getShapeFactory().createStartHole();
                 break;
-            case CreatePolygonModel.CREATE_WRONG_HOLE:
+            case CreatePolygonModel.CREATE_HOLE_WRONG:
                 f = model.getShapeFactory().createWrongHole();
                 break;
-            case CreatePolygonModel.CREATE_FINISH_HOLE:
+            case CreatePolygonModel.CREATE_HOLE_FINISH:
                 f = model.getShapeFactory().createFinishHole();
                 break;
             case CreatePolygonModel.CREATE_OBSTACLE_RECTANGLE:
@@ -136,6 +136,9 @@ public class CreatePolygonController
                 break;
             case CreatePolygonModel.CREATE_OBSTACLE_CIRCLE:
                 f = model.getShapeFactory().createObstacleCircle();
+                break;
+            case CreatePolygonModel.CREATE_HOLE_SLOW_DOWN:
+                f = model.getShapeFactory().createSlowDownHole();
                 break;
         }
 
@@ -158,12 +161,12 @@ public class CreatePolygonController
         int cntFinish = 0;
         for (Figure it : listFIgures)
         {
-            if (ShapeConst.TYPE_START_HOLE.equals(it.getFigureType()))
+            if (ShapeConst.TYPE_HOLE_START.equals(it.getFigureType()))
             {
                 cntStart++;
             }
 
-            if (ShapeConst.TYPE_FINISH_HOLE.equals(it.getFigureType()))
+            if (ShapeConst.TYPE_HOLE_FINISH.equals(it.getFigureType()))
             {
                 cntFinish++;
             }

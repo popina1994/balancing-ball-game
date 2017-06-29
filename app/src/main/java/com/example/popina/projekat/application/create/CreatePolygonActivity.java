@@ -55,13 +55,16 @@ public class CreatePolygonActivity extends CommonActivity
         switch (v.getId())
         {
             case R.id.buttonStartHole:
-                controller.createFigure(CreatePolygonModel.CREATE_START_HOLE);
+                controller.createFigure(CreatePolygonModel.CREATE_HOLE_START);
                 break;
             case R.id.buttonFinishHole:
-                controller.createFigure(CreatePolygonModel.CREATE_FINISH_HOLE);
+                controller.createFigure(CreatePolygonModel.CREATE_HOLE_FINISH);
                 break;
             case R.id.buttonWrongHole:
-                controller.createFigure(CreatePolygonModel.CREATE_WRONG_HOLE);
+                controller.createFigure(CreatePolygonModel.CREATE_HOLE_WRONG);
+                break;
+            case R.id.buttonSlowDownHole:
+                controller.createFigure(CreatePolygonModel.CREATE_HOLE_SLOW_DOWN);
                 break;
             case R.id.buttonObstacleRectangle:
                 controller.createFigure(CreatePolygonModel.CREATE_OBSTACLE_RECTANGLE);

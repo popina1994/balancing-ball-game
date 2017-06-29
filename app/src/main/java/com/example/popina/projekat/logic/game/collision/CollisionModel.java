@@ -119,6 +119,7 @@ public class CollisionModel extends CollisionModelAbstract
 
         boolean xAxisChange = false;
         boolean yAxisChange = false;
+        boolean positionChanged = false;
 
         //Log.d("SPEED CHANGE X", Float.toString(speedChange.getX()));
         //Log.d("SPEED CHANGE Y", Float.toString(speedChange.getY()));
@@ -129,6 +130,7 @@ public class CollisionModel extends CollisionModelAbstract
         if (isDimBetweenDims(0, 0, speedChange.getX()) || doesCollideWithGravityHole)
         {
             ball.getCenter().setX(newX);
+            positionChanged = true;
         } else
         {
             xAxisChange = true;
@@ -139,6 +141,7 @@ public class CollisionModel extends CollisionModelAbstract
         if (isDimBetweenDims(0, 0, speedChange.getY()) || doesCollideWithGravityHole)
         {
             ball.getCenter().setY(newY);
+            positionChanged = true;
         } else
         {
             yAxisChange = true;
@@ -149,6 +152,7 @@ public class CollisionModel extends CollisionModelAbstract
         {
             localLaggingCount = laggingCount;
             localLaggingCount++;
+
             if (localLaggingCount > MAX_LAGGING_COUNTER)
             {
                 newBallPos.getCenter().setX(ball.getCenter().getX());

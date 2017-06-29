@@ -17,11 +17,12 @@ public class CreatePolygonModel extends CommonModel
     public static final int MODE_DELETE = 2;
     public static final int MODE_ROTATE = 3;
 
-    public static final int CREATE_START_HOLE = 0;
-    public static final int CREATE_FINISH_HOLE = 1;
-    public static final int CREATE_WRONG_HOLE = 2;
+    public static final int CREATE_HOLE_START = 0;
+    public static final int CREATE_HOLE_FINISH = 1;
+    public static final int CREATE_HOLE_WRONG = 2;
     public static final int CREATE_OBSTACLE_RECTANGLE = 3;
     public static final int CREATE_OBSTACLE_CIRCLE = 4;
+    public static final int CREATE_HOLE_SLOW_DOWN = 5;
     // List of unscaled figures.
     //
     private LinkedList<Figure> listFigures = new LinkedList<>();

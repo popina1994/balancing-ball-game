@@ -1,4 +1,4 @@
-package com.example.popina.projekat.logic.shape.constants;
+package com.example.popina.projekat.logic.shape.sound;
 
 import android.graphics.Color;
 
@@ -17,6 +17,8 @@ public abstract class SoundConst
     public static final int SOUND_ID_COLLISION = 0;
     public static final int SOUND_ID_MISS = 1;
     public static final int SOUND_ID_SUCCESS = 2;
-    public static final int SOUND_MAX = 3;
+    public static final int SOUND_ID_SLOW_DOWN = 3;
+    public static final int SOUND_MAX = 4;
+
     public static final int MAX_STREAMS = 10;
 }

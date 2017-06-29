@@ -2,9 +2,8 @@ package com.example.popina.projekat.logic.shape.figure.hole.gravity;
 
 import com.example.popina.projekat.logic.shape.constants.ColorConst;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
-import com.example.popina.projekat.logic.shape.constants.SoundConst;
+import com.example.popina.projekat.logic.shape.sound.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
@@ -16,12 +15,12 @@ public class WrongHole extends GravityHole
 {
     public WrongHole(float x, float y, float radius)
     {
-        super(x, y, radius, ShapeConst.TYPE_WRONG_HOLE, ColorConst.COLOR_HOLE_WRONG);
+        super(x, y, radius, ShapeConst.TYPE_HOLE_WRONG, ColorConst.COLOR_HOLE_WRONG);
     }
 
     public WrongHole(Coordinate c, float radius)
     {
-        super(c, radius, ShapeConst.TYPE_WRONG_HOLE, ColorConst.COLOR_HOLE_WRONG);
+        super(c, radius, ShapeConst.TYPE_HOLE_WRONG, ColorConst.COLOR_HOLE_WRONG);
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.example.popina.projekat.logic.shape.figure.obstacle;
 
-import com.example.popina.projekat.logic.game.utility.Coordinate3D;
-import com.example.popina.projekat.logic.shape.constants.SoundConst;
+import com.example.popina.projekat.logic.shape.sound.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.movement.collision.handling.CollisionHandlingInterface;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 

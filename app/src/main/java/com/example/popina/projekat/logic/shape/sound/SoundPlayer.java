@@ -6,7 +6,6 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 
 import com.example.popina.projekat.R;
-import com.example.popina.projekat.logic.shape.constants.SoundConst;
 
 /**
  * Created by popina on 27.06.2017..
@@ -40,6 +39,7 @@ public class SoundPlayer implements SoundPlayerCallback
         sounds[SoundConst.SOUND_ID_COLLISION] = soundPool.load(activity, R.raw.collision, SoundConst.SOUND_PRIORITY);
         sounds[SoundConst.SOUND_ID_MISS] = soundPool.load(activity, R.raw.miss, SoundConst.SOUND_PRIORITY);
         sounds[SoundConst.SOUND_ID_SUCCESS] = soundPool.load(activity, R.raw.success, SoundConst.SOUND_PRIORITY);
+        sounds[SoundConst.SOUND_ID_SLOW_DOWN] = soundPool.load(activity, R.raw.water, SoundConst.SOUND_PRIORITY);
     }
 
     @Override

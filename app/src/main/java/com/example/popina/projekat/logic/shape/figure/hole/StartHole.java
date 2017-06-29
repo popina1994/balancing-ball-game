@@ -1,6 +1,5 @@
 package com.example.popina.projekat.logic.shape.figure.hole;
 
-import com.example.popina.projekat.application.game.GameModel;
 import com.example.popina.projekat.logic.shape.constants.ColorConst;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
@@ -15,12 +14,12 @@ public class StartHole extends CircleHole
 {
     public StartHole(float x, float y, float radius)
     {
-        super(x, y, radius, ShapeConst.TYPE_START_HOLE, ColorConst.COLOR_HOLE_START);
+        super(x, y, radius, ShapeConst.TYPE_HOLE_START, ColorConst.COLOR_HOLE_START);
     }
 
     public StartHole(Coordinate c, float radius)
     {
-        super(c, radius, ShapeConst.TYPE_START_HOLE, ColorConst.COLOR_HOLE_START);
+        super(c, radius, ShapeConst.TYPE_HOLE_START, ColorConst.COLOR_HOLE_START);
     }
 
     @Override
