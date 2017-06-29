@@ -50,7 +50,7 @@ public class CircleObstacle extends Obstacle
         // v1 - v2
         Coordinate v1Subv2 = speed.generate2dCoordinate();
         float scalarProduct = v1Subv2.scalarProduct(x1Subx2);
-        x1Subx2.mulScalar(2 * scalarProduct / x1Subx2.magnitudeSquared());
+        x1Subx2.mulThisScalar(2 * scalarProduct / x1Subx2.magnitudeSquared());
         Coordinate neededspeed = speed.generate2dCoordinate().subCoordinate(x1Subx2);
         return new Coordinate( (neededspeed.getX() - speed.getX())/2, (neededspeed.getY() - speed.getY())/2);
 

@@ -1,9 +1,10 @@
-package com.example.popina.projekat.logic.shape.figure.hole;
+package com.example.popina.projekat.logic.shape.figure.hole.gravity;
 
 import com.example.popina.projekat.logic.shape.constants.ColorConst;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.constants.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
@@ -11,7 +12,7 @@ import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
  * Created by popina on 08.03.2017..
  */
 
-public class FinishHole extends CircleHole
+public class FinishHole extends GravityHole
 {
     public FinishHole(float x, float y, float radius)
     {
@@ -39,12 +40,6 @@ public class FinishHole extends CircleHole
 
     @Override
     public boolean isWon()
-    {
-        return true;
-    }
-
-    @Override
-    public boolean isGameOver()
     {
         return true;
     }

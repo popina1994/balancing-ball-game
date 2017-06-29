@@ -12,7 +12,7 @@ import com.example.popina.projekat.logic.shape.figure.Figure;
 
 public abstract class CircleHole extends Figure
 {
-    private float radius;
+    protected float radius;
 
     public CircleHole(float x, float y, float radius, String figureType, int color)
     {

@@ -47,14 +47,19 @@ public class Coordinate implements Cloneable
         return Float.toString(x) + " " + Float.toString(y) + " ";
     }
 
-    public Coordinate addCoordinate(Coordinate coordinate)
+    public Coordinate addToThisCoordinate(Coordinate coordinate)
     {
         x += coordinate.getX();
         y += coordinate.getY();
         return this;
     }
 
-    public Coordinate mulScalar(float scalar)
+    public Coordinate addCoordinate(Coordinate coordinate)
+    {
+        return new Coordinate(x + coordinate.x, y + coordinate.y);
+    }
+
+    public Coordinate mulThisScalar(float scalar)
     {
         x *= scalar;
         y *= scalar;

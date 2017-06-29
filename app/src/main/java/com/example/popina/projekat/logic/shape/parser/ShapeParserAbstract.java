@@ -2,22 +2,10 @@ package com.example.popina.projekat.logic.shape.parser;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 
-import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
-import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
-import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
-import com.example.popina.projekat.logic.shape.figure.hole.WrongHole;
-import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
-import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.LinkedList;
 
 /**

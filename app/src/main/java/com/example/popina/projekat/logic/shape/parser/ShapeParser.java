@@ -8,9 +8,9 @@ import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.hole.FinishHole;
+import com.example.popina.projekat.logic.shape.figure.hole.gravity.FinishHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
-import com.example.popina.projekat.logic.shape.figure.hole.WrongHole;
+import com.example.popina.projekat.logic.shape.figure.hole.gravity.WrongHole;
 import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
 

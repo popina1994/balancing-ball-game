@@ -9,7 +9,8 @@ import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
-import com.example.popina.projekat.logic.shape.figure.obstacle.Obstacle;
+import com.example.popina.projekat.logic.shape.figure.hole.gravity.GravityHole;
+import com.example.popina.projekat.logic.shape.movement.collision.handling.CollisionHandlingInterface;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
 import java.util.LinkedList;
@@ -62,6 +63,8 @@ public class CollisionModel extends CollisionModelAbstract
 
         cnt++;
 
+        boolean doesCollideWithGravityHole = false;
+
         if (cnt > 25)
         {
             Log.d("VX", Float.toString(vX));
@@ -89,17 +92,22 @@ public class CollisionModel extends CollisionModelAbstract
                 }
                 else
                 {
-                    // In case of obstacle collision.
+                    // In case of collision.
                     //
-                    Obstacle obstacle = (Obstacle) itFigure;
+                    CollisionHandlingInterface obstacle = (CollisionHandlingInterface) itFigure;
+
+                    if (itFigure instanceof GravityHole)
+                    {
+                        doesCollideWithGravityHole = true;
+                    }
 
                     Coordinate speedChangeFigure = obstacle.getSpeedChangeAfterCollision((StartHole) ball, newBallPos, speed);
-                    speedChangeFigure.mulScalar(2);
+                    speedChangeFigure.mulThisScalar(2);
 
                     //Log.d("SPEEDCHANGECOLX", Float.toString(speedChangeFigure.getX()));
                     //Log.d("SPEEDCHANGECOLY", Float.toString(speedChangeFigure.getY()));
 
-                    speedChange.addCoordinate(speedChangeFigure);
+                    speedChange.addToThisCoordinate(speedChangeFigure);
                     if (retVal == CollisionModelAbstract.GAME_CONTINUES_NO_COLLISION)
                     {
                         retVal = CollisionModelAbstract.GAME_CONTINUES_COLLISION;
@@ -118,7 +126,7 @@ public class CollisionModel extends CollisionModelAbstract
         // It is faster to update without neccessary copying of center of ball, but it is not safe. (vsync...)
         // if there is no collison on x axis.
         //
-        if (isDimBetweenDims(0, 0, speedChange.getX()))
+        if (isDimBetweenDims(0, 0, speedChange.getX()) || doesCollideWithGravityHole)
         {
             ball.getCenter().setX(newX);
         } else
@@ -128,7 +136,7 @@ public class CollisionModel extends CollisionModelAbstract
 
         // If there is no collsion on y axis.
         //
-        if (isDimBetweenDims(0, 0, speedChange.getY()))
+        if (isDimBetweenDims(0, 0, speedChange.getY()) || doesCollideWithGravityHole)
         {
             ball.getCenter().setY(newY);
         } else
@@ -137,7 +145,7 @@ public class CollisionModel extends CollisionModelAbstract
         }
 
         int localLaggingCount = 0;
-        if (xAxisChange && yAxisChange)
+        if (xAxisChange && yAxisChange && !doesCollideWithGravityHole)
         {
             localLaggingCount = laggingCount;
             localLaggingCount++;
@@ -161,16 +169,16 @@ public class CollisionModel extends CollisionModelAbstract
         }
         laggingCount = localLaggingCount;
 
-        speedChange.addCoordinate(new Coordinate(vX, vY));
+        speedChange.addToThisCoordinate(new Coordinate(vX, vY));
 
-        if (xAxisChange)
+        if (xAxisChange || doesCollideWithGravityHole)
         {
             //Log.d("XAXISCHange", "TRUE");
             speedChange.setX(coefficient.getReverseSlowDown() * speedChange.getX());
             speed.setX(speedChange.getX());
         }
 
-        if (yAxisChange)
+        if (yAxisChange || doesCollideWithGravityHole)
         {
             //Log.d("YAXISCHange", "TRUE");
             speedChange.setY(coefficient.getReverseSlowDown() * speedChange.getY());
