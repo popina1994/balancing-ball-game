@@ -264,9 +264,10 @@ public class RectangleObstacle extends Obstacle
         Coordinate speedRot = rotatePointAroundCenter(sineOfOpositeAngle, cosineOfOpositeAngle, new Coordinate(speed.getX(), speed.getY()));
         boolean speedChangeX = false;
         boolean speedChangeY = false;
-
+        /*
         Log.d("SPEEDROTX", Float.toString(speedRot.getX()));
         Log.d("SPEEDROTY", Float.toString(speedRot.getY()));
+        */
         Coordinate centerBallRot = rotatePointAroundCenter(getCenter(), sineOfOpositeAngle, cosineOfOpositeAngle, ballNew.getCenter());
 
         if ((doesBallHitLine(getBotomLeft(), getBottomRight(), centerBallRot, ballNew.getRadius(), true) && speedRot.getY() <= 0)
@@ -282,10 +283,10 @@ public class RectangleObstacle extends Obstacle
             speedChange.setX(-speedRot.getX());
             speedChangeY = true;
         }
-
+        /*
         Log.d("SPEEDROTX", Float.toString(speedChange.getX()));
         Log.d("SPEEDROTY", Float.toString(speedChange.getY()));
-
+*/
 
         return rotatePointAroundCenter(sine, cosine, speedChange);
     }

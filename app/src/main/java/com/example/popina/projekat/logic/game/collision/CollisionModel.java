@@ -23,9 +23,11 @@ import static com.example.popina.projekat.logic.game.utility.Utility.opositeSign
 
 public class CollisionModel extends CollisionModelAbstract
 {
-    public static int MAX_LAGGING_COUNTER = 9;
+    public static int MAX_LAGGING_COUNTER = 3;
     private Coordinate3D speed = new Coordinate3D(5, 5, 0);
     private int laggingCount = 0;
+
+    private int cnt = 0;
 
     private Coordinate speedChange = new Coordinate(0, 0);
     private StartHole newBallPos = new StartHole(0, 0, 0);
@@ -58,9 +60,15 @@ public class CollisionModel extends CollisionModelAbstract
         speedChange.setX(0);
         speedChange.setY(0);
 
-        Log.d("VX", Float.toString(vX));
-        Log.d("VY", Float.toString(vY));
+        cnt++;
 
+        if (cnt > 25)
+        {
+            Log.d("VX", Float.toString(vX));
+            Log.d("VY", Float.toString(vY));
+            Log.d("********", "********");
+            cnt = 0;
+        }
 
         for (Figure itFigure : listFigures)
         {
@@ -88,8 +96,8 @@ public class CollisionModel extends CollisionModelAbstract
                     Coordinate speedChangeFigure = obstacle.getSpeedChangeAfterCollision((StartHole) ball, newBallPos, speed);
                     speedChangeFigure.mulScalar(2);
 
-                    Log.d("SPEEDCHANGECOLX", Float.toString(speedChangeFigure.getX()));
-                    Log.d("SPEEDCHANGECOLY", Float.toString(speedChangeFigure.getY()));
+                    //Log.d("SPEEDCHANGECOLX", Float.toString(speedChangeFigure.getX()));
+                    //Log.d("SPEEDCHANGECOLY", Float.toString(speedChangeFigure.getY()));
 
                     speedChange.addCoordinate(speedChangeFigure);
                     if (retVal == CollisionModelAbstract.GAME_CONTINUES_NO_COLLISION)
@@ -104,8 +112,8 @@ public class CollisionModel extends CollisionModelAbstract
         boolean xAxisChange = false;
         boolean yAxisChange = false;
 
-        Log.d("SPEED CHANGE X", Float.toString(speedChange.getX()));
-        Log.d("SPEED CHANGE Y", Float.toString(speedChange.getY()));
+        //Log.d("SPEED CHANGE X", Float.toString(speedChange.getX()));
+        //Log.d("SPEED CHANGE Y", Float.toString(speedChange.getY()));
 
         // It is faster to update without neccessary copying of center of ball, but it is not safe. (vsync...)
         // if there is no collison on x axis.
@@ -157,21 +165,20 @@ public class CollisionModel extends CollisionModelAbstract
 
         if (xAxisChange)
         {
-            Log.d("XAXISCHange", "TRUE");
+            //Log.d("XAXISCHange", "TRUE");
             speedChange.setX(coefficient.getReverseSlowDown() * speedChange.getX());
             speed.setX(speedChange.getX());
         }
 
         if (yAxisChange)
         {
-            Log.d("YAXISCHange", "TRUE");
+            //Log.d("YAXISCHange", "TRUE");
             speedChange.setY(coefficient.getReverseSlowDown() * speedChange.getY());
             speed.setY(speedChange.getY());
         }
 
         return retVal;
     }
-
 
     private boolean doesCollide(StartHole possibleBall, LinkedList<Figure> listFigures)
     {
@@ -210,7 +217,7 @@ public class CollisionModel extends CollisionModelAbstract
             newSpeedY = 0;
         }
 
-
+        /*
         Log.d("filteredAccX", Float.toString(filteredAcc.getX()));
         Log.d("filteredAccY", Float.toString(filteredAcc.getY()));
         Log.d("frictionMakeAccX", Boolean.toString(frictionMakeAccX));
@@ -221,7 +228,8 @@ public class CollisionModel extends CollisionModelAbstract
         Log.d("SPEEDY", Float.toString(speed.getY()));
         Log.d("NEWSPEEDX", Float.toString(newSpeedX));
         Log.d("NEWSPEEDY", Float.toString(newSpeedY));
-        Log.d("********", "********");
+        */
+        //Log.d("********", "********");
         speed.setX(newSpeedX);
         speed.setY(newSpeedY);
     }
