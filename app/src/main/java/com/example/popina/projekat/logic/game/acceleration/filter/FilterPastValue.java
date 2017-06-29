@@ -1,4 +1,4 @@
-package com.example.popina.projekat.application.game;
+package com.example.popina.projekat.logic.game.acceleration.filter;
 
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 
@@ -6,13 +6,13 @@ import com.example.popina.projekat.logic.game.utility.Coordinate3D;
  * Created by popina on 12.03.2017..
  */
 
-public class Filter
+public class FilterPastValue implements FilterInterface
 {
-
+    public static float ALPHA = 0.9f;
     private Coordinate3D oldVals;
     private float alpha;
 
-    public Filter(float alpha)
+    public FilterPastValue(float alpha)
     {
         this.alpha = alpha;
     }

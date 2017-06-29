@@ -8,20 +8,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.popina.projekat.logic.game.coefficient.Coefficient;
+import com.example.popina.projekat.logic.game.collision.CollisionModel;
+import com.example.popina.projekat.logic.game.collision.CollisionModelAbstract;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
-import com.example.popina.projekat.logic.shape.figure.obstacle.Obstacle;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayer;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
 import java.util.LinkedList;
 
-import static com.example.popina.projekat.logic.game.utility.Utility.isDimBetweenDims;
 import static com.example.popina.projekat.logic.game.utility.Utility.opositeSign;
 
 /**
@@ -54,6 +53,11 @@ public class GameController
 
         SoundPlayerCallback soundPlayerCallback = new SoundPlayer(gameActivity);
         model.setSoundPlayerCallback(soundPlayerCallback);
+
+        CollisionModelAbstract collisionModelAbstract = new CollisionModel(coefficient, soundPlayerCallback);
+        model.setCollisionModel(collisionModelAbstract);
+
+
     }
 
     public void destructor()
@@ -68,7 +72,7 @@ public class GameController
 
         if (null != sensor)
         {
-            model.setLastTime(Long.MAX_VALUE);
+            model.setLastTimeInitialized(false);
             sensorManager.registerListener(gameActivity, sensor, SensorManager.SENSOR_DELAY_GAME);
             model.getListTimes().addLast(new Time(System.currentTimeMillis()));
             model.setPaused(false);
@@ -87,12 +91,13 @@ public class GameController
     {
         if (!model.isGameOver())
         {
-            if (model.getLastTime() != Long.MAX_VALUE)
+            if (model.isLastTimeInitialized())
             {
                 Coordinate3D filteredAcc = model.getFilter().filter(new Coordinate3D(newAcc[0], newAcc[1], newAcc[2]));
                 updatePosition(filteredAcc, time);
             }
-            model.setLastTime(time);
+            model.getCollisionModel().setLastTime(time);
+            model.setLastTimeInitialized(true);
         }
     }
 
@@ -102,11 +107,25 @@ public class GameController
         //
         if (model.isSurfaceInitialized())
         {
-
-            // model.getLastTime
-            // model.getBall
-            // model.getSpeed
-            // model.getLIstFigures
+            int state = model.getCollisionModel().updateSystem(filteredAcc, time, model.getListFigures(), model.getBall());
+            switch (state)
+            {
+                case CollisionModelAbstract.GAME_CONTINUES_COLLISION:
+                    break;
+                case CollisionModelAbstract.GAME_CONTINUES_NO_COLLISION:
+                    break;
+                case CollisionModelAbstract.GAME_OVER_LOSE:
+                    model.setGameOver(true);
+                    Toast.makeText(gameActivity, "Izgubio si igru", Toast.LENGTH_SHORT).show();
+                    break;
+                case CollisionModelAbstract.GAME_OVER_WIN:
+                    model.setGameOver(true);
+                    model.getListTimes().getLast().setEnd(System.currentTimeMillis());
+                    Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getListTimes()), model.getFileName());
+                    dialog.show();
+                    break;
+            }
+            /*
             float deltaT = Utility.convertNsToS(time - model.getLastTime());
             scaleAcceleration(filteredAcc);
             addFrictionToAcc(filteredAcc, model.getSpeed(), deltaT);
@@ -231,65 +250,10 @@ public class GameController
                 speedChange.setY(model.getCoefficient().getReverseSlowDown() * speedChange.getY());
                 model.getSpeed().setY(speedChange.getY());
             }
+            */
 
             view.invalidateSurfaceView();
         }
-    }
-
-
-    private boolean doesCollide(StartHole possibleBall)
-    {
-        for (Figure it : model.getListFigures())
-        {
-            if (it.doesCollide(possibleBall))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void addFrictionToAcc(Coordinate3D filteredAcc, Coordinate3D speed, float deltaT)
-    {
-        float frictionAccX = -1 * opositeSign(speed.getX()) * model.getCoefficient().getMi() * filteredAcc.getZ();
-        float frictionAccY = opositeSign(speed.getY()) * model.getCoefficient().getMi() * filteredAcc.getZ();
-
-
-        float frictatedAccX = filteredAcc.getX() + frictionAccX;
-        float frictatedAccY = filteredAcc.getY() + frictionAccY;
-
-        boolean frictionMakeAccX = checkFriction(frictionAccX, filteredAcc.getX());
-        boolean frictionMakeAccY = checkFriction(frictionAccY, filteredAcc.getY());
-
-        float newSpeedX = updateSpeed(speed.getX(), frictatedAccX, deltaT, -1);
-        float newSpeedY = updateSpeed(speed.getY(), frictatedAccY, deltaT, 1);
-
-
-
-        if ((newSpeedX * speed.getX() <= 0) && frictionMakeAccX)
-        {
-            newSpeedX = 0;
-        }
-
-        if ((newSpeedY * speed.getY() <= 0) && frictionMakeAccY)
-        {
-            newSpeedY = 0;
-        }
-
-
-        Log.d("filteredAccX", Float.toString(filteredAcc.getX()));
-        Log.d("filteredAccY", Float.toString(filteredAcc.getY()));
-        Log.d("frictionMakeAccX", Boolean.toString(frictionMakeAccX));
-        Log.d("frictionMakeAccY", Boolean.toString(frictionMakeAccY));
-        Log.d("FRICTATEDACCY", Float.toString(frictatedAccY));
-        Log.d("FRICTATEDACCX", Float.toString(frictatedAccX));
-        Log.d("SPEEDX", Float.toString(speed.getX()));
-        Log.d("SPEEDY", Float.toString(speed.getY()));
-        Log.d("NEWSPEEDX", Float.toString(newSpeedX));
-        Log.d("NEWSPEEDY", Float.toString(newSpeedY));
-        Log.d("********", "********");
-        speed.setX(newSpeedX);
-        speed.setY(newSpeedY);
     }
 
     private long calcTime(LinkedList<Time> listTimes)

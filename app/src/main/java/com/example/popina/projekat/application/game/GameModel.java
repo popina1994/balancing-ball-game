@@ -1,11 +1,12 @@
 package com.example.popina.projekat.application.game;
 
 import android.hardware.SensorManager;
-import android.media.SoundPool;
 
 import com.example.popina.projekat.application.common.CommonModel;
+import com.example.popina.projekat.logic.game.acceleration.filter.FilterPastValue;
+import com.example.popina.projekat.logic.game.acceleration.filter.FilterInterface;
 import com.example.popina.projekat.logic.game.coefficient.Coefficient;
-import com.example.popina.projekat.logic.game.utility.Coordinate3D;
+import com.example.popina.projekat.logic.game.collision.CollisionModelAbstract;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
@@ -19,28 +20,46 @@ import java.util.LinkedList;
 
 public class GameModel extends CommonModel
 {
-    public static final String POLYGON_NAME = "POLYGON_NAME";
-    public static float ALPHA = 0.9f;
-
-    public static int MAX_LAGGING_COUNTER = 9;
-
-
-    private LinkedList<Figure> listFigures = new LinkedList<>();
-    private String fileName;
     private CircleHole ball;
-    private Filter filter = new Filter(ALPHA);
+    private LinkedList<Figure> listFigures = new LinkedList<>();
 
-    private long lastTime = Long.MAX_VALUE;
-    private Coordinate3D speed = new Coordinate3D(5, 5, 0);
+    private FilterInterface filter = new FilterPastValue(FilterPastValue.ALPHA);
+    private CollisionModelAbstract collisionModel;
+
+    public static final String POLYGON_NAME = "POLYGON_NAME";
+    private String fileName;
+
     private int height;
     private int width;
     private boolean surfaceInitialized;
-    private Coefficient coefficient;
     private boolean gameOver = false;
     private boolean paused = false;
-    private int laggingCount = 0;
+    private boolean lastTimeInitialized = false;
+    private LinkedList<Time> listTimes = new LinkedList<>();
 
+    private SensorManager sensorManager;
+    private Coefficient coefficient;
     private SoundPlayerCallback soundPlayerCallback;
+
+    public CollisionModelAbstract getCollisionModel()
+    {
+        return collisionModel;
+    }
+
+    public void setCollisionModel(CollisionModelAbstract collisionModel)
+    {
+        this.collisionModel = collisionModel;
+    }
+
+    public boolean isLastTimeInitialized()
+    {
+        return lastTimeInitialized;
+    }
+
+    public void setLastTimeInitialized(boolean lastTimeInitialized)
+    {
+        this.lastTimeInitialized = lastTimeInitialized;
+    }
 
     public SoundPlayerCallback getSoundPlayerCallback()
     {
@@ -51,9 +70,6 @@ public class GameModel extends CommonModel
     {
         this.soundPlayerCallback = soundPlayerCallback;
     }
-
-    private LinkedList<Time> listTimes = new LinkedList<>();
-    private SensorManager sensorManager;
 
     public LinkedList<Figure> getListFigures()
     {
@@ -85,35 +101,16 @@ public class GameModel extends CommonModel
         this.ball = ball;
     }
 
-    public Filter getFilter()
+    public FilterInterface getFilter()
     {
         return filter;
     }
 
-    public void setFilter(Filter filter)
+    public void setFilter(FilterInterface filter)
     {
         this.filter = filter;
     }
 
-    public long getLastTime()
-    {
-        return lastTime;
-    }
-
-    public void setLastTime(long lastTime)
-    {
-        this.lastTime = lastTime;
-    }
-
-    public Coordinate3D getSpeed()
-    {
-        return speed;
-    }
-
-    public void setSpeed(Coordinate3D speed)
-    {
-        this.speed = speed;
-    }
 
     public int getHeight()
     {
@@ -196,13 +193,4 @@ public class GameModel extends CommonModel
         this.listTimes = listTimes;
     }
 
-    public int getLaggingCount()
-    {
-        return laggingCount;
-    }
-
-    public void setLaggingCount(int laggingCount)
-    {
-        this.laggingCount = laggingCount;
-    }
 }
