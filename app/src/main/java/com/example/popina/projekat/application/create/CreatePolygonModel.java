@@ -1,7 +1,6 @@
 package com.example.popina.projekat.application.create;
 
 import com.example.popina.projekat.application.common.CommonModel;
-import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 
 import java.util.LinkedList;
@@ -22,14 +21,19 @@ public class CreatePolygonModel extends CommonModel
     public static final int CREATE_HOLE_WRONG = 2;
     public static final int CREATE_OBSTACLE_RECTANGLE = 3;
     public static final int CREATE_OBSTACLE_CIRCLE = 4;
-    public static final int CREATE_HOLE_SLOW_DOWN = 5;
+    public static final int CREATE_HOLE_VORTEX = 5;
     // List of unscaled figures.
     //
     private LinkedList<Figure> listFigures = new LinkedList<>();
+    private String fileName;
 
     private int curMode = MODE_MOVE;
 
     private Figure selectedFigure = null;
+    private boolean initializedScreen = false;
+    private boolean editMode = false;
+    private int levelDifficulty;
+
 
     public Float getStartAngleOfRotation()
     {
@@ -74,4 +78,43 @@ public class CreatePolygonModel extends CommonModel
         this.listFigures = listFigures;
     }
 
+    public String getFileName()
+    {
+        return fileName;
+    }
+
+    public void setFileName(String fileName)
+    {
+        this.fileName = fileName;
+    }
+
+    public boolean isInitializedScreen()
+    {
+        return initializedScreen;
+    }
+
+    public void setInitializedScreen(boolean initializedScreen)
+    {
+        this.initializedScreen = initializedScreen;
+    }
+
+    public boolean isEditMode()
+    {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode)
+    {
+        this.editMode = editMode;
+    }
+
+    public void setLevelDifficulty(int levelDifficulty)
+    {
+        this.levelDifficulty = levelDifficulty;
+    }
+
+    public int getLevelDifficulty()
+    {
+        return levelDifficulty;
+    }
 }

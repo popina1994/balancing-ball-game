@@ -57,7 +57,7 @@ public abstract  class GravityHole extends CircleHole implements CollisionHandli
     public Coordinate getSpeedChangeAfterCollision(StartHole ballOld, StartHole ballNew, Coordinate3D speed)
     {
         Coordinate vectorSpeed = getCenter().subCoordinate(ballNew.getCenter());
-        if (!Utility.isDimBetweenDims(0, 0, vectorSpeed.getX()) || Utility.isDimBetweenDims(0, 0, vectorSpeed.getY()))
+        if (!Utility.isDimBetweenDims(0, 0, Utility.distanceSquared(ballNew.getCenter(), getCenter())))
             vectorSpeed.mulThisScalar(GRAVITY / Utility.distanceSquared(ballNew.getCenter(), getCenter()));
         return vectorSpeed;
     }

@@ -1,11 +1,18 @@
 package com.example.popina.projekat.application.create;
 
+import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
+import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -25,6 +32,8 @@ public class CreatePolygonController
         this.createPolygonActivity = createPolygonActivity;
         this.view = view;
         this.model = model;
+
+
     }
 
 
@@ -137,8 +146,8 @@ public class CreatePolygonController
             case CreatePolygonModel.CREATE_OBSTACLE_CIRCLE:
                 f = model.getShapeFactory().createObstacleCircle();
                 break;
-            case CreatePolygonModel.CREATE_HOLE_SLOW_DOWN:
-                f = model.getShapeFactory().createSlowDownHole();
+            case CreatePolygonModel.CREATE_HOLE_VORTEX:
+                f = model.getShapeFactory().createVortexHole();
                 break;
         }
 
@@ -152,9 +161,7 @@ public class CreatePolygonController
 
     }
 
-    // Dilaog pops up and asks user to enter name of polygon or if invalid number of start and finish wholes, Toast which warns user to return.
-    //
-    public void savePolygon()
+    boolean canSavePolygon()
     {
         LinkedList<Figure> listFIgures = model.getListFigures();
         int cntStart = 0;
@@ -194,10 +201,86 @@ public class CreatePolygonController
         {
             Toast toast = Toast.makeText(createPolygonActivity.getApplicationContext(), errorText, Toast.LENGTH_SHORT);
             toast.show();
-        } else
+            return false;
+        }
+        return true;
+
+    }
+
+    // Dilaog pops up and asks user to enter name of polygon or if invalid number of start and finish wholes, Toast which warns user to return.
+    //
+    public void savePolygon()
+    {
+        if (canSavePolygon())
         {
-            SaveDialog dialog = new SaveDialog(createPolygonActivity, model);
+            SaveDialog dialog = new SaveDialog(createPolygonActivity, this, model);
             dialog.show();
         }
     }
+
+    LinkedList<Figure> initWalls()
+    {
+        ShapeBorderFactory shapeBorderFactory = (ShapeBorderFactory) model.getShapeFactory();
+        LinkedList<Figure> listWalls = new LinkedList<>();
+        LinkedList<RectangleObstacle> listWallsRect = shapeBorderFactory.createBorders();
+
+        for (RectangleObstacle itRect : listWallsRect)
+        {
+            listWalls.addLast(itRect);
+        }
+
+        return listWalls;
+    }
+
+    public void savePolygonInFileAndDB()
+    {
+        if (model.getFileName() != null)
+        {
+            FileOutputStream outputStream = null;
+
+            try
+            {
+                outputStream = createPolygonActivity.openFileOutput(model.getFileName(), Context.MODE_PRIVATE);
+                StringBuilder stringBuilder = new StringBuilder();
+                LinkedList<Figure> listFigure = model.getListFigures();
+                listFigure = model.getShapeFactory().scaleReverseFigure(listFigure);
+
+                for (Figure it : listFigure)
+                {
+                    stringBuilder.append(it.toString() + "\n");
+                }
+
+                outputStream.write(stringBuilder.toString().getBytes());
+
+                ScoreDatabase database = new ScoreDatabase(createPolygonActivity.getApplicationContext());
+                database.insertLevel(model.getFileName(), model.getLevelDifficulty());
+
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                if (null != outputStream)
+                {
+                    try
+                    {
+                        outputStream.close();
+                    }
+                    catch (IOException e)
+                    {
+                        Log.d("Save dialog", "Neko te prokleo");
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        else
+        {
+            Toast toast = Toast.makeText(createPolygonActivity.getApplicationContext(), "Morate da date ime poligonu (kliknite sacuvaj)", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
 }

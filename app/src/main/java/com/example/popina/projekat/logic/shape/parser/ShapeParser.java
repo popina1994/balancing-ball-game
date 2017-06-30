@@ -10,7 +10,7 @@ import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.gravity.FinishHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
-import com.example.popina.projekat.logic.shape.figure.hole.gravity.SlowDownHole;
+import com.example.popina.projekat.logic.shape.figure.hole.gravity.VortexHole;
 import com.example.popina.projekat.logic.shape.figure.hole.gravity.WrongHole;
 import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
@@ -60,8 +60,8 @@ public class ShapeParser extends ShapeParserAbstract
                         Float.parseFloat(tokens[ShapeConst.FIGURE_CIRCLE_RADIUS_IDX])
                 );
                 break;
-            case ShapeConst.TYPE_HOLE_SLOW_DOWN:
-                figure = new SlowDownHole(
+            case ShapeConst.TYPE_HOLE_VORTEX:
+                figure = new VortexHole(
                         Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_X_IDX]),
                         Float.parseFloat(tokens[ShapeConst.FIGURE_COORDINATE_Y_IDX]),
                         Float.parseFloat(tokens[ShapeConst.FIGURE_CIRCLE_RADIUS_IDX])

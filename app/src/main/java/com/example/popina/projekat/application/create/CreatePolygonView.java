@@ -13,7 +13,11 @@ import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
+import com.example.popina.projekat.logic.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
+
+import java.util.LinkedList;
 
 /**
  * Created by popina on 04.03.2017..
@@ -83,9 +87,27 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
         ShapeFactory shapeFactory = new ShapeBorderFactory(utilScaleNormal);
         model.setShapeFactory(shapeFactory);
 
+
         ShapeDraw shapeDraw = new ShapeDraw(getContext(), width, height);
         shapeDraw.setCommonModel(model);
         model.setShapeDraw(shapeDraw);
+
+        if (!model.isInitializedScreen())
+        {
+            LinkedList<Figure> listFigures  = null;
+            if (model.isEditMode())
+            {
+                ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
+                model.setShapeParser(shapeParser);
+                listFigures = (LinkedList<Figure>) shapeParser.parseFile(model.getFileName());
+            }
+            else
+            {
+                listFigures = controller.initWalls();
+            }
+            model.setInitializedScreen(true);
+            model.setListFigures(listFigures);
+        }
 
         holder.unlockCanvasAndPost(canvas);
         setOnTouchListener(this);

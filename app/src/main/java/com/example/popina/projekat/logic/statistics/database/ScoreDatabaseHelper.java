@@ -15,7 +15,7 @@ public class ScoreDatabaseHelper extends SQLiteOpenHelper
 {
 
     public static final String DATABASE_NAME = "scores.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
 
     public ScoreDatabaseHelper(Context context)
     {

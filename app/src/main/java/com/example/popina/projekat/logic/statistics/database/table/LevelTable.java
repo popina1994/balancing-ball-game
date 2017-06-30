@@ -16,6 +16,7 @@ public class LevelTable implements BaseColumns
 
     public static final String TABLE_CREATE = "CREATE TABLE "
             + TABLE_NAME + "(" + _ID + " INTEGER PRIMARY KEY, " +
-            TABLE_COLUMN_LEVEL_NAME + " TEXT);";
+            TABLE_COLUMN_LEVEL_NAME + " TEXT UNIQUE, " +
+            TABLE_COLUMN_LEVEL_DIFFICULTY +" INTEGER );";
     public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 }

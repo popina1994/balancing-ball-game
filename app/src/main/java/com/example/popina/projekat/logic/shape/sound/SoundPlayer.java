@@ -39,7 +39,7 @@ public class SoundPlayer implements SoundPlayerCallback
         sounds[SoundConst.SOUND_ID_COLLISION] = soundPool.load(activity, R.raw.collision, SoundConst.SOUND_PRIORITY);
         sounds[SoundConst.SOUND_ID_MISS] = soundPool.load(activity, R.raw.miss, SoundConst.SOUND_PRIORITY);
         sounds[SoundConst.SOUND_ID_SUCCESS] = soundPool.load(activity, R.raw.success, SoundConst.SOUND_PRIORITY);
-        sounds[SoundConst.SOUND_ID_SLOW_DOWN] = soundPool.load(activity, R.raw.water, SoundConst.SOUND_PRIORITY);
+        sounds[SoundConst.SOUND_ID_VORTEX] = soundPool.load(activity, R.raw.water, SoundConst.SOUND_PRIORITY);
     }
 
     @Override

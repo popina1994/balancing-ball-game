@@ -29,8 +29,6 @@ public class GameActivity extends CommonActivity implements SensorEventListener
         }
 
         model = new GameModel();
-        // TODO : Refactor where file name and coeficent are initialized..
-        //
         model.setFileName(fileName);
 
         view = (GameView) findViewById(R.id.surfaceViewGame);

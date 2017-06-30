@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,8 @@ import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.example.popina.projekat.R.id.textView;
 
 public class MainActivity extends CommonActivity
 {
@@ -117,8 +120,9 @@ public class MainActivity extends CommonActivity
     {
         ListView listView = (ListView) findViewById(R.id.listViewPolygons);
 
-        String[] from = new String[]{MainModel.POLYGON_NAME, MainModel.POLYGON_IMAGE};
-        int[] to = new int[]{R.id.textViewListItemPolygonName, R.id.imageViewPolygon};
+        String[] from = new String[]{MainModel.POLYGON_NAME, MainModel.POLYGON_IMAGE, MainModel.POLYGON_DIFFICULTY};
+        int[] to = new int[]{R.id.textViewListItemPolygonName, R.id.imageViewPolygon, R.id.ratingBarListItemPolygonDifficulty};
+
 
         String[] createdPolygons = getFilesDir().list(new FilenameFilter()
         {
@@ -133,13 +137,14 @@ public class MainActivity extends CommonActivity
             }
         });
         model.setCreatedPolygons(createdPolygons);
-
+        databaseInitialize();
         List<HashMap<String, String>> data = new LinkedList<>();
         for (String fileName : createdPolygons)
         {
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put(MainModel.POLYGON_NAME, fileName);
             hashMap.put(MainModel.POLYGON_IMAGE, fileName);
+            hashMap.put(MainModel.POLYGON_DIFFICULTY, fileName);
             data.add(hashMap);
         }
 
@@ -156,18 +161,25 @@ public class MainActivity extends CommonActivity
             @Override
             public boolean setViewValue(View view, Object data, String textRepresentation)
             {
-                if (view.getId() == R.id.imageViewPolygon)
+                switch (view.getId())
                 {
-                    ImageView imageViewPolygon = (ImageView) view;
+                    case R.id.imageViewPolygon:
+                        ImageView imageViewPolygon = (ImageView) view;
 
-                    Bitmap bmp = Bitmap.createBitmap(
-                            (int) model.getShapeFactory().getUtilScale().getScreenWidth(),
-                            (int) model.getShapeFactory().getUtilScale().getScreenHeight(),
-                            Bitmap.Config.ARGB_8888);
-                    Canvas canvas = new Canvas(bmp);
-                    model.getShapeParser().drawImageFromFile(canvas, (String) data);
-                    imageViewPolygon.setImageBitmap(bmp);
-                    return true;
+                        Bitmap bmp = Bitmap.createBitmap(
+                                (int) model.getShapeFactory().getUtilScale().getScreenWidth(),
+                                (int) model.getShapeFactory().getUtilScale().getScreenHeight(),
+                                Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(bmp);
+                        model.getShapeParser().drawImageFromFile(canvas, (String) data);
+                        imageViewPolygon.setImageBitmap(bmp);
+                        return true;
+                    case R.id.ratingBarListItemPolygonDifficulty:
+                        databaseInitialize();
+                        int difficulty = model.getScoreDatabase().getDifficulty((String) data);
+                        RatingBar ratingBarPolygon = (RatingBar)view;
+                        ratingBarPolygon.setRating(difficulty);
+                        return true;
                 }
 
                 return false;
@@ -205,6 +217,7 @@ public class MainActivity extends CommonActivity
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Izaberite opciju");
         menu.add(0, v.getId(), 0, MainModel.SELECT_DELETE);
+        menu.add(0, v.getId(), 0, MainModel.SELECT_EDIT);
     }
 
     @Override
@@ -212,19 +225,27 @@ public class MainActivity extends CommonActivity
     {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int id = (int) menuInfo.id;
-        if (item.getTitle().equals(MainModel.SELECT_DELETE))
+
+        switch (item.getTitle().toString())
         {
-            File file = new File(getFilesDir(), model.getCreatedPolygons()[id]);
-            boolean delted = file.delete();
+            case MainModel.SELECT_DELETE:
+                File file = new File(getFilesDir(), model.getCreatedPolygons()[id]);
+                boolean deleted = file.delete();
 
-            initDatabase();
-            model.getScoreDatabase().deleteLevel(model.getCreatedPolygons()[id]);
+                databaseInitialize();
+                model.getScoreDatabase().deleteLevel(model.getCreatedPolygons()[id]);
 
-            Toast.makeText(getApplicationContext(), "Izbrisan poilgon" +
-                    model.getCreatedPolygons()[id], Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Izbrisan poilgon " + model.getCreatedPolygons()[id], Toast.LENGTH_LONG).show();
 
-            listRefresh();
-            return false;
+                listRefresh();
+                return false;
+            case MainModel.SELECT_EDIT:
+                String fileName = model.getCreatedPolygons()[id];
+
+                Intent intent = new Intent(MainActivity.this, CreatePolygonActivity.class);
+                intent.putExtra(MainModel.POLYGON_NAME, fileName);
+                startActivityForResult(intent, MainModel.REQUEST_CODE_CREATE_POLYGON);
+                break;
         }
         return true;
     }
@@ -242,7 +263,7 @@ public class MainActivity extends CommonActivity
         }
     }
 
-    private void initDatabase()
+    private void databaseInitialize()
     {
         if (null == model.getScoreDatabase())
         {

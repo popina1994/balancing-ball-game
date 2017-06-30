@@ -28,31 +28,33 @@ public class ScoreDatabase
 
     public String getFirstLevel()
     {
-        SQLiteDatabase database = databaseHelper.getReadableDatabase();
         String levelName = null;
+        try(SQLiteDatabase database = databaseHelper.getReadableDatabase())
+        {
 
-        Cursor cursor = null;
-        try
-        {
-            cursor = database.query(
-                    LevelTable.TABLE_NAME,
-                    new String[]{LevelTable._ID, LevelTable.TABLE_COLUMN_LEVEL_NAME},
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            );
-            cursor.moveToFirst();
-            levelName = cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME));
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            cursor.close();
+            Cursor cursor = null;
+            try
+            {
+                cursor = database.query(
+                        LevelTable.TABLE_NAME,
+                        new String[]{LevelTable._ID, LevelTable.TABLE_COLUMN_LEVEL_NAME},
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                );
+                cursor.moveToFirst();
+                levelName = cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                cursor.close();
+            }
         }
         return levelName;
 
@@ -105,39 +107,42 @@ public class ScoreDatabase
 
     public int insertUser(String user, String levelName, long time)
     {
-        SQLiteDatabase database = databaseHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        String z = levelName;
-        values.put(UserScoreTable.TABLE_COLUMN_USER_NAME, user);
-        values.put(UserScoreTable.TABLE_COLUMN_TIME, time);
-
-        int id = getIdLevelName(database, levelName);
-
-        if (-1 == id)
+        try(SQLiteDatabase database = databaseHelper.getWritableDatabase())
         {
-            return NO_LEVEL;
-        }
+            ContentValues values = new ContentValues();
+            String z = levelName;
+            values.put(UserScoreTable.TABLE_COLUMN_USER_NAME, user);
+            values.put(UserScoreTable.TABLE_COLUMN_TIME, time);
 
-        values.put(UserScoreTable.TABLE_COLUMN_FK_LEVEL, id);
+            int id = getIdLevelName(database, levelName);
 
-        if (-1 == database.insert(UserScoreTable.TABLE_NAME, null, values))
-        {
-            return INSERT_ERROR;
+            if (-1 == id)
+            {
+                return NO_LEVEL;
+            }
+
+            values.put(UserScoreTable.TABLE_COLUMN_FK_LEVEL, id);
+
+            if (-1 == database.insert(UserScoreTable.TABLE_NAME, null, values))
+            {
+                return INSERT_ERROR;
+            }
         }
         return OK;
     }
 
-    public int insertLevel(String levelName)
+
+    public int insertLevel(String levelName, int levelDifficulty)
     {
-        SQLiteDatabase database = databaseHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(LevelTable.TABLE_COLUMN_LEVEL_NAME, levelName);
-
-        if (-1 == database.insert(LevelTable.TABLE_NAME, null, values))
+        long retVal = OK;
+        try(SQLiteDatabase database = databaseHelper.getWritableDatabase())
         {
-            return INSERT_ERROR;
+            ContentValues values = new ContentValues();
+            values.put(LevelTable.TABLE_COLUMN_LEVEL_NAME, levelName);
+            values.put(LevelTable.TABLE_COLUMN_LEVEL_DIFFICULTY, levelDifficulty);
+
+            retVal = database.insertWithOnConflict(LevelTable.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
         }
 
         return OK;
@@ -220,10 +225,62 @@ public class ScoreDatabase
 
     public int deleteLevel(String level)
     {
-        SQLiteDatabase database = databaseHelper.getWritableDatabase();
-        database.delete(LevelTable.TABLE_NAME,
-                LevelTable.TABLE_COLUMN_LEVEL_NAME + "=" + "\"" + level + "\"",
-                null);
-        return OK;
+        try(SQLiteDatabase database = databaseHelper.getWritableDatabase())
+        {
+            database.delete(LevelTable.TABLE_NAME,
+                    LevelTable.TABLE_COLUMN_LEVEL_NAME + "=" + "\"" + level + "\"",
+                    null);
+            database.close();
+            return OK;
+        }
+    }
+
+    public int getDifficulty(String levelName)
+    {
+
+        int id = -1;
+        try(SQLiteDatabase database = databaseHelper.getReadableDatabase())
+        {
+
+            String selectionArg = null;
+
+            if (levelName != null)
+            {
+                selectionArg = LevelTable.TABLE_COLUMN_LEVEL_NAME + "=\"" + levelName + "\"";
+            } else
+            {
+                selectionArg = "";
+            }
+
+            Cursor cursor = null;
+            try
+            {
+                cursor = database.query(
+                        LevelTable.TABLE_NAME,
+                        new String[]{LevelTable._ID, LevelTable.TABLE_COLUMN_LEVEL_NAME, LevelTable.TABLE_COLUMN_LEVEL_DIFFICULTY},
+                        selectionArg,
+                        null,
+                        null,
+                        null,
+                        null
+                );
+                if (!cursor.moveToFirst())
+                {
+                    Log.d("ScoreDatabase", "Error with currsor insert user");
+                    return id;
+                }
+                cursor.moveToFirst();
+                id = cursor.getInt(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_DIFFICULTY));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                cursor.close();
+            }
+        }
+        return id;
     }
 }

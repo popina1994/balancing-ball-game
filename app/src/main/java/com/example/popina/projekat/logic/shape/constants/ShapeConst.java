@@ -12,7 +12,7 @@ public class ShapeConst
     public static final String TYPE_HOLE_START = "START_HOLE";
     public static final String TYPE_HOLE_FINISH = "FINISH_HOLE";
     public static final String TYPE_HOLE_WRONG = "WRONG_HOLE";
-    public static final String TYPE_HOLE_SLOW_DOWN = "SLOW_DOWN_HOLE";
+    public static final String TYPE_HOLE_VORTEX = "VORTEX_HOLE";
     public static final String TYPE_OBSTACLE_RECTANGLE = "OBSTACLE_RECTANGLE";
     public static final String TYPE_OBSTACLE_CIRCLE = "OBSTACLE_CIRCLE";
 

@@ -4,7 +4,7 @@ import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.gravity.FinishHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
-import com.example.popina.projekat.logic.shape.figure.hole.gravity.SlowDownHole;
+import com.example.popina.projekat.logic.shape.figure.hole.gravity.VortexHole;
 import com.example.popina.projekat.logic.shape.figure.hole.gravity.WrongHole;
 import com.example.popina.projekat.logic.shape.figure.obstacle.CircleObstacle;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
@@ -75,11 +75,11 @@ public class ShapeFactory
         return circ;
     }
 
-    public SlowDownHole createSlowDownHole()
+    public VortexHole createVortexHole()
     {
-        final SlowDownHole DEFAULT_SLOW_DOWN_HOLE = new SlowDownHole(ShapeConst.DEFAULT_OBSTACLE_X, ShapeConst.DEFAULT_OBSTACLE_Y, ShapeConst.DEFAULT_RECT_RADIUS);
-        SlowDownHole slowDownHole = DEFAULT_SLOW_DOWN_HOLE.scale(utilScale);
-        return  slowDownHole;
+        final VortexHole DEFAULT_VORTEX_HOLE = new VortexHole(ShapeConst.DEFAULT_OBSTACLE_X, ShapeConst.DEFAULT_OBSTACLE_Y, ShapeConst.DEFAULT_RECT_RADIUS);
+        VortexHole vortexHole = DEFAULT_VORTEX_HOLE.scale(utilScale);
+        return vortexHole;
     }
 
     public Figure scaleFigure(Figure f)

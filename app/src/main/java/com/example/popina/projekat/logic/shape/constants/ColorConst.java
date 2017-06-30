@@ -11,6 +11,6 @@ public abstract class ColorConst
     public static final int COLOR_HOLE_START = Color.RED;
     public static final int COLOR_HOLE_FINISH = Color.GREEN;
     public static final int COLOR_HOLE_WRONG = Color.BLACK;
-    public static final int COLOR_HOLE_SLOW_DOWN = Color.BLUE;
+    public static final int COLOR_VORTEX_DOWN = Color.BLUE;
     public static final int COLOR_OBSTACLE = Color.YELLOW;
 }

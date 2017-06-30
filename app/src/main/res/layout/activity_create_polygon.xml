@@ -97,7 +97,7 @@
             android:textSize="13sp"/>
 
         <Button
-            android:id="@+id/buttonSlowDownHole"
+            android:id="@+id/buttonVortexHole"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

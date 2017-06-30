@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.popina.projekat.R;
+import com.example.popina.projekat.application.begin.MainModel;
 import com.example.popina.projekat.application.common.CommonActivity;
 
 public class CreatePolygonActivity extends CommonActivity
@@ -19,7 +20,18 @@ public class CreatePolygonActivity extends CommonActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_polygon);
 
+        Bundle extras = getIntent().getExtras();
+
         model = new CreatePolygonModel();
+        if (null != extras)
+        {
+            String fileName = extras.getString(MainModel.POLYGON_NAME);
+            if (fileName != null)
+            {
+                model.setFileName(fileName);
+                model.setEditMode(true);
+            }
+        }
         view = (CreatePolygonView) findViewById(R.id.surfaceViewCreatePolygon);
         controller = new CreatePolygonController(this, view, model);
         view.setModel(model);
@@ -63,8 +75,8 @@ public class CreatePolygonActivity extends CommonActivity
             case R.id.buttonWrongHole:
                 controller.createFigure(CreatePolygonModel.CREATE_HOLE_WRONG);
                 break;
-            case R.id.buttonSlowDownHole:
-                controller.createFigure(CreatePolygonModel.CREATE_HOLE_SLOW_DOWN);
+            case R.id.buttonVortexHole:
+                controller.createFigure(CreatePolygonModel.CREATE_HOLE_VORTEX);
                 break;
             case R.id.buttonObstacleRectangle:
                 controller.createFigure(CreatePolygonModel.CREATE_OBSTACLE_RECTANGLE);
@@ -82,7 +94,11 @@ public class CreatePolygonActivity extends CommonActivity
     @Override
     public void onBackPressed()
     {
-        setResult(RESULT_OK);
-        super.onBackPressed();
+        if (controller.canSavePolygon())
+        {
+            controller.savePolygonInFileAndDB();
+            setResult(RESULT_OK);
+            super.onBackPressed();
+        }
     }
 }

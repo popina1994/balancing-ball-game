@@ -5,7 +5,6 @@ import com.example.popina.projekat.logic.shape.constants.ColorConst;
 import com.example.popina.projekat.logic.shape.constants.ShapeConst;
 import com.example.popina.projekat.logic.shape.sound.SoundConst;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.scale.UtilScale;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
@@ -14,16 +13,16 @@ import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
  * Created by popina on 29.06.2017..
  */
 
-public class SlowDownHole extends GravityHole
+public class VortexHole extends GravityHole
 {
-    public SlowDownHole(float x, float y, float radius)
+    public VortexHole(float x, float y, float radius)
     {
-        super(x, y, radius, ShapeConst.TYPE_HOLE_SLOW_DOWN, ColorConst.COLOR_HOLE_SLOW_DOWN);
+        super(x, y, radius, ShapeConst.TYPE_HOLE_VORTEX, ColorConst.COLOR_VORTEX_DOWN);
     }
 
-    public SlowDownHole(Coordinate c, float radius)
+    public VortexHole(Coordinate c, float radius)
     {
-        super(c, radius, ShapeConst.TYPE_HOLE_SLOW_DOWN, ColorConst.COLOR_HOLE_SLOW_DOWN);
+        super(c, radius, ShapeConst.TYPE_HOLE_VORTEX, ColorConst.COLOR_VORTEX_DOWN);
     }
 
     @Override
@@ -39,22 +38,22 @@ public class SlowDownHole extends GravityHole
     }
 
     @Override
-    public SlowDownHole scale(UtilScale utilScale)
+    public VortexHole scale(UtilScale utilScale)
     {
-        SlowDownHole slowDownHole = new SlowDownHole(utilScale.scaleCoordinate(getCenter()), utilScale.scaleWidth(getRadius()));
-        return slowDownHole;
+        VortexHole vortexHole = new VortexHole(utilScale.scaleCoordinate(getCenter()), utilScale.scaleWidth(getRadius()));
+        return vortexHole;
     }
 
     @Override
-    public SlowDownHole scaleReverse(UtilScale utilScale)
+    public VortexHole scaleReverse(UtilScale utilScale)
     {
-        SlowDownHole slowDownHole = new SlowDownHole(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getRadius()));
-        return slowDownHole;
+        VortexHole vortexHole = new VortexHole(utilScale.scaleReverseCoordinate(getCenter()), utilScale.scaleReverseWidth(getRadius()));
+        return vortexHole;
     }
 
     @Override
     protected void playSoundTemplateMethod(SoundPlayerCallback soundPlayerCallback)
     {
-        soundPlayerCallback.playSound(SoundConst.SOUND_ID_SLOW_DOWN);
+        soundPlayerCallback.playSound(SoundConst.SOUND_ID_VORTEX);
     }
 }
