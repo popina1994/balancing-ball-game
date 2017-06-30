@@ -29,6 +29,8 @@ public class GameActivity extends CommonActivity implements SensorEventListener
         if (null != extras)
         {
             int currentMode = extras.getInt(GameModel.GAME_MODE);
+            Long currentScore = extras.getLong(GameModel.GAME_SCORE);
+            model.setCurrentScore(currentScore);
             model.setCurrentMode(currentMode);
             levelName = extras.getString(MainModel.POLYGON_NAME);
         }

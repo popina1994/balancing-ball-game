@@ -154,7 +154,7 @@ public class GameController
                     break;
                 case CollisionModelAbstract.GAME_OVER_LOSE:
                     model.setGameOver(true);
-                    Toast.makeText(gameActivity, "Izgubio si igru", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(gameActivity, "Izgubio si igru\n samo pobednici se upisuju:( ", Toast.LENGTH_SHORT).show();
                     break;
                 case CollisionModelAbstract.GAME_OVER_WIN:
                     model.setGameOver(true);
@@ -162,17 +162,22 @@ public class GameController
                     if ( (model.getCurrentMode() == GameModel.MODE_ONE_GAME)
                             || ((model.getCurrentMode()) == GameModel.MODE_ADVENTURE) && (model.getCurrentDifficulty() == 2))
                     {
-                        Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getLevelElements().getListTimes()),
-                                                            model.getLevelElements().getLevelName());
+                        long score = calcTime(model.getLevelElements().getListTimes());
+                        if (model.getCurrentMode() == GameModel.MODE_ADVENTURE)
+                        {
+                            score += model.getCurrentScore();
+                        }
+
+                        Dialog dialog = new GameOverDialog(gameActivity, score, model.getLevelElements().getLevelName());
                         dialog.show();
                     }
                     else
                     {
-                        // TODO: calcTime(model.getLevelElements().getListTimes())
                         Intent intent = new Intent(gameActivity, GameActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra(GameModel.POLYGON_NAME, generateNextLevel());
                         intent.putExtra(GameModel.GAME_MODE, GameModel.MODE_ADVENTURE);
+                        intent.putExtra(GameModel.GAME_SCORE, calcTime(model.getLevelElements().getListTimes()) + model.getCurrentScore());
                         gameActivity.startActivity(intent);
                         gameActivity.finish();
                     }

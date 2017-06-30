@@ -40,6 +40,7 @@ public class GameModel extends CommonModel
     private GameDatabase gameDatabase;
 
     private int currentMode;
+    private  Long currentScore;
     private int currentDifficulty = NUM_DIFFICULTIES;
 
 
@@ -194,5 +195,15 @@ public class GameModel extends CommonModel
     public void setCurrentDifficulty(int currentDifficulty)
     {
         this.currentDifficulty = currentDifficulty;
+    }
+
+    public Long getCurrentScore()
+    {
+        return currentScore;
+    }
+
+    public void setCurrentScore(Long currentScore)
+    {
+        this.currentScore = currentScore;
     }
 }

@@ -114,6 +114,7 @@ public class MainActivity extends CommonActivity
         intent = new Intent(this, classStart);
         if (item.getItemId() == R.id.menuItemNewGame)
         {
+            intent.putExtra(GameModel.GAME_SCORE, 0);
             intent.putExtra(GameModel.GAME_MODE, GameModel.MODE_ADVENTURE);
         }
         databaseClose();

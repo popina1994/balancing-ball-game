@@ -21,6 +21,8 @@ public class GameDatabase
     public static final int NO_LEVEL = 0x1;
     public static final int INSERT_ERROR = 0x2;
 
+    public static final String ADVENTURE_LEVEL_NAME = "Avantura";
+
     GameDatabaseHelper databaseHelper;
 
     public GameDatabase(Context context)
