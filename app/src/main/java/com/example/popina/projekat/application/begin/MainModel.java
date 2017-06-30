@@ -16,7 +16,7 @@ public class MainModel extends CommonModel
     public static final String INSTANT_RUN = "instant-run";
 
     public static final float SCALE_SCREEN_WIDTH = 1f;
-    public static final float SCALE_SCREEN_HEIGHT = 0.8f;
+    public static final float SCALE_SCREEN_HEIGHT = 1f;
 
     public static final String SELECT_DELETE = "Brisi poligon";
     public static final String SELECT_EDIT = "Uredi poligon";
