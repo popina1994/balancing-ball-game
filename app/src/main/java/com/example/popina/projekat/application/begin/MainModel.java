@@ -1,7 +1,7 @@
 package com.example.popina.projekat.application.begin;
 
 import com.example.popina.projekat.application.common.CommonModel;
-import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 
 /**
  * Created by popina on 08.03.2017..
@@ -26,17 +26,17 @@ public class MainModel extends CommonModel
     public static final int REQUEST_CODE_SETTINGS = 3;
     public static final int REQUEST_CODE_NEW_GAME = 4;
 
-    private ScoreDatabase scoreDatabase;
+    private GameDatabase gameDatabase;
     private String[] createdPolygons;
 
-    public ScoreDatabase getScoreDatabase()
+    public GameDatabase getGameDatabase()
     {
-        return scoreDatabase;
+        return gameDatabase;
     }
 
-    public void setScoreDatabase(ScoreDatabase scoreDatabase)
+    public void setGameDatabase(GameDatabase gameDatabase)
     {
-        this.scoreDatabase = scoreDatabase;
+        this.gameDatabase = gameDatabase;
     }
 
     public String[] getCreatedPolygons()

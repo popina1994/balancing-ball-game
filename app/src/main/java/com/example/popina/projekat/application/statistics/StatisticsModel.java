@@ -1,6 +1,6 @@
 package com.example.popina.projekat.application.statistics;
 
-import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 
 /**
  * Created by popina on 05.04.2017..
@@ -9,15 +9,15 @@ import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 public class StatisticsModel
 {
 
-    private ScoreDatabase database;
+    private GameDatabase database;
     private String selectedLevel;
 
-    public ScoreDatabase getDatabase()
+    public GameDatabase getDatabase()
     {
         return database;
     }
 
-    public void setDatabase(ScoreDatabase database)
+    public void setDatabase(GameDatabase database)
     {
         this.database = database;
     }

@@ -12,7 +12,7 @@ import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.game.model.GameModel;
 import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.logic.game.utility.Utility;
-import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 
 /**
  * Created by popina on 04.04.2017..
@@ -70,8 +70,11 @@ public class GameOverDialog extends Dialog
         @Override
         public void onClick(View v)
         {
-            ScoreDatabase database = new ScoreDatabase(activity.getApplicationContext());
+            GameDatabase database = new GameDatabase(activity.getApplicationContext());
             database.insertUser(editText.getText().toString(), levelName, time);
+            // Memory leakage bug.
+            //
+            GameOverDialog.this.dismiss();
             Intent intent = new Intent(activity, StatisticsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra(GameModel.POLYGON_NAME, levelName);

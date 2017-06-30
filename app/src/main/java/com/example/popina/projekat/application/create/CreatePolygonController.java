@@ -9,7 +9,7 @@ import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.obstacle.RectangleObstacle;
-import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -251,7 +251,7 @@ public class CreatePolygonController
 
             outputStream.write(stringBuilder.toString().getBytes());
 
-            ScoreDatabase database = new ScoreDatabase(createPolygonActivity.getApplicationContext());
+            GameDatabase database = new GameDatabase(createPolygonActivity.getApplicationContext());
             database.insertLevel(model.getFileName(), model.getLevelDifficulty());
 
             model.setEditMode(true);

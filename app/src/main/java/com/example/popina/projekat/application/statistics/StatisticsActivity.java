@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.common.CommonActivity;
 import com.example.popina.projekat.application.game.model.GameModel;
-import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 import com.example.popina.projekat.logic.statistics.database.table.LevelTable;
 import com.example.popina.projekat.logic.statistics.database.table.UserScoreTable;
 
@@ -28,7 +28,7 @@ public class StatisticsActivity extends CommonActivity
         setContentView(R.layout.activity_statistics);
 
         model = new StatisticsModel();
-        ScoreDatabase database = new ScoreDatabase(getApplicationContext());
+        GameDatabase database = new GameDatabase(getApplicationContext());
         model.setDatabase(database);
         Bundle extras = getIntent().getExtras();
         String level = null;

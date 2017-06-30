@@ -163,4 +163,9 @@ public class Utility
         return angle;
     }
 
+    public static double randomNumberInInterval(int startInterval, int endInterval)
+    {
+        return Math.random() * (endInterval - startInterval) + startInterval;
+    }
+
 }

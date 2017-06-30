@@ -29,15 +29,13 @@ import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
-import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
+import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.example.popina.projekat.R.id.textView;
 
 public class MainActivity extends CommonActivity
 {
@@ -106,13 +104,24 @@ public class MainActivity extends CommonActivity
                 requestCode = MainModel.REQUEST_CODE_SETTINGS;
                 break;
             case R.id.menuItemNewGame:
+                classStart = GameActivity.class;
+                requestCode = MainModel.REQUEST_CODE_NEW_GAME;
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         intent = new Intent(this, classStart);
+        databaseClose();
         startActivityForResult(intent, requestCode);
         return true;
+    }
+
+    private void databaseClose()
+    {
+        if (model.getGameDatabase() != null)
+        {
+            model.getGameDatabase().close();
+        }
     }
 
 
@@ -177,7 +186,7 @@ public class MainActivity extends CommonActivity
                         return true;
                     case R.id.ratingBarListItemPolygonDifficulty:
                         databaseInitialize();
-                        int difficulty = model.getScoreDatabase().getDifficulty((String) data);
+                        int difficulty = model.getGameDatabase().getDifficulty((String) data);
                         RatingBar ratingBarPolygon = (RatingBar)view;
                         ratingBarPolygon.setRating(difficulty);
                         return true;
@@ -199,6 +208,7 @@ public class MainActivity extends CommonActivity
 
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 intent.putExtra(MainModel.POLYGON_NAME, fileName);
+                databaseClose();
                 startActivityForResult(intent, MainModel.REQUEST_CODE_NEW_GAME);
             }
         });
@@ -234,7 +244,7 @@ public class MainActivity extends CommonActivity
                 boolean deleted = file.delete();
 
                 databaseInitialize();
-                model.getScoreDatabase().deleteLevel(model.getCreatedPolygons()[id]);
+                model.getGameDatabase().deleteLevel(model.getCreatedPolygons()[id]);
 
                 Toast.makeText(getApplicationContext(), "Izbrisan poilgon " + model.getCreatedPolygons()[id], Toast.LENGTH_LONG).show();
 
@@ -246,7 +256,7 @@ public class MainActivity extends CommonActivity
                 Intent intent = new Intent(MainActivity.this, CreatePolygonActivity.class);
                 intent.putExtra(MainModel.POLYGON_NAME, fileName);
                 databaseInitialize();
-                intent.putExtra(MainModel.POLYGON_DIFFICULTY, model.getScoreDatabase().getDifficulty(fileName));
+                intent.putExtra(MainModel.POLYGON_DIFFICULTY, model.getGameDatabase().getDifficulty(fileName));
                 startActivityForResult(intent, MainModel.REQUEST_CODE_CREATE_POLYGON);
                 break;
         }
@@ -268,10 +278,10 @@ public class MainActivity extends CommonActivity
 
     private void databaseInitialize()
     {
-        if (null == model.getScoreDatabase())
+        if (null == model.getGameDatabase())
         {
-            ScoreDatabase database = new ScoreDatabase(getApplicationContext());
-            model.setScoreDatabase(database);
+            GameDatabase database = new GameDatabase(getApplicationContext());
+            model.setGameDatabase(database);
         }
     }
 }

@@ -14,13 +14,13 @@ import com.example.popina.projekat.logic.game.collision.CollisionModelAbstract;
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
-import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayer;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
+import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 
 import java.util.LinkedList;
 
@@ -59,19 +59,41 @@ public class GameController
         model.setCollisionModel(collisionModelAbstract);
 
         LevelElements levelElements = null;
-        if (model.getCurrentMode() == GameModel.MODE_ONE_GAME)
+        if (model.getCurrentMode() == GameModel.MODE_ADVENTURE)
         {
-            levelElements = new LevelElements(levelName);
+            levelName = generateNextLevel();
+            model.setCurrentLevel(getDifficulty(levelName));
         }
-        else
-        {
-            // TODO : generate random start level.
-            
-            //levelElements =
-        }
+        levelElements = new LevelElements(levelName);
         model.setLevelElements(levelElements);
+    }
 
+    private String generateNextLevel()
+    {
 
+        databaseInitialize();
+        String level = null;
+
+        for (   int difficulty = (model.getCurrentLevel() + 1) % model.NUM_DIFFICULTIES;
+                difficulty != model.getCurrentLevel();
+                difficulty = (difficulty + 1) % model.NUM_DIFFICULTIES
+            )
+        {
+            LinkedList<String> listLevels = model.getGameDatabase().getLevels(difficulty);
+            if (!listLevels.isEmpty())
+            {
+                level = listLevels.get((int)Utility.randomNumberInInterval(0, listLevels.size()));
+                break;
+            }
+        }
+        return level;
+
+    }
+
+    private int getDifficulty(String level)
+    {
+        databaseInitialize();
+        return model.getGameDatabase().getDifficulty(level);
     }
 
     public void destructor()
@@ -155,7 +177,7 @@ public class GameController
         return timeAll;
     }
 
-    public void loadLevel()
+     void loadLevel()
     {
         ShapeParser shapeParser = new ShapeParser(model.getShapeFactory(), model.getShapeDraw(), view.getContext());
         model.setShapeParser(shapeParser);
@@ -174,61 +196,12 @@ public class GameController
         model.getLevelElements().setListFigures(listFigures);
     }
 
-    // A * X + B * Y = Z
-    //
-    private Coordinate3D calculateLine(Coordinate point1, Coordinate point2)
+    public void databaseInitialize()
     {
-        float A = point1.getY() - point2.getY();
-        float B = point2.getX() - point1.getX();
-        float C = point1.getX() * point2.getY() - point1.getY() * point2.getX();
-        Coordinate3D line = new Coordinate3D(A, B, C);
-
-        return line;
-    }
-
-    private Coordinate intersectionLines(Coordinate3D line1, Coordinate3D line2)
-    {
-        float A1 = line1.getX();
-        float B1 = line1.getY();
-        float C1 = line1.getZ();
-
-        float A2 = line2.getX();
-        float B2 = line2.getY();
-        float C2 = line2.getZ();
-
-        // Parallel lines.
-        //
-        float det = -A1 * B2 + A2 * B1;
-        if (Math.abs(det)
-                < Utility.FLOAT_ACCURACY)
+        if (null == model.getGameDatabase())
         {
-            return null;
+            GameDatabase database = new GameDatabase(gameActivity.getApplicationContext());
+            model.setGameDatabase(database);
         }
-
-        return new Coordinate((B2 * C1 - B1 * C2) / det, (A1 * C2 - A2 * C1) / det);
     }
-
-    private float calculateX(Coordinate3D line, float y)
-    {
-        float A = line.getX();
-        float B = line.getY();
-        float C = line.getZ();
-
-        // Carefull exception!!!
-        //
-        return (-C - B * y) / A;
-    }
-
-    private float calculateY(Coordinate3D line, float x)
-    {
-        float A = line.getX();
-        float B = line.getY();
-        float C = line.getZ();
-
-        // Carefull exception!!!
-        //
-        return (-C - A * x) / B;
-    }
-
-
 }

@@ -9,21 +9,23 @@ import android.util.Log;
 import com.example.popina.projekat.logic.statistics.database.table.LevelTable;
 import com.example.popina.projekat.logic.statistics.database.table.UserScoreTable;
 
+import java.util.LinkedList;
+
 /**
  * Created by popina on 05.04.2017..
  */
 
-public class ScoreDatabase
+public class GameDatabase
 {
     public static final int OK = 0x0;
     public static final int NO_LEVEL = 0x1;
     public static final int INSERT_ERROR = 0x2;
 
-    ScoreDatabaseHelper databaseHelper;
+    GameDatabaseHelper databaseHelper;
 
-    public ScoreDatabase(Context context)
+    public GameDatabase(Context context)
     {
-        databaseHelper = new ScoreDatabaseHelper(context);
+        databaseHelper = new GameDatabaseHelper(context);
     }
 
     public String getFirstLevel()
@@ -88,7 +90,7 @@ public class ScoreDatabase
             );
             if (!cursor.moveToFirst())
             {
-                Log.d("ScoreDatabase", "Error with currsor insert user");
+                Log.d("GameDatabase", "Error with currsor insert user");
                 return id;
             }
             cursor.moveToFirst();
@@ -203,23 +205,25 @@ public class ScoreDatabase
 
     public int deleteHighScore(String level)
     {
-        SQLiteDatabase database = databaseHelper.getWritableDatabase();
-        String selectionArg = null;
+        try (SQLiteDatabase database = databaseHelper.getWritableDatabase())
+        {
+            String selectionArg = null;
 
-        if (null == level)
-        {
-            selectionArg = null;
-        } else
-        {
-            int id = getIdLevelName(database, level);
-            selectionArg = UserScoreTable.TABLE_COLUMN_FK_LEVEL + "=" + id;
+            if (null == level)
+            {
+                selectionArg = null;
+            } else
+            {
+                int id = getIdLevelName(database, level);
+                selectionArg = UserScoreTable.TABLE_COLUMN_FK_LEVEL + "=" + id;
+            }
+
+            // TODO : Add more checks
+            //
+            database.delete(UserScoreTable.TABLE_NAME,
+                    selectionArg,
+                    null);
         }
-
-        // TODO : Add more checks
-        //
-        database.delete(UserScoreTable.TABLE_NAME,
-                selectionArg,
-                null);
         return OK;
     }
 
@@ -266,7 +270,7 @@ public class ScoreDatabase
                 );
                 if (!cursor.moveToFirst())
                 {
-                    Log.d("ScoreDatabase", "Error with currsor insert user");
+                    Log.d("GameDatabase", "Error with currsor insert user");
                     return id;
                 }
                 cursor.moveToFirst();
@@ -282,5 +286,50 @@ public class ScoreDatabase
             }
         }
         return id;
+    }
+
+    public LinkedList<String> getLevels(int difficulty)
+    {
+        LinkedList<String> listLevels = new LinkedList<>();
+        try(SQLiteDatabase database = databaseHelper.getReadableDatabase())
+        {
+
+            String selectionArg = null;
+
+            selectionArg = LevelTable.TABLE_COLUMN_LEVEL_DIFFICULTY + "=\"" + difficulty + "\"";
+
+            Cursor cursor = null;
+            try
+            {
+                cursor = database.query(
+                        LevelTable.TABLE_NAME,
+                        new String[]{LevelTable._ID, LevelTable.TABLE_COLUMN_LEVEL_NAME, LevelTable.TABLE_COLUMN_LEVEL_DIFFICULTY},
+                        selectionArg,
+                        null,
+                        null,
+                        null,
+                        null
+                );
+
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+                {
+                    listLevels.addLast(cursor.getString(cursor.getColumnIndex(LevelTable.TABLE_COLUMN_LEVEL_NAME)));
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                cursor.close();
+            }
+        }
+        return listLevels;
+    }
+
+    public void close()
+    {
+        databaseHelper.close();
     }
 }

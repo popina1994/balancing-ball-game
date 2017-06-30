@@ -11,6 +11,7 @@ import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
+import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 
 import java.util.LinkedList;
 
@@ -20,15 +21,13 @@ import java.util.LinkedList;
 
 public class GameModel extends CommonModel
 {
-    private LinkedList<Figure> listFigures = new LinkedList<>();
-
     private FilterInterface filter = new FilterPastValue(FilterPastValue.ALPHA);
     private CollisionModelAbstract collisionModel;
 
     public static final String POLYGON_NAME = "POLYGON_NAME";
     public static final int MODE_ONE_GAME = 0;
     public static final int MODE_ADVENTURE = 1;
-    public static final int NUM_LEVELS = 10;
+    public static final int NUM_DIFFICULTIES = 10;
 
     private int height;
     private int width;
@@ -41,9 +40,10 @@ public class GameModel extends CommonModel
     private Coefficient coefficient;
     private LevelElements levelElements;
     private SoundPlayerCallback soundPlayerCallback;
+    private GameDatabase gameDatabase;
 
     private int currentMode;
-    private int currentLevel = -1;
+    private int currentLevel = NUM_DIFFICULTIES;
 
 
     public CollisionModelAbstract getCollisionModel()
@@ -179,5 +179,23 @@ public class GameModel extends CommonModel
         this.levelElements = levelElements;
     }
 
+    public GameDatabase getGameDatabase()
+    {
+        return gameDatabase;
+    }
 
+    public void setGameDatabase(GameDatabase gameDatabase)
+    {
+        this.gameDatabase = gameDatabase;
+    }
+
+    public int getCurrentLevel()
+    {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel)
+    {
+        this.currentLevel = currentLevel;
+    }
 }
