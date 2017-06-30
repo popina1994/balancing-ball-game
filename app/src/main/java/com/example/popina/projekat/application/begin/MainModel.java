@@ -26,9 +26,6 @@ public class MainModel extends CommonModel
     public static final int REQUEST_CODE_SETTINGS = 3;
     public static final int REQUEST_CODE_NEW_GAME = 4;
 
-    private static final String TAG = "BEGIN_ACTIVITY";
-
-
     private ScoreDatabase scoreDatabase;
     private String[] createdPolygons;
 

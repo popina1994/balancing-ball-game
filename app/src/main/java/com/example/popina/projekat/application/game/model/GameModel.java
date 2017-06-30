@@ -28,7 +28,7 @@ public class GameModel extends CommonModel
 
     public static final String POLYGON_NAME = "POLYGON_NAME";
     public static final int MODE_ONE_GAME = 0;
-    public static final int MODE_TEN_GAMES = 1;
+    public static final int MODE_ADVENTURE = 1;
     public static final int NUM_LEVELS = 10;
 
     private String levelName;

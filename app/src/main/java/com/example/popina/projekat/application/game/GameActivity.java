@@ -23,14 +23,18 @@ public class GameActivity extends CommonActivity implements SensorEventListener
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_game);
+        model = new GameModel();
         Bundle extras = getIntent().getExtras();
         if (null != extras)
         {
             fileName = extras.getString(MainModel.POLYGON_NAME);
+            model.setCurrentMode(GameModel.MODE_ONE_GAME);
+            model.setLevelName(fileName);
         }
-
-        model = new GameModel();
-        model.setLevelName(fileName);
+        else
+        {
+            model.setCurrentMode(GameModel.MODE_ADVENTURE);
+        }
 
         view = (GameView) findViewById(R.id.surfaceViewGame);
         controller = new GameController(this, model, view);

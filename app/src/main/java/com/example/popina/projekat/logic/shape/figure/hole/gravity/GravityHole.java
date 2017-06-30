@@ -1,7 +1,5 @@
 package com.example.popina.projekat.logic.shape.figure.hole.gravity;
 
-import android.util.Log;
-
 import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
@@ -16,7 +14,7 @@ import com.example.popina.projekat.logic.shape.movement.collision.handling.Colli
 public abstract  class GravityHole extends CircleHole implements CollisionHandlingInterface
 {
 
-    public static final int GRAVITY = 1000;
+    public static final int GRAVITY_CONSTANT = 1000;
     protected boolean isGameOver = false;
 
     public GravityHole(float x, float y, float radius, String figureType, int color)
@@ -58,7 +56,7 @@ public abstract  class GravityHole extends CircleHole implements CollisionHandli
     {
         Coordinate vectorSpeed = getCenter().subCoordinate(ballNew.getCenter());
         if (!Utility.isDimBetweenDims(0, 0, Utility.distanceSquared(ballNew.getCenter(), getCenter())))
-            vectorSpeed.mulThisScalar(GRAVITY / Utility.distanceSquared(ballNew.getCenter(), getCenter()));
+            vectorSpeed.mulThisScalar(GRAVITY_CONSTANT / Utility.distanceSquared(ballNew.getCenter(), getCenter()));
         return vectorSpeed;
     }
 }
