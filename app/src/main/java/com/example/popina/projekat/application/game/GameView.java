@@ -97,15 +97,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         holder.unlockCanvasAndPost(canvas);
         if (model.isPaused() || !model.isLevelLoaded())
         {
-            if (!model.isLevelLoaded())
-            {
-                controller.loadLevel();
-                model.setLevelLoaded(true);
-            }
-            // Split ball from other figures.
-            //
-            shapeDraw.spriteOnBackground(model.getLevelElements().getListFigures());
-
+            controller.loadLevelAndBackground();
             controller.resume();
         }
 

@@ -2,6 +2,7 @@ package com.example.popina.projekat.application.game;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.widget.Toast;
@@ -59,14 +60,15 @@ public class GameController
         model.setCollisionModel(collisionModelAbstract);
 
         LevelElements levelElements = null;
-        if (model.getCurrentMode() == GameModel.MODE_ADVENTURE)
+        if ((levelName == null) &&  (model.getCurrentMode() == GameModel.MODE_ADVENTURE))
         {
             levelName = generateNextLevel();
-            model.setCurrentLevel(getDifficulty(levelName));
         }
+        model.setCurrentDifficulty(getDifficulty(levelName));
         levelElements = new LevelElements(levelName);
         model.setLevelElements(levelElements);
     }
+
 
     private String generateNextLevel()
     {
@@ -74,9 +76,9 @@ public class GameController
         databaseInitialize();
         String level = null;
 
-        for (   int difficulty = (model.getCurrentLevel() + 1) % model.NUM_DIFFICULTIES;
-                difficulty != model.getCurrentLevel();
-                difficulty = (difficulty + 1) % model.NUM_DIFFICULTIES
+        for (int difficulty = (model.getCurrentDifficulty() + 1) % model.NUM_DIFFICULTIES;
+             difficulty != model.getCurrentDifficulty();
+             difficulty = (difficulty + 1) % model.NUM_DIFFICULTIES
             )
         {
             LinkedList<String> listLevels = model.getGameDatabase().getLevels(difficulty);
@@ -157,9 +159,24 @@ public class GameController
                 case CollisionModelAbstract.GAME_OVER_WIN:
                     model.setGameOver(true);
                     model.getLevelElements().getListTimes().getLast().setEnd(System.currentTimeMillis());
-                    Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getLevelElements().getListTimes()),
-                                                        model.getLevelElements().getLevelName());
-                    dialog.show();
+                    if ( (model.getCurrentMode() == GameModel.MODE_ONE_GAME)
+                            || ((model.getCurrentMode()) == GameModel.MODE_ADVENTURE) && (model.getCurrentDifficulty() == 2))
+                    {
+                        Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getLevelElements().getListTimes()),
+                                                            model.getLevelElements().getLevelName());
+                        dialog.show();
+                    }
+                    else
+                    {
+                        // TODO: calcTime(model.getLevelElements().getListTimes())
+                        Intent intent = new Intent(gameActivity, GameActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra(GameModel.POLYGON_NAME, generateNextLevel());
+                        intent.putExtra(GameModel.GAME_MODE, GameModel.MODE_ADVENTURE);
+                        gameActivity.startActivity(intent);
+                        gameActivity.finish();
+                    }
+
                     break;
             }
 
@@ -203,5 +220,17 @@ public class GameController
             GameDatabase database = new GameDatabase(gameActivity.getApplicationContext());
             model.setGameDatabase(database);
         }
+    }
+
+    public void loadLevelAndBackground()
+    {
+        if (!model.isLevelLoaded())
+        {
+            loadLevel();
+            model.setLevelLoaded(true);
+        }
+        // Split ball from other figures.
+        //
+        model.getShapeDraw().spriteOnBackground(model.getLevelElements().getListFigures());
     }
 }

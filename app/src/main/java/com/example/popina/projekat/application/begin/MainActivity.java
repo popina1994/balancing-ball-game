@@ -23,6 +23,7 @@ import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.common.CommonActivity;
 import com.example.popina.projekat.application.create.CreatePolygonActivity;
 import com.example.popina.projekat.application.game.GameActivity;
+import com.example.popina.projekat.application.game.model.GameModel;
 import com.example.popina.projekat.application.settings.SettingsActivity;
 import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
@@ -111,6 +112,10 @@ public class MainActivity extends CommonActivity
                 return super.onOptionsItemSelected(item);
         }
         intent = new Intent(this, classStart);
+        if (item.getItemId() == R.id.menuItemNewGame)
+        {
+            intent.putExtra(GameModel.GAME_MODE, GameModel.MODE_ADVENTURE);
+        }
         databaseClose();
         startActivityForResult(intent, requestCode);
         return true;
@@ -207,6 +212,7 @@ public class MainActivity extends CommonActivity
                 String fileName = textView.getText().toString();
 
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                intent.putExtra(GameModel.GAME_MODE, GameModel.MODE_ONE_GAME);
                 intent.putExtra(MainModel.POLYGON_NAME, fileName);
                 databaseClose();
                 startActivityForResult(intent, MainModel.REQUEST_CODE_NEW_GAME);

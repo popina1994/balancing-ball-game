@@ -7,13 +7,8 @@ import com.example.popina.projekat.logic.game.acceleration.filter.FilterPastValu
 import com.example.popina.projekat.logic.game.acceleration.filter.FilterInterface;
 import com.example.popina.projekat.logic.game.coefficient.Coefficient;
 import com.example.popina.projekat.logic.game.collision.CollisionModelAbstract;
-import com.example.popina.projekat.logic.game.utility.Time;
-import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 import com.example.popina.projekat.logic.statistics.database.GameDatabase;
-
-import java.util.LinkedList;
 
 /**
  * Created by popina on 09.03.2017..
@@ -25,6 +20,8 @@ public class GameModel extends CommonModel
     private CollisionModelAbstract collisionModel;
 
     public static final String POLYGON_NAME = "POLYGON_NAME";
+    public static final String GAME_MODE = "GAME_MODE";
+    public static final String GAME_SCORE = "GAME_SCORE";
     public static final int MODE_ONE_GAME = 0;
     public static final int MODE_ADVENTURE = 1;
     public static final int NUM_DIFFICULTIES = 10;
@@ -43,7 +40,7 @@ public class GameModel extends CommonModel
     private GameDatabase gameDatabase;
 
     private int currentMode;
-    private int currentLevel = NUM_DIFFICULTIES;
+    private int currentDifficulty = NUM_DIFFICULTIES;
 
 
     public CollisionModelAbstract getCollisionModel()
@@ -189,13 +186,13 @@ public class GameModel extends CommonModel
         this.gameDatabase = gameDatabase;
     }
 
-    public int getCurrentLevel()
+    public int getCurrentDifficulty()
     {
-        return currentLevel;
+        return currentDifficulty;
     }
 
-    public void setCurrentLevel(int currentLevel)
+    public void setCurrentDifficulty(int currentDifficulty)
     {
-        this.currentLevel = currentLevel;
+        this.currentDifficulty = currentDifficulty;
     }
 }

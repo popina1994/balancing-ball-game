@@ -28,12 +28,9 @@ public class GameActivity extends CommonActivity implements SensorEventListener
         String levelName = null;
         if (null != extras)
         {
+            int currentMode = extras.getInt(GameModel.GAME_MODE);
+            model.setCurrentMode(currentMode);
             levelName = extras.getString(MainModel.POLYGON_NAME);
-            model.setCurrentMode(GameModel.MODE_ONE_GAME);
-        }
-        else
-        {
-            model.setCurrentMode(GameModel.MODE_ADVENTURE);
         }
 
         view = (GameView) findViewById(R.id.surfaceViewGame);
