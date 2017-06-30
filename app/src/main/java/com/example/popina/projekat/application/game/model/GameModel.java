@@ -1,4 +1,4 @@
-package com.example.popina.projekat.application.game;
+package com.example.popina.projekat.application.game.model;
 
 import android.hardware.SensorManager;
 
@@ -27,7 +27,11 @@ public class GameModel extends CommonModel
     private CollisionModelAbstract collisionModel;
 
     public static final String POLYGON_NAME = "POLYGON_NAME";
-    private String fileName;
+    public static final int MODE_ONE_GAME = 0;
+    public static final int MODE_TEN_GAMES = 1;
+    public static final int NUM_LEVELS = 10;
+
+    private String levelName;
 
     private int height;
     private int width;
@@ -36,10 +40,13 @@ public class GameModel extends CommonModel
     private boolean paused = false;
     private boolean lastTimeInitialized = false;
     private LinkedList<Time> listTimes = new LinkedList<>();
+    private boolean levelLoaded = false;
 
     private SensorManager sensorManager;
     private Coefficient coefficient;
     private SoundPlayerCallback soundPlayerCallback;
+
+    private int currentMode;
 
     public CollisionModelAbstract getCollisionModel()
     {
@@ -81,14 +88,14 @@ public class GameModel extends CommonModel
         this.listFigures = listFigures;
     }
 
-    public String getFileName()
+    public String getLevelName()
     {
-        return fileName;
+        return levelName;
     }
 
-    public void setFileName(String fileName)
+    public void setLevelName(String levelName)
     {
-        this.fileName = fileName;
+        this.levelName = levelName;
     }
 
     public CircleHole getBall()
@@ -193,4 +200,23 @@ public class GameModel extends CommonModel
         this.listTimes = listTimes;
     }
 
+    public boolean isLevelLoaded()
+    {
+        return levelLoaded;
+    }
+
+    public void setLevelLoaded(boolean levelLoaded)
+    {
+        this.levelLoaded = levelLoaded;
+    }
+
+    public int getCurrentMode()
+    {
+        return currentMode;
+    }
+
+    public void setCurrentMode(int currentMode)
+    {
+        this.currentMode = currentMode;
+    }
 }

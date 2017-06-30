@@ -42,6 +42,7 @@
         android:isIndicator="false"
         android:numStars="10"
         android:stepSize="1"
+        android:rating="1"
         android:visibility="visible"
         android:layout_marginTop="23dp"
         android:layout_below="@+id/buttonDialogSavePolygon"

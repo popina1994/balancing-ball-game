@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.begin.MainModel;
 import com.example.popina.projekat.application.common.CommonActivity;
+import com.example.popina.projekat.application.game.model.GameModel;
 
 public class GameActivity extends CommonActivity implements SensorEventListener
 {
@@ -29,7 +30,7 @@ public class GameActivity extends CommonActivity implements SensorEventListener
         }
 
         model = new GameModel();
-        model.setFileName(fileName);
+        model.setLevelName(fileName);
 
         view = (GameView) findViewById(R.id.surfaceViewGame);
         controller = new GameController(this, model, view);

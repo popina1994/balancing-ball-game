@@ -245,6 +245,8 @@ public class MainActivity extends CommonActivity
 
                 Intent intent = new Intent(MainActivity.this, CreatePolygonActivity.class);
                 intent.putExtra(MainModel.POLYGON_NAME, fileName);
+                databaseInitialize();
+                intent.putExtra(MainModel.POLYGON_DIFFICULTY, model.getScoreDatabase().getDifficulty(fileName));
                 startActivityForResult(intent, MainModel.REQUEST_CODE_CREATE_POLYGON);
                 break;
         }

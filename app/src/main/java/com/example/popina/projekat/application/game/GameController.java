@@ -4,9 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.example.popina.projekat.application.game.model.GameModel;
 import com.example.popina.projekat.logic.game.coefficient.Coefficient;
 import com.example.popina.projekat.logic.game.collision.CollisionModel;
 import com.example.popina.projekat.logic.game.collision.CollisionModelAbstract;
@@ -14,14 +14,10 @@ import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
-import com.example.popina.projekat.logic.shape.figure.Figure;
-import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayer;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
 import java.util.LinkedList;
-
-import static com.example.popina.projekat.logic.game.utility.Utility.opositeSign;
 
 /**
  * Created by popina on 09.03.2017..
@@ -121,7 +117,7 @@ public class GameController
                 case CollisionModelAbstract.GAME_OVER_WIN:
                     model.setGameOver(true);
                     model.getListTimes().getLast().setEnd(System.currentTimeMillis());
-                    Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getListTimes()), model.getFileName());
+                    Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getListTimes()), model.getLevelName());
                     dialog.show();
                     break;
             }

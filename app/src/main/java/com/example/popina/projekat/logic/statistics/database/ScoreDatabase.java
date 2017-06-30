@@ -29,7 +29,7 @@ public class ScoreDatabase
     public String getFirstLevel()
     {
         String levelName = null;
-        try(SQLiteDatabase database = databaseHelper.getReadableDatabase())
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
         {
 
             Cursor cursor = null;

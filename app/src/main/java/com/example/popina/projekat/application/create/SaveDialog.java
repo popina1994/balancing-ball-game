@@ -37,6 +37,14 @@ public class SaveDialog extends Dialog
     private void initDialog()
     {
         setContentView(R.layout.dialog_save_polygon);
+        if (model.isEditMode())
+        {
+            EditText editTextFileName = (EditText) findViewById(R.id.editTextNewNameOfPolygon);
+            RatingBar ratingBarDifficulty =  (RatingBar)findViewById(R.id.ratingBarDifficulty);
+
+            editTextFileName.setText(model.getFileName());
+            ratingBarDifficulty.setRating(model.getLevelDifficulty());
+        }
 
         // TODO: Check if file exists.
         //

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.popina.projekat.R;
+import com.example.popina.projekat.application.game.model.GameModel;
 import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;

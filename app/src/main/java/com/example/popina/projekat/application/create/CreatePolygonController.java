@@ -197,7 +197,7 @@ public class CreatePolygonController
 
         // TODO : check overlaping
 
-        if (null != errorText)
+        if ( (null != errorText) )
         {
             Toast toast = Toast.makeText(createPolygonActivity.getApplicationContext(), errorText, Toast.LENGTH_SHORT);
             toast.show();
@@ -234,53 +234,49 @@ public class CreatePolygonController
 
     public void savePolygonInFileAndDB()
     {
-        if (model.getFileName() != null)
+
+        FileOutputStream outputStream = null;
+
+        try
         {
-            FileOutputStream outputStream = null;
+            outputStream = createPolygonActivity.openFileOutput(model.getFileName(), Context.MODE_PRIVATE);
+            StringBuilder stringBuilder = new StringBuilder();
+            LinkedList<Figure> listFigure = model.getListFigures();
+            listFigure = model.getShapeFactory().scaleReverseFigure(listFigure);
 
-            try
+            for (Figure it : listFigure)
             {
-                outputStream = createPolygonActivity.openFileOutput(model.getFileName(), Context.MODE_PRIVATE);
-                StringBuilder stringBuilder = new StringBuilder();
-                LinkedList<Figure> listFigure = model.getListFigures();
-                listFigure = model.getShapeFactory().scaleReverseFigure(listFigure);
+                stringBuilder.append(it.toString() + "\n");
+            }
 
-                for (Figure it : listFigure)
+            outputStream.write(stringBuilder.toString().getBytes());
+
+            ScoreDatabase database = new ScoreDatabase(createPolygonActivity.getApplicationContext());
+            database.insertLevel(model.getFileName(), model.getLevelDifficulty());
+
+            model.setEditMode(true);
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (null != outputStream)
+            {
+                try
                 {
-                    stringBuilder.append(it.toString() + "\n");
+                    outputStream.close();
                 }
-
-                outputStream.write(stringBuilder.toString().getBytes());
-
-                ScoreDatabase database = new ScoreDatabase(createPolygonActivity.getApplicationContext());
-                database.insertLevel(model.getFileName(), model.getLevelDifficulty());
-
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                if (null != outputStream)
+                catch (IOException e)
                 {
-                    try
-                    {
-                        outputStream.close();
-                    }
-                    catch (IOException e)
-                    {
-                        Log.d("Save dialog", "Neko te prokleo");
-                        e.printStackTrace();
-                    }
+                    Log.d("Save dialog", "Neko te prokleo");
+                    e.printStackTrace();
                 }
             }
         }
-        else
-        {
-            Toast toast = Toast.makeText(createPolygonActivity.getApplicationContext(), "Morate da date ime poligonu (kliknite sacuvaj)", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+
     }
 
 }

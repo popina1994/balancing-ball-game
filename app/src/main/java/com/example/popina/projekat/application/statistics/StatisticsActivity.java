@@ -11,7 +11,7 @@ import android.widget.Spinner;
 
 import com.example.popina.projekat.R;
 import com.example.popina.projekat.application.common.CommonActivity;
-import com.example.popina.projekat.application.game.GameModel;
+import com.example.popina.projekat.application.game.model.GameModel;
 import com.example.popina.projekat.logic.statistics.database.ScoreDatabase;
 import com.example.popina.projekat.logic.statistics.database.table.LevelTable;
 import com.example.popina.projekat.logic.statistics.database.table.UserScoreTable;

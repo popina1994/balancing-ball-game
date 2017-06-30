@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.popina.projekat.application.game.model.GameModel;
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
@@ -92,35 +93,39 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         //
         model.setShapeDraw(shapeDraw);
 
-        if ((null == model.getBall()) || (model.isPaused()))
+        // SP
+        holder.unlockCanvasAndPost(canvas);
+        if (model.isPaused() || !model.isLevelLoaded())
         {
-            ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
-            model.setShapeParser(shapeParser);
-
-            LinkedList<Figure> listFigures = (LinkedList<Figure>)shapeParser.parseFile(model.getFileName());
-            for (Figure it : listFigures)
+            if (!model.isLevelLoaded())
             {
+                ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
+                model.setShapeParser(shapeParser);
 
-                if (it instanceof StartHole)
+                LinkedList<Figure> listFigures = (LinkedList<Figure>) shapeParser.parseFile(model.getLevelName());
+                for (Figure it : listFigures)
                 {
-                    if (null == model.getBall())
+
+                    if (it instanceof StartHole)
                     {
-                        model.setBall((CircleHole) it);
+                        if (null == model.getBall())
+                        {
+                            model.setBall((CircleHole) it);
+                        }
+                        listFigures.remove(it);
+                        break;
                     }
-                    listFigures.remove(it);
-                    break;
                 }
+
+                model.setListFigures(listFigures);
+                model.setLevelLoaded(true);
             }
-
-
-            model.setListFigures(listFigures);
-
             // Split ball from other figures.
             //
             shapeDraw.spriteOnBackground(model.getListFigures());
+
             controller.resume();
         }
-        holder.unlockCanvasAndPost(canvas);
 
         surfaceThread = new SurfaceThread();
         surfaceThread.start();

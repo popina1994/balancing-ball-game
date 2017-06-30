@@ -26,9 +26,11 @@ public class CreatePolygonActivity extends CommonActivity
         if (null != extras)
         {
             String fileName = extras.getString(MainModel.POLYGON_NAME);
+            int difficulty = extras.getInt(MainModel.POLYGON_DIFFICULTY);
             if (fileName != null)
             {
                 model.setFileName(fileName);
+                model.setLevelDifficulty(difficulty);
                 model.setEditMode(true);
             }
         }
@@ -94,9 +96,22 @@ public class CreatePolygonActivity extends CommonActivity
     @Override
     public void onBackPressed()
     {
-        if (controller.canSavePolygon())
+        boolean canGoBack = false;
+        if (model.isEditMode())
         {
-            controller.savePolygonInFileAndDB();
+            if (controller.canSavePolygon())
+            {
+                controller.savePolygonInFileAndDB();
+                canGoBack = true;
+            }
+        }
+        else
+        {
+            canGoBack = true;
+        }
+
+        if (canGoBack)
+        {
             setResult(RESULT_OK);
             super.onBackPressed();
         }
