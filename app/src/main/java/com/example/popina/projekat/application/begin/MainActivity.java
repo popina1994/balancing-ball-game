@@ -54,6 +54,7 @@ public class MainActivity extends CommonActivity
 
         setContentView(R.layout.activity_main);
         model = new MainModel();
+        adventureGameModeInitialize();
         listRefresh();
     }
 
@@ -127,6 +128,7 @@ public class MainActivity extends CommonActivity
         if (model.getGameDatabase() != null)
         {
             model.getGameDatabase().close();
+            model.setGameDatabase(null);
         }
     }
 
@@ -290,5 +292,17 @@ public class MainActivity extends CommonActivity
             GameDatabase database = new GameDatabase(getApplicationContext());
             model.setGameDatabase(database);
         }
+    }
+
+    private void adventureGameModeInitialize()
+    {
+        databaseInitialize();
+        LinkedList<String> listLevels = model.getGameDatabase().getLevels(GameDatabase.ADVENTURE_LEVEL_DIFFICULTY);
+        if (listLevels.isEmpty())
+        {
+            model.getGameDatabase().insertLevel(GameDatabase.ADVENTURE_LEVEL_NAME, GameDatabase.ADVENTURE_LEVEL_DIFFICULTY);
+        }
+        databaseClose();
+
     }
 }

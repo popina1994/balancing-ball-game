@@ -22,6 +22,7 @@ public class GameDatabase
     public static final int INSERT_ERROR = 0x2;
 
     public static final String ADVENTURE_LEVEL_NAME = "Avantura";
+    public static final int ADVENTURE_LEVEL_DIFFICULTY = -1;
 
     GameDatabaseHelper databaseHelper;
 

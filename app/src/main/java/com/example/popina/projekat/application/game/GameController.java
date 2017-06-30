@@ -163,12 +163,18 @@ public class GameController
                             || ((model.getCurrentMode()) == GameModel.MODE_ADVENTURE) && (model.getCurrentDifficulty() == 2))
                     {
                         long score = calcTime(model.getLevelElements().getListTimes());
+                        String levelName = null;
                         if (model.getCurrentMode() == GameModel.MODE_ADVENTURE)
                         {
                             score += model.getCurrentScore();
+                            levelName = GameDatabase.ADVENTURE_LEVEL_NAME;
+                        }
+                        else
+                        {
+                            levelName = model.getLevelElements().getLevelName();
                         }
 
-                        Dialog dialog = new GameOverDialog(gameActivity, score, model.getLevelElements().getLevelName());
+                        Dialog dialog = new GameOverDialog(gameActivity, score, levelName);
                         dialog.show();
                     }
                     else
