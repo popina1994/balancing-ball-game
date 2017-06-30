@@ -173,6 +173,7 @@ public class MainActivity extends CommonActivity
                         Canvas canvas = new Canvas(bmp);
                         model.getShapeParser().drawImageFromFile(canvas, (String) data);
                         imageViewPolygon.setImageBitmap(bmp);
+
                         return true;
                     case R.id.ratingBarListItemPolygonDifficulty:
                         databaseInitialize();
