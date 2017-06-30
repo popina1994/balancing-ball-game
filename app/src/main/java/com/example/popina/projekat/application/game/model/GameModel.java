@@ -20,7 +20,6 @@ import java.util.LinkedList;
 
 public class GameModel extends CommonModel
 {
-    private CircleHole ball;
     private LinkedList<Figure> listFigures = new LinkedList<>();
 
     private FilterInterface filter = new FilterPastValue(FilterPastValue.ALPHA);
@@ -31,22 +30,21 @@ public class GameModel extends CommonModel
     public static final int MODE_ADVENTURE = 1;
     public static final int NUM_LEVELS = 10;
 
-    private String levelName;
-
     private int height;
     private int width;
     private boolean surfaceInitialized;
     private boolean gameOver = false;
     private boolean paused = false;
-    private boolean lastTimeInitialized = false;
-    private LinkedList<Time> listTimes = new LinkedList<>();
     private boolean levelLoaded = false;
 
     private SensorManager sensorManager;
     private Coefficient coefficient;
+    private LevelElements levelElements;
     private SoundPlayerCallback soundPlayerCallback;
 
     private int currentMode;
+    private int currentLevel = -1;
+
 
     public CollisionModelAbstract getCollisionModel()
     {
@@ -58,15 +56,6 @@ public class GameModel extends CommonModel
         this.collisionModel = collisionModel;
     }
 
-    public boolean isLastTimeInitialized()
-    {
-        return lastTimeInitialized;
-    }
-
-    public void setLastTimeInitialized(boolean lastTimeInitialized)
-    {
-        this.lastTimeInitialized = lastTimeInitialized;
-    }
 
     public SoundPlayerCallback getSoundPlayerCallback()
     {
@@ -76,36 +65,6 @@ public class GameModel extends CommonModel
     public void setSoundPlayerCallback(SoundPlayerCallback soundPlayerCallback)
     {
         this.soundPlayerCallback = soundPlayerCallback;
-    }
-
-    public LinkedList<Figure> getListFigures()
-    {
-        return listFigures;
-    }
-
-    public void setListFigures(LinkedList<Figure> listFigures)
-    {
-        this.listFigures = listFigures;
-    }
-
-    public String getLevelName()
-    {
-        return levelName;
-    }
-
-    public void setLevelName(String levelName)
-    {
-        this.levelName = levelName;
-    }
-
-    public CircleHole getBall()
-    {
-        return ball;
-    }
-
-    public void setBall(CircleHole ball)
-    {
-        this.ball = ball;
     }
 
     public FilterInterface getFilter()
@@ -190,16 +149,6 @@ public class GameModel extends CommonModel
         this.sensorManager = sensorManager;
     }
 
-    public LinkedList<Time> getListTimes()
-    {
-        return listTimes;
-    }
-
-    public void setListTimes(LinkedList<Time> listTimes)
-    {
-        this.listTimes = listTimes;
-    }
-
     public boolean isLevelLoaded()
     {
         return levelLoaded;
@@ -219,4 +168,16 @@ public class GameModel extends CommonModel
     {
         this.currentMode = currentMode;
     }
+
+    public LevelElements getLevelElements()
+    {
+        return levelElements;
+    }
+
+    public void setLevelElements(LevelElements levelElements)
+    {
+        this.levelElements = levelElements;
+    }
+
+
 }

@@ -25,11 +25,11 @@ public class GameActivity extends CommonActivity implements SensorEventListener
         setContentView(R.layout.activity_game);
         model = new GameModel();
         Bundle extras = getIntent().getExtras();
+        String levelName = null;
         if (null != extras)
         {
-            fileName = extras.getString(MainModel.POLYGON_NAME);
+            levelName = extras.getString(MainModel.POLYGON_NAME);
             model.setCurrentMode(GameModel.MODE_ONE_GAME);
-            model.setLevelName(fileName);
         }
         else
         {
@@ -37,7 +37,7 @@ public class GameActivity extends CommonActivity implements SensorEventListener
         }
 
         view = (GameView) findViewById(R.id.surfaceViewGame);
-        controller = new GameController(this, model, view);
+        controller = new GameController(this, model, view, levelName);
         view.setModel(model);
         view.setController(controller);
     }

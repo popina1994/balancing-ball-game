@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.widget.Toast;
 
+import com.example.popina.projekat.application.game.model.LevelElements;
 import com.example.popina.projekat.application.game.model.GameModel;
 import com.example.popina.projekat.logic.game.coefficient.Coefficient;
 import com.example.popina.projekat.logic.game.collision.CollisionModel;
@@ -14,6 +15,10 @@ import com.example.popina.projekat.logic.game.utility.Coordinate3D;
 import com.example.popina.projekat.logic.game.utility.Time;
 import com.example.popina.projekat.logic.game.utility.Utility;
 import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
+import com.example.popina.projekat.logic.shape.figure.Figure;
+import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
+import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
+import com.example.popina.projekat.logic.shape.parser.ShapeParser;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayer;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 
@@ -30,16 +35,16 @@ public class GameController
     private GameView view;
 
 
-    public GameController(GameActivity gameActivity, GameModel model, GameView view)
+    public GameController(GameActivity gameActivity, GameModel model, GameView view, String levelName)
     {
         this.gameActivity = gameActivity;
         this.model = model;
         this.view = view;
 
-        initActivity();
+        initActivity(levelName);
     }
 
-    private void initActivity()
+    private void initActivity(String levelName)
     {
         Coefficient coefficient = new Coefficient(gameActivity);
         model.setCoefficient(coefficient);
@@ -52,6 +57,19 @@ public class GameController
 
         CollisionModelAbstract collisionModelAbstract = new CollisionModel(coefficient, soundPlayerCallback);
         model.setCollisionModel(collisionModelAbstract);
+
+        LevelElements levelElements = null;
+        if (model.getCurrentMode() == GameModel.MODE_ONE_GAME)
+        {
+            levelElements = new LevelElements(levelName);
+        }
+        else
+        {
+            // TODO : generate random start level.
+            
+            //levelElements =
+        }
+        model.setLevelElements(levelElements);
 
 
     }
@@ -68,9 +86,9 @@ public class GameController
 
         if (null != sensor)
         {
-            model.setLastTimeInitialized(false);
+            model.getLevelElements().setLastTimeInitialized(false);
             sensorManager.registerListener(gameActivity, sensor, SensorManager.SENSOR_DELAY_GAME);
-            model.getListTimes().addLast(new Time(System.currentTimeMillis()));
+            model.getLevelElements().getListTimes().addLast(new Time(System.currentTimeMillis()));
             model.setPaused(false);
         }
 
@@ -79,7 +97,7 @@ public class GameController
     public void pause()
     {
         model.getSensorManager().unregisterListener(gameActivity);
-        model.getListTimes().getLast().setEnd(System.currentTimeMillis());
+        model.getLevelElements().getListTimes().getLast().setEnd(System.currentTimeMillis());
         model.setPaused(true);
     }
 
@@ -87,13 +105,13 @@ public class GameController
     {
         if (!model.isGameOver())
         {
-            if (model.isLastTimeInitialized())
+            if (model.getLevelElements().isLastTimeInitialized())
             {
                 Coordinate3D filteredAcc = model.getFilter().filter(new Coordinate3D(newAcc[0], newAcc[1], newAcc[2]));
                 updatePosition(filteredAcc, time);
             }
             model.getCollisionModel().setLastTime(time);
-            model.setLastTimeInitialized(true);
+            model.getLevelElements().setLastTimeInitialized(true);
         }
     }
 
@@ -103,7 +121,7 @@ public class GameController
         //
         if (model.isSurfaceInitialized())
         {
-            int state = model.getCollisionModel().updateSystem(filteredAcc, time, model.getListFigures(), model.getBall());
+            int state = model.getCollisionModel().updateSystem(filteredAcc, time, model.getLevelElements().getListFigures(), model.getLevelElements().getBall());
             switch (state)
             {
                 case CollisionModelAbstract.GAME_CONTINUES_COLLISION:
@@ -116,8 +134,9 @@ public class GameController
                     break;
                 case CollisionModelAbstract.GAME_OVER_WIN:
                     model.setGameOver(true);
-                    model.getListTimes().getLast().setEnd(System.currentTimeMillis());
-                    Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getListTimes()), model.getLevelName());
+                    model.getLevelElements().getListTimes().getLast().setEnd(System.currentTimeMillis());
+                    Dialog dialog = new GameOverDialog(gameActivity, calcTime(model.getLevelElements().getListTimes()),
+                                                        model.getLevelElements().getLevelName());
                     dialog.show();
                     break;
             }
@@ -134,6 +153,25 @@ public class GameController
             timeAll += time.timeInt();
         }
         return timeAll;
+    }
+
+    public void loadLevel()
+    {
+        ShapeParser shapeParser = new ShapeParser(model.getShapeFactory(), model.getShapeDraw(), view.getContext());
+        model.setShapeParser(shapeParser);
+
+        LinkedList<Figure> listFigures = (LinkedList<Figure>) shapeParser.parseFile(model.getLevelElements().getLevelName());
+        for (Figure it : listFigures)
+        {
+            if (it instanceof StartHole)
+            {
+                model.getLevelElements().setBall((CircleHole) it);
+                listFigures.remove(it);
+                break;
+            }
+        }
+
+        model.getLevelElements().setListFigures(listFigures);
     }
 
     // A * X + B * Y = Z
@@ -191,5 +229,6 @@ public class GameController
         //
         return (-C - A * x) / B;
     }
+
 
 }

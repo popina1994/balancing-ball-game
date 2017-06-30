@@ -32,28 +32,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
     public GameView(Context context)
     {
         super(context);
-        init();
+        surfaceInitialization();
     }
 
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        init();
+        surfaceInitialization();
     }
 
     public GameView(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-        init();
+        surfaceInitialization();
     }
 
     public GameView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        surfaceInitialization();
     }
 
-    private void init()
+    private void surfaceInitialization()
     {
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
@@ -71,7 +71,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
 
     private void renderSurfaceView(Canvas canvas)
     {
-        model.getShapeDraw().drawOnCanvas(model.getBall(), canvas);
+        model.getShapeDraw().drawOnCanvas(model.getLevelElements().getBall(), canvas);
     }
 
     @Override
@@ -99,30 +99,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
         {
             if (!model.isLevelLoaded())
             {
-                ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
-                model.setShapeParser(shapeParser);
-
-                LinkedList<Figure> listFigures = (LinkedList<Figure>) shapeParser.parseFile(model.getLevelName());
-                for (Figure it : listFigures)
-                {
-
-                    if (it instanceof StartHole)
-                    {
-                        if (null == model.getBall())
-                        {
-                            model.setBall((CircleHole) it);
-                        }
-                        listFigures.remove(it);
-                        break;
-                    }
-                }
-
-                model.setListFigures(listFigures);
+                controller.loadLevel();
                 model.setLevelLoaded(true);
             }
             // Split ball from other figures.
             //
-            shapeDraw.spriteOnBackground(model.getListFigures());
+            shapeDraw.spriteOnBackground(model.getLevelElements().getListFigures());
 
             controller.resume();
         }
@@ -194,7 +176,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback
                 }
                 if (running)
                 {
-                    //Log.d("Sufrace view", "Drawing");
                     Canvas canvas = surfaceHolder.lockCanvas();
                     try
                     {
