@@ -19,6 +19,7 @@ import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.figure.hole.CircleHole;
 import com.example.popina.projekat.logic.shape.figure.hole.StartHole;
 import com.example.popina.projekat.logic.shape.parser.ShapeParser;
+import com.example.popina.projekat.logic.shape.parser.ShapeParserAbstract;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayer;
 import com.example.popina.projekat.logic.shape.sound.SoundPlayerCallback;
 import com.example.popina.projekat.logic.statistics.database.GameDatabase;
@@ -207,7 +208,7 @@ public class GameController
 
      void loadLevel()
     {
-        ShapeParser shapeParser = new ShapeParser(model.getShapeFactory(), model.getShapeDraw(), view.getContext());
+        ShapeParserAbstract shapeParser = new ShapeParser(model.getShapeFactory(), model.getShapeDraw(), view.getContext());
         model.setShapeParser(shapeParser);
 
         LinkedList<Figure> listFigures = (LinkedList<Figure>) shapeParser.parseFile(model.getLevelElements().getLevelName());

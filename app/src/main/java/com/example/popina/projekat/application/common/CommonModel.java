@@ -5,6 +5,7 @@ import android.view.View;
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.parser.ShapeParser;
+import com.example.popina.projekat.logic.shape.parser.ShapeParserAbstract;
 
 /**
  * Created by popina on 08.03.2017..
@@ -26,7 +27,7 @@ public abstract class CommonModel
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
     private ShapeFactory shapeFactory;
     private ShapeDraw shapeDraw;
-    private ShapeParser shapeParser;
+    private ShapeParserAbstract shapeParser;
 
     public ShapeFactory getShapeFactory()
     {
@@ -48,12 +49,12 @@ public abstract class CommonModel
         this.shapeDraw = shapeDraw;
     }
 
-    public ShapeParser getShapeParser()
+    public ShapeParserAbstract getShapeParser()
     {
         return shapeParser;
     }
 
-    public void setShapeParser(ShapeParser shapeParser)
+    public void setShapeParser(ShapeParserAbstract shapeParser)
     {
         this.shapeParser = shapeParser;
     }

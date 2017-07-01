@@ -29,6 +29,7 @@ import com.example.popina.projekat.application.statistics.StatisticsActivity;
 import com.example.popina.projekat.logic.shape.draw.ShapeDraw;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.parser.ShapeParser;
+import com.example.popina.projekat.logic.shape.parser.ShapeParserAbstract;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
 import com.example.popina.projekat.logic.statistics.database.GameDatabase;
 
@@ -72,7 +73,7 @@ public class MainActivity extends CommonActivity
 
         ShapeDraw shapeDraw = new ShapeDraw(this, (int) width, (int) height);
         model.setShapeDraw(shapeDraw);
-        ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, this);
+        ShapeParserAbstract shapeParser = new ShapeParser(shapeFactory, shapeDraw, this);
         model.setShapeParser(shapeParser);
     }
 

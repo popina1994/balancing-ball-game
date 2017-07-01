@@ -15,6 +15,7 @@ import com.example.popina.projekat.logic.shape.factory.ShapeBorderFactory;
 import com.example.popina.projekat.logic.shape.factory.ShapeFactory;
 import com.example.popina.projekat.logic.shape.figure.Figure;
 import com.example.popina.projekat.logic.shape.parser.ShapeParser;
+import com.example.popina.projekat.logic.shape.parser.ShapeParserAbstract;
 import com.example.popina.projekat.logic.shape.scale.UtilScaleNormal;
 
 import java.util.LinkedList;
@@ -97,7 +98,7 @@ public class CreatePolygonView extends SurfaceView implements SurfaceHolder.Call
             LinkedList<Figure> listFigures  = null;
             if (model.isEditMode())
             {
-                ShapeParser shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
+                ShapeParserAbstract shapeParser = new ShapeParser(shapeFactory, shapeDraw, getContext());
                 model.setShapeParser(shapeParser);
                 listFigures = (LinkedList<Figure>) shapeParser.parseFile(model.getFileName());
             }
