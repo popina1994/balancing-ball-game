@@ -1,4 +1,4 @@
-\documentclass[hidelinks,a4paper]{report}
+\documentclass[hidelinks,a4paper,12pt]{report}
 
 \usepackage[utf8x]{inputenc}
 \usepackage[T2A]{fontenc} 
@@ -56,7 +56,18 @@
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 
+
+\raggedbottom                           % try to avoid widows and orphans
+\sloppy
+\clubpenalty1000%
+\widowpenalty1000%
+
+\renewcommand{\baselinestretch}{1.1}    % adjust line spacing to make
+                                        % more readable
+
+
 \begin{document}
+
 
 \include{TitlePage}
 
@@ -67,10 +78,11 @@
 \renewcommand{\chaptername}{ Глава}
 
 \include{Intro}
+\include{UseCases}
+\include{Android}
 \include{Collision}
 \include{Graphics}
 \include{Architecture}
-\include{UseCases}
 \include{Conclusion}
 
 \addcontentsline{toc}{chapter}{\bibname}

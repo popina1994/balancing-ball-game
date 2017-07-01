@@ -1,12 +1,28 @@
 \select@language {serbianc}
 \contentsline {chapter}{\numberline {1}\IeC {\CYRU }\IeC {\cyrv }\IeC {\cyro }\IeC {\cyrd }}{2}{chapter.1}
 \contentsline {section}{\numberline {1.1}\IeC {\CYRM }\IeC {\cyro }\IeC {\cyrt }\IeC {\cyri }\IeC {\cyrv }\IeC {\cyra }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyra }}{2}{section.1.1}
-\contentsline {section}{\numberline {1.2}\IeC {\CYRP }\IeC {\cyro }\IeC {\cyrs }\IeC {\cyrt }\IeC {\cyro }\IeC {\cyrje }\IeC {\cyre }\IeC {\cyrtshe }\IeC {\cyra } \IeC {\cyrr }\IeC {\cyre }\IeC {\cyrsh }\IeC {\cyre }\IeC {\cyrnje }\IeC {\cyra }}{2}{section.1.2}
-\contentsline {section}{\numberline {1.3}\IeC {\CYRK }\IeC {\cyro }\IeC {\cyrr }\IeC {\cyri }\IeC {\cyrsh }\IeC {\cyrtshe }\IeC {\cyre }\IeC {\cyrn }\IeC {\cyri } \IeC {\cyra }\IeC {\cyrl }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyri }}{2}{section.1.3}
+\contentsline {section}{\numberline {1.2}\IeC {\CYRP }\IeC {\cyro }\IeC {\cyrs }\IeC {\cyrt }\IeC {\cyro }\IeC {\cyrje }\IeC {\cyre }\IeC {\cyrtshe }\IeC {\cyra } \IeC {\cyrr }\IeC {\cyre }\IeC {\cyrsh }\IeC {\cyre }\IeC {\cyrnje }\IeC {\cyra }}{3}{section.1.2}
+\contentsline {section}{\numberline {1.3}\IeC {\CYRK }\IeC {\cyro }\IeC {\cyrr }\IeC {\cyri }\IeC {\cyrsh }\IeC {\cyrtshe }\IeC {\cyre }\IeC {\cyrn }\IeC {\cyri } \IeC {\cyra }\IeC {\cyrl }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyri } \IeC {\cyri } \IeC {\cyrm }\IeC {\cyra }\IeC {\cyrsh }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyre }}{3}{section.1.3}
 \contentsline {section}{\numberline {1.4}\IeC {\CYRS }\IeC {\cyrt }\IeC {\cyrr }\IeC {\cyru }\IeC {\cyrk }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra }}{3}{section.1.4}
-\contentsline {chapter}{\numberline {2}\IeC {\CYRM }\IeC {\cyro }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrl } \IeC {\cyrs }\IeC {\cyru }\IeC {\cyrd }\IeC {\cyra }\IeC {\cyrr }\IeC {\cyra }}{4}{chapter.2}
-\contentsline {chapter}{\numberline {3}\IeC {\CYRG }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrf }\IeC {\cyri }\IeC {\cyrk }\IeC {\cyra }}{5}{chapter.3}
-\contentsline {chapter}{\numberline {4}A\IeC {\cyrr }\IeC {\cyrh }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrk }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra }}{6}{chapter.4}
-\contentsline {chapter}{\numberline {5}\IeC {\CYRF }\IeC {\cyru }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyra }\IeC {\cyrl }\IeC {\cyrn }\IeC {\cyro }\IeC {\cyrs }\IeC {\cyrt }\IeC {\cyri }}{7}{chapter.5}
-\contentsline {chapter}{\numberline {6}\IeC {\CYRZ }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyrlje }\IeC {\cyru }\IeC {\cyrch }\IeC {\cyra }\IeC {\cyrk }}{8}{chapter.6}
-\contentsline {chapter}{\IeC {\CYRL }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri } \IeC {\cyrl }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyri }}{9}{chapter.6}
+\contentsline {chapter}{\numberline {2}\IeC {\CYRF }\IeC {\cyru }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyra }\IeC {\cyrl }\IeC {\cyrn }\IeC {\cyro }\IeC {\cyrs }\IeC {\cyrt }\IeC {\cyri }}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}\IeC {\CYRP }\IeC {\cyro }\IeC {\cyrch }\IeC {\cyre }\IeC {\cyrt }\IeC {\cyrn }\IeC {\cyri } \IeC {\cyre }\IeC {\cyrk }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrn }}{5}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\IeC {\CYRO }\IeC {\cyrs }\IeC {\cyrn }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyrn }\IeC {\cyri }}{5}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Me\IeC {\cyrn }\IeC {\cyri }}{6}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}\IeC {\CYRO }\IeC {\cyrp }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyre } \IeC {\cyrp }\IeC {\cyro }\IeC {\cyrl }\IeC {\cyri }\IeC {\cyrg }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyra }}{6}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}\IeC {\CYRI }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyra }}{7}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\IeC {\CYRI }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyrp }\IeC {\cyro }\IeC {\cyrb }\IeC {\cyre }\IeC {\cyrdje }\IeC {\cyre }\IeC {\cyrn }\IeC {\cyra }}{8}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\IeC {\CYRI }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri }\IeC {\cyrz }\IeC {\cyrg }\IeC {\cyru }\IeC {\cyrb }\IeC {\cyrlje }\IeC {\cyre }\IeC {\cyrn }\IeC {\cyra }}{9}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}\IeC {\CYRP }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrv }\IeC {\cyrlje }\IeC {\cyre }\IeC {\cyrnje }\IeC {\cyre } \IeC {\cyrp }\IeC {\cyro }\IeC {\cyrl }\IeC {\cyri }\IeC {\cyrg }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyra }}{9}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\IeC {\CYRO }\IeC {\cyrp }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyre } \IeC {\cyrz }\IeC {\cyra } \IeC {\cyru }\IeC {\cyrr }\IeC {\cyre }\IeC {\cyrdje }\IeC {\cyri }\IeC {\cyrv }\IeC {\cyra }\IeC {\cyrnje }\IeC {\cyre } \IeC {\cyrp }\IeC {\cyro }\IeC {\cyrl }\IeC {\cyri }\IeC {\cyrg }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyra }}{9}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\IeC {\CYRCH }\IeC {\cyru }\IeC {\cyrv }\IeC {\cyra }\IeC {\cyrnje }\IeC {\cyre } \IeC {\cyrp }\IeC {\cyro }\IeC {\cyrl }\IeC {\cyri }\IeC {\cyrg }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyra }}{10}{subsection.2.3.2}
+\contentsline {section}{\numberline {2.4}\IeC {\CYRR }\IeC {\cyre }\IeC {\cyrz }\IeC {\cyru }\IeC {\cyrl }\IeC {\cyrt }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyri }}{11}{section.2.4}
+\contentsline {section}{\numberline {2.5}\IeC {\CYRP }\IeC {\cyro }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrsh }\IeC {\cyra }\IeC {\cyrv }\IeC {\cyra }\IeC {\cyrnje }\IeC {\cyra }}{12}{section.2.5}
+\contentsline {chapter}{\numberline {3}Android}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}GUI \IeC {\cyrk }\IeC {\cyro }\IeC {\cyrd }}{13}{section.3.1}
+\contentsline {section}{\numberline {3.2}Java \IeC {\cyrk }\IeC {\cyro }\IeC {\cyrd }}{14}{section.3.2}
+\contentsline {section}{\numberline {3.3}Unit Test}{14}{section.3.3}
+\contentsline {chapter}{\numberline {4}\IeC {\CYRM }\IeC {\cyro }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrl } \IeC {\cyrs }\IeC {\cyru }\IeC {\cyrd }\IeC {\cyra }\IeC {\cyrr }\IeC {\cyra }}{15}{chapter.4}
+\contentsline {chapter}{\numberline {5}\IeC {\CYRG }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrf }\IeC {\cyri }\IeC {\cyrk }\IeC {\cyra }}{16}{chapter.5}
+\contentsline {chapter}{\numberline {6}A\IeC {\cyrr }\IeC {\cyrh }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrk }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra }}{17}{chapter.6}
+\contentsline {chapter}{\numberline {7}\IeC {\CYRZ }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyrlje }\IeC {\cyru }\IeC {\cyrch }\IeC {\cyra }\IeC {\cyrk }}{18}{chapter.7}
+\contentsline {chapter}{\IeC {\CYRL }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri } \IeC {\cyrl }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyri }}{19}{chapter.7}
