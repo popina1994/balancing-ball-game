@@ -121,6 +121,18 @@
 Класа \emph{ShapeBorderFactory} садржи методу чији потпис је \\\emph{LinkedList<RectangleObstacle> createBorders()} и која генерише листу зидова (четири) као листу правоугаоних препрека скалираних за екран. Ово омогућава избегавање посебних провера за зидове (јер се зидови посматрају као фигуре).
 
 \subsection{Пакет figure}
+Унутар овог пакета, а и његових подпакета налазе се класе које имплемнтирају лопту, и препреке. 
+
+\emph{Figure} класа имплементира интерфејсе \emph{ShapeParserInterface, ShapeDrawInterface, SoundInterface, CollisionDetectionInterface} који се користе код чувања у фајлове, пуштања звука, исцртавања, и детектовања и обрађивања колизије. Поред тога ако фигура дође у стање мировања омогућава да се звук не пушта више. Звук се такође не пушта ако лопта има учесталу колизију са препрекама. Такође \emph{toString} метода је неопходна због чувања у фајловима. Има  свој центар који ће се користити код померања, ротирања... Центар може да се дохвати и постави.
+
+
+\subsubsection{Пакет hole}
+Постоји класа \emph{CircleHole} која имплемнтира лопту и лоптасте препреке у 2D. Изведена је из класе \emph{Figure}.Самим тим имплементира методе из \emph{ShapeDrawInterface} и \emph{CollisionDetectionInterface}, уз додато поље полупречник, које може да се дохвати и постави.
+Постоји и класа \emph{StartHole} која служи за приказивање лопте, додатно још имплементира методе из \emph{SoundInterface} као и промењену \emph{toString} методу. 
+\\ \indent Садржи  пакет gravity који служи за класе које представљају рупе (тј. има неки облик гравитације који вуче лопту ка њима). Стога \emph{ GravityHole} имплементира још \emph{CollisionHandlingInterface} који омогућава промену брзине након судара (у суштини мења брзину тако да иде ка центру лопте). У случају \emph{FinishHole} и \emph{WrongHole} које прошиују \emph{GravityHole} долази до краја игре кад лопта упадне у њих (с тим да је у једном случају позитиван, а у другом негативан крај). Док \emph{VortexHole} такође проширује, али игра се не губи кад лопта упадне у њу, нити побеђује. Такође \emph{toString} и звук су другачји за сваки тип препреке.
+\subsubsection{Пакет obstacle}
+У овом пакету постоје класе \emph{Obstacle}, \emph{CircleObstacle} и \emph{RectangleObstacle}. Прва проширује класу \emph{Figure}, и поставља одговарајући звук који ће бити пуштан за препреке. Такође имплементира \emph{CollisionHandlingInterface} који се користи након судара да се промени брзина објекта, тј. није крај игре кад се лопта судари са њима. Друге две класе проширују класу \emph{Оbstacle}. И код \emph{CircleObstacle} и \emph{RectangleObstacle} све методе класе \emph{Figure} су override-оване и самим тим ту су имплементације за фигуре типа правоугаоник и круг у 2D. Поред тога \emph{RectangleObstacle} садржи и поља \emph{width} и \emph{height} која могу да се дохвате и поставе и представљају одговарајућу ширину и висину. Може да се дохвате и координате одговарајућих темена. Слично за лопту може да се дохвати полупречник.
+
 \subsection{Пакет movement.collision.detection}
 Налази се интерфејсе \emph{CollisionDetectionInterface}. Класе које га имплементирају морају да имају следеће методе:
 \begin{itemize}
@@ -151,7 +163,7 @@
 \item \emph{void drawImageFromFile(Canvas canvas, String fileName)}- црта фигуре из фајла \emph{fileName} на платно \emph{canvas}.
 \end{itemize}
 
-Класа \emph{ShapeParser} је изведена из \emph{ShapeParserAbstract} и подржава све методе из њеног интерфејса, с тим да свуда генерише објекте изведених класа из \emph{Figure} уместо \emph{ShapeParserInterface}
+Класа \emph{ShapeParser} је изведена из \emph{ShapeParserAbstract} и подржава све методе из њеног интерфејса, с тим да свуда генерише објекте изведених класа изq \emph{Figure} уместо \emph{ShapeParserInterface}
 
 \subsection{Пакет scale}
 Поседује две класе. Прва је апстрактна \emph{UtilScale} и кад се иницијализује прима прима величину екрана и на основу тога скалира дужине по висини (\emph{scaleHeight} и \emph{scaleReverseHeight}) ширини (\emph{scaleWidth} и \emph{scaleReverseWidth}) као и координате (\emph{scaleReverseCoordinate} и \emph{scaleCoordinate}). \emph{scalexxx} скалира вредности за екран уређаја, док \emph{scaleReverse} скалира за фајл (претвара у проценте). Класа \emph{UtilScaleNormal}импементира претходно наведене методе.
