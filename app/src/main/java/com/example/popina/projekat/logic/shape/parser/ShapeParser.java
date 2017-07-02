@@ -98,7 +98,7 @@ public class ShapeParser extends ShapeParserAbstract
             String curLine = null;
             while ((curLine = bufferedReader.readLine()) != null)
             {
-                listFigures.addLast(shapeFactory.scaleFigure(parseLine(curLine)));
+                listFigures.addLast(shapeFactory.scaleFigures(parseLine(curLine)));
             }
 
         }

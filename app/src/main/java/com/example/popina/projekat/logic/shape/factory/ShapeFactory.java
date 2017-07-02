@@ -82,17 +82,17 @@ public class ShapeFactory
         return vortexHole;
     }
 
-    public Figure scaleFigure(Figure f)
+    public Figure scaleFigures(Figure f)
     {
         return f.scale(utilScale);
     }
 
-    public Figure scaleReverseFigure(Figure f)
+    public Figure scaleReverseFigures(Figure f)
     {
         return f.scaleReverse(utilScale);
     }
 
-    public LinkedList<Figure> scaleFigure(LinkedList<Figure> listFigures)
+    public LinkedList<Figure> scaleFigures(LinkedList<Figure> listFigures)
     {
         LinkedList<Figure> list = new LinkedList<>();
 
@@ -103,7 +103,7 @@ public class ShapeFactory
         return list;
     }
 
-    public LinkedList<Figure> scaleReverseFigure(LinkedList<Figure> listFigures)
+    public LinkedList<Figure> scaleReverseFigures(LinkedList<Figure> listFigures)
     {
         LinkedList<Figure> list = new LinkedList<>();
 

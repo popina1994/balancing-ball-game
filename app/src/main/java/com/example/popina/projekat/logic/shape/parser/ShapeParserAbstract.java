@@ -36,7 +36,7 @@ public abstract class ShapeParserAbstract
         this.shapeFactory = shapeFactory;
     }
 
-    public abstract ShapeParserInterface parseLine(String line);
+    protected abstract ShapeParserInterface parseLine(String line);
 
     public abstract LinkedList<? extends ShapeParserInterface> parseFile(String fileName);
 

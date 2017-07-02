@@ -242,7 +242,7 @@ public class CreatePolygonController
             outputStream = createPolygonActivity.openFileOutput(model.getFileName(), Context.MODE_PRIVATE);
             StringBuilder stringBuilder = new StringBuilder();
             LinkedList<Figure> listFigure = model.getListFigures();
-            listFigure = model.getShapeFactory().scaleReverseFigure(listFigure);
+            listFigure = model.getShapeFactory().scaleReverseFigures(listFigure);
 
             for (Figure it : listFigure)
             {
