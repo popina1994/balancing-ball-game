@@ -4,7 +4,7 @@ package com.example.popina.projekat.application.settings;
  * Created by popina on 12.03.2017..
  */
 
-public class SettingsModel
+public abstract class SettingsModel
 {
     public static final int MAX_SEEK_BAR_ACC = 1000;
     public static final int MAX_SEEK_BAR_MI = 10000;

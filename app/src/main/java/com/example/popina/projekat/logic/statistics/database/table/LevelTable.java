@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
  * Created by popina on 05.04.2017..
  */
 
-public class LevelTable implements BaseColumns
+public abstract class LevelTable implements BaseColumns
 {
     // TODO : levels of different difficulty.
     //

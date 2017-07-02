@@ -11,7 +11,7 @@ import android.view.Window;
  * Created by popina on 10.03.2017..
  */
 
-public class CommonActivity extends Activity
+public abstract class CommonActivity extends Activity
 {
 
     private boolean isMainMenu;

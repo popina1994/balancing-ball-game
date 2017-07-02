@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
  * Created by popina on 05.04.2017..
  */
 
-public class UserScoreTable implements BaseColumns
+public abstract class UserScoreTable implements BaseColumns
 {
 
     public static final String TABLE_NAME = "user_score";

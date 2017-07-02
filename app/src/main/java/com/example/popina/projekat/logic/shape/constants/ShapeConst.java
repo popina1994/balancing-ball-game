@@ -6,7 +6,7 @@ import android.graphics.Color;
  * Created by popina on 08.03.2017..
  */
 
-public class ShapeConst
+public abstract class ShapeConst
 {
 
     public static final String TYPE_HOLE_START = "START_HOLE";
