@@ -28,5 +28,10 @@
 \contentsline {section}{\numberline {5.2}\IeC {\CYRO }\IeC {\cyrp }\IeC {\cyrt }\IeC {\cyri }\IeC {\cyrm }\IeC {\cyri }\IeC {\cyrz }\IeC {\cyra }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyre } \IeC {\cyrk }\IeC {\cyro }\IeC {\cyrd } \IeC {\cyri }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrnje }\IeC {\cyra } \IeC {\cyri }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyre }}{18}{section.5.2}
 \contentsline {chapter}{\numberline {6}A\IeC {\cyrr }\IeC {\cyrh }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrk }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra }}{20}{chapter.6}
 \contentsline {section}{\numberline {6.1}\IeC {\CYRO }\IeC {\cyrr }\IeC {\cyrg }\IeC {\cyra }\IeC {\cyrn }\IeC {\cyri }\IeC {\cyrz }\IeC {\cyra }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyra } \IeC {\cyrp }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt }\IeC {\cyra }}{20}{section.6.1}
-\contentsline {chapter}{\numberline {7}\IeC {\CYRZ }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyrlje }\IeC {\cyru }\IeC {\cyrch }\IeC {\cyra }\IeC {\cyrk }}{22}{chapter.7}
-\contentsline {chapter}{\IeC {\CYRL }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri } \IeC {\cyrl }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyri }}{23}{chapter.7}
+\contentsline {section}{\numberline {6.2}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } game}{21}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } acceleration.filter}{21}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } coefficient}{22}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } collision}{22}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } utility}{22}{subsection.6.2.4}
+\contentsline {chapter}{\numberline {7}\IeC {\CYRZ }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyrlje }\IeC {\cyru }\IeC {\cyrch }\IeC {\cyra }\IeC {\cyrk }}{24}{chapter.7}
+\contentsline {chapter}{\IeC {\CYRL }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri } \IeC {\cyrl }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyri }}{25}{chapter.7}

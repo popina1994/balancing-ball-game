@@ -45,7 +45,7 @@ public class Coefficient
         return value;
     }
 
-    public void readDefaultValues()
+    private void readDefaultValues()
     {
         scaleAccDefault = readFloatValue(R.dimen.ACCELERATION_COEFICIENT_DEFAULT);
         miDefault = readFloatValue(R.dimen.MI_COEFICIENT_DEFAULT);

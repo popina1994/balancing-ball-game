@@ -6,11 +6,62 @@ import com.example.popina.projekat.logic.shape.coordinate.Coordinate;
  * Created by popina on 16.03.2017..
  */
 
-public class Utility
+public abstract class Utility
 {
     public static final float S_NS = 1000000000;
     public static float FLOAT_ACCURACY = 0.01f;
     public static float S_MS = 1000;
+
+    public static double degToRadian(float deg)
+    {
+        return deg * 2 * Math.PI / 360;
+    }
+
+    public static float convertRadianAngleTo2PiRange(float angle)
+    {
+        float cnt = (float)Math.abs(Math.floor(angle / (2 * Math.PI))) ;
+
+
+        if ( (angle < 0) || (angle >= 2 * Math.PI))
+        {
+            angle += opositeSign(angle) * 2 * Math.PI * cnt;
+        }
+        return angle;
+    }
+
+    public static double radianToDeg(float rad)
+    {
+        return 360 * rad / (2 * Math.PI);
+    }
+    public static float convertMsToS(float ms)
+    {
+        return ms / S_MS;
+    }
+
+    public static float convertNsToS(float ns)
+    {
+        return ns / S_NS;
+    }
+
+    public static float opositeSign(float val)
+    {
+        if (val < 0)
+        {
+            return 1;
+        } else if (val > 0)
+        {
+            return -1;
+        }
+
+        return 0;
+    }
+
+
+    public static float distanceSquared(Coordinate point1, Coordinate point2)
+    {
+        return (point1.getX() - point2.getX()) * (point1.getX() - point2.getX())
+                + (point1.getY() - point2.getY()) * (point1.getY() - point2.getY());
+    }
 
     public static boolean isDistanceBetweenCoordLesThan(Coordinate coordinate1, Coordinate coordinate2,
                                                         float dist, boolean isSquared)
@@ -26,38 +77,6 @@ public class Utility
     public static boolean isDimBetweenDims(float dimBegin, float dimEnd, float dim)
     {
         return (dimBegin - FLOAT_ACCURACY <= dim) && (dimEnd + FLOAT_ACCURACY >= dim);
-    }
-
-
-    // Fucking accuracy.
-    //
-    public static boolean isOnSegment(Coordinate beginSegment, Coordinate endSegment, Coordinate point)
-    {
-        return (isDimBetweenDims(beginSegment.getX(), endSegment.getX(), point.getX()) &&
-                isDimBetweenDims(beginSegment.getY(), endSegment.getY(), point.getY()));
-    }
-
-    public static float distanceSquared(Coordinate point1, Coordinate point2)
-    {
-        return (point1.getX() - point2.getX()) * (point1.getX() - point2.getX())
-                + (point1.getY() - point2.getY()) * (point1.getY() - point2.getY());
-    }
-
-    public static void swap(float var1, float var2)
-    {
-        float tmp = var1;
-        var1 = var2;
-        var2 = tmp;
-    }
-
-    public static float convertMsToS(float ms)
-    {
-        return ms / S_MS;
-    }
-
-    public static float convertNsToS(float ns)
-    {
-        return ns / S_NS;
     }
 
     public static boolean doesSegmentIntersectsCircle(Coordinate beginSegment, Coordinate endSegment, Coordinate center, float radius,
@@ -85,28 +104,7 @@ public class Utility
         }
     }
 
-    public static float opositeSign(float val)
-    {
-        if (val < 0)
-        {
-            return 1;
-        } else if (val > 0)
-        {
-            return -1;
-        }
 
-        return 0;
-    }
-
-    public static double degToRadian(float deg)
-    {
-        return deg * 2 * Math.PI / 360;
-    }
-
-    public static double radianToDeg(float rad)
-    {
-        return 360 * rad / (2 * Math.PI);
-    }
 
     public static float calculateAngle(Coordinate center, Coordinate point)
     {
@@ -151,17 +149,7 @@ public class Utility
         return rotatePointAroundCenter(new Coordinate(0, 0), sine, cosine, point);
     }
 
-    public static float convertRadianAngleTo2PiRange(float angle)
-    {
-        float cnt = (float)Math.abs(Math.floor(angle / (2 * Math.PI))) ;
 
-
-        if ( (angle < 0) || (angle >= 2 * Math.PI))
-        {
-            angle += opositeSign(angle) * 2 * Math.PI * cnt;
-        }
-        return angle;
-    }
 
     public static double randomNumberInInterval(int startInterval, int endInterval)
     {
