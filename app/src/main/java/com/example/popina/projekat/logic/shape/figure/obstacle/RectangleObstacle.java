@@ -146,10 +146,9 @@ public class RectangleObstacle extends Obstacle
     @Override
     public void resize(Coordinate c)
     {
-        // TODO : if time is left update this.
-
-        width = 2 * Math.abs(c.getX() - center.getX());
-        height = 2 * Math.abs(c.getY() - center.getY());
+        Coordinate rotatedC = Utility.rotatePointAroundCenter(getCenter(), -angle, c);
+        width = 2 * Math.abs(rotatedC.getX() - center.getX());
+        height = 2 * Math.abs(rotatedC.getY() - center.getY());
     }
 
     @Override
