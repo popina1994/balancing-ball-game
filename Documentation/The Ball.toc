@@ -23,30 +23,30 @@
 \contentsline {section}{\numberline {3.3}\IeC {\CYRCH }\IeC {\cyru }\IeC {\cyrv }\IeC {\cyra }\IeC {\cyrnje }\IeC {\cyre } \IeC {\cyrp }\IeC {\cyro }\IeC {\cyrd }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyra }}{15}{section.3.3}
 \contentsline {section}{\numberline {3.4}Unit Test}{16}{section.3.4}
 \contentsline {chapter}{\numberline {4}\IeC {\CYRM }\IeC {\cyro }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrl } \IeC {\cyrf }\IeC {\cyri }\IeC {\cyrz }\IeC {\cyri }\IeC {\cyrk }\IeC {\cyre }}{17}{chapter.4}
-\contentsline {chapter}{\numberline {5}\IeC {\CYRG }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrf }\IeC {\cyri }\IeC {\cyrk }\IeC {\cyra }}{18}{chapter.5}
-\contentsline {section}{\numberline {5.1}\IeC {\CYRO }\IeC {\cyrp }\IeC {\cyrsh }\IeC {\cyrt }\IeC {\cyra } \IeC {\cyri }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrje }\IeC {\cyra }}{18}{section.5.1}
-\contentsline {section}{\numberline {5.2}\IeC {\CYRO }\IeC {\cyrp }\IeC {\cyrt }\IeC {\cyri }\IeC {\cyrm }\IeC {\cyri }\IeC {\cyrz }\IeC {\cyra }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyre } \IeC {\cyrk }\IeC {\cyro }\IeC {\cyrd } \IeC {\cyri }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrnje }\IeC {\cyra } \IeC {\cyri }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyre }}{18}{section.5.2}
-\contentsline {chapter}{\numberline {6}A\IeC {\cyrr }\IeC {\cyrh }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrk }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra }}{20}{chapter.6}
-\contentsline {section}{\numberline {6.1}\IeC {\CYRO }\IeC {\cyrr }\IeC {\cyrg }\IeC {\cyra }\IeC {\cyrn }\IeC {\cyri }\IeC {\cyrz }\IeC {\cyra }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyra } \IeC {\cyrp }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt }\IeC {\cyra }}{20}{section.6.1}
-\contentsline {section}{\numberline {6.2}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } game}{21}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } acceleration.filter}{21}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } coefficient}{22}{subsection.6.2.2}
-\contentsline {subsection}{\numberline {6.2.3}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } collision}{22}{subsection.6.2.3}
-\contentsline {subsection}{\numberline {6.2.4}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } utility}{22}{subsection.6.2.4}
-\contentsline {section}{\numberline {6.3}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } statistics.database}{23}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } table}{24}{subsection.6.3.1}
-\contentsline {section}{\numberline {6.4}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } shape}{24}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } constants}{24}{subsection.6.4.1}
-\contentsline {subsection}{\numberline {6.4.2}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } coordinate}{25}{subsection.6.4.2}
-\contentsline {subsection}{\numberline {6.4.3}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } draw}{25}{subsection.6.4.3}
-\contentsline {subsection}{\numberline {6.4.4}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } factory}{26}{subsection.6.4.4}
-\contentsline {subsection}{\numberline {6.4.5}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } figure}{27}{subsection.6.4.5}
-\contentsline {subsubsection}{\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } hole}{27}{section*.2}
-\contentsline {subsubsection}{\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } obstacle}{27}{section*.3}
-\contentsline {subsection}{\numberline {6.4.6}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } movement.collision.detection}{27}{subsection.6.4.6}
-\contentsline {subsection}{\numberline {6.4.7}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } movement.collision.handling}{28}{subsection.6.4.7}
-\contentsline {subsection}{\numberline {6.4.8}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } parser}{28}{subsection.6.4.8}
-\contentsline {subsection}{\numberline {6.4.9}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } scale}{29}{subsection.6.4.9}
-\contentsline {subsection}{\numberline {6.4.10}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } sound}{29}{subsection.6.4.10}
-\contentsline {chapter}{\numberline {7}\IeC {\CYRZ }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyrlje }\IeC {\cyru }\IeC {\cyrch }\IeC {\cyra }\IeC {\cyrk }}{30}{chapter.7}
-\contentsline {chapter}{\IeC {\CYRL }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri } \IeC {\cyrl }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyri }}{31}{chapter.7}
+\contentsline {chapter}{\numberline {5}\IeC {\CYRG }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrf }\IeC {\cyri }\IeC {\cyrk }\IeC {\cyra }}{20}{chapter.5}
+\contentsline {section}{\numberline {5.1}\IeC {\CYRO }\IeC {\cyrp }\IeC {\cyrsh }\IeC {\cyrt }\IeC {\cyra } \IeC {\cyri }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrje }\IeC {\cyra }}{20}{section.5.1}
+\contentsline {section}{\numberline {5.2}\IeC {\CYRO }\IeC {\cyrp }\IeC {\cyrt }\IeC {\cyri }\IeC {\cyrm }\IeC {\cyri }\IeC {\cyrz }\IeC {\cyra }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyre } \IeC {\cyrk }\IeC {\cyro }\IeC {\cyrd } \IeC {\cyri }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrnje }\IeC {\cyra } \IeC {\cyri }\IeC {\cyrg }\IeC {\cyrr }\IeC {\cyre }}{20}{section.5.2}
+\contentsline {chapter}{\numberline {6}A\IeC {\cyrr }\IeC {\cyrh }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrk }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra }}{22}{chapter.6}
+\contentsline {section}{\numberline {6.1}\IeC {\CYRO }\IeC {\cyrr }\IeC {\cyrg }\IeC {\cyra }\IeC {\cyrn }\IeC {\cyri }\IeC {\cyrz }\IeC {\cyra }\IeC {\cyrc }\IeC {\cyri }\IeC {\cyrje }\IeC {\cyra } \IeC {\cyrp }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt }\IeC {\cyra }}{22}{section.6.1}
+\contentsline {section}{\numberline {6.2}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } game}{23}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } acceleration.filter}{23}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } coefficient}{24}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } collision}{24}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } utility}{24}{subsection.6.2.4}
+\contentsline {section}{\numberline {6.3}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } statistics.database}{25}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } table}{26}{subsection.6.3.1}
+\contentsline {section}{\numberline {6.4}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } shape}{26}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } constants}{26}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } coordinate}{27}{subsection.6.4.2}
+\contentsline {subsection}{\numberline {6.4.3}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } draw}{27}{subsection.6.4.3}
+\contentsline {subsection}{\numberline {6.4.4}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } factory}{28}{subsection.6.4.4}
+\contentsline {subsection}{\numberline {6.4.5}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } figure}{29}{subsection.6.4.5}
+\contentsline {subsubsection}{\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } hole}{29}{section*.2}
+\contentsline {subsubsection}{\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } obstacle}{29}{section*.3}
+\contentsline {subsection}{\numberline {6.4.6}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } movement.collision.detection}{29}{subsection.6.4.6}
+\contentsline {subsection}{\numberline {6.4.7}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } movement.collision.handling}{30}{subsection.6.4.7}
+\contentsline {subsection}{\numberline {6.4.8}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } parser}{30}{subsection.6.4.8}
+\contentsline {subsection}{\numberline {6.4.9}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } scale}{31}{subsection.6.4.9}
+\contentsline {subsection}{\numberline {6.4.10}\IeC {\CYRP }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyre }\IeC {\cyrt } sound}{31}{subsection.6.4.10}
+\contentsline {chapter}{\numberline {7}\IeC {\CYRZ }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyrlje }\IeC {\cyru }\IeC {\cyrch }\IeC {\cyra }\IeC {\cyrk }}{32}{chapter.7}
+\contentsline {chapter}{\IeC {\CYRL }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri } \IeC {\cyrl }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyri }}{33}{chapter.7}
