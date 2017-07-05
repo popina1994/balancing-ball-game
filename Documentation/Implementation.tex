@@ -14,7 +14,7 @@
 \subsection{Java код}
 GUI компоненте на одговарајућим екранима референциране су тако што се из одговарајућег прозора нађе компонента уз помоћ \emph{findViewById} \footnote{\url{https://developer.android.com/reference/android/view/View.html} и \url{https://developer.android.com/reference/android/app/Activity.html}}
 \\ \indent 
-Постоји пет активности (\emph{MainActivity, CreatePolygonActivity, GameActivity, SettingsActivity, StatisticsActivity}). Свака подржавајући одговарајућу функционалност из главе \ref{UseCases}. Дакле MainActivity почетни екран (\ref{UseCases:Main}), GameActivity  саму игру (\ref{UseCases:Game}), SettingsActivity подешавања (\ref{UseCases:Settings}), StatisticsActivity резултате (\ref{UseCases:Statistics}) и CreatePolygonActivity уређивање полигона (\ref{UseCases:CreatePolygon}).
+Постоји пет активности (\emph{MainActivity, CreatePolygonActivity, GameActivity, SettingsActivity, StatisticsActivity}). Свака подржавајући одговарајућу функционалност из главе \ref{ModelProposal}. Дакле MainActivity почетни екран (в. употребу\ref{UseCases:Main}), GameActivity  саму игру (в. употребу \ref{UseCases:Game}), SettingsActivity подешавања (в. употребу \ref{UseCases:Settings}), StatisticsActivity резултате (в. употребу \ref{UseCases:Statistics}) и CreatePolygonActivity уређивање полигона (в. употребу \ref{UseCases:CreatePolygon}).
 \\ \indent 
 Свака активност је прављена тако да је изведена из активности \emph{CommonActivtity}. Свака активност која наслеђује ову класу има подешен прозор тако да је навигациона трака скривена док корисник не превуче прстом са дна уређаја на горе. Поред тога оријентација је увек вертикално, да корисник не би губио време ако случајно окрене уређај. Такoђе екран обавештења је остао доступан кориснику да би могао у сваком тренутку да сазна више о обавештењу које му стигне (али тек након што превуче прстом екран са врха ка дну).
  Дата имплементације је по узору на већину данашањих екслузивних играчких наслова за Android уређаје попут Hill Climb Racing (линк за преузимање \cite{HillCR}). Даље коришћен је MVC\footnote{Model View Controller} пројектни узорак прилагођен за Android. При чему имамо активност која прослеђује своје догађаје контролеру, и он у зависности од њих обавља акције и у моделу се то чува. Постоји и имплементација где у моделу постоје методе које обрађују податке, али изабраним је раздвојена имплементација кода , од приступа подацима, и олакшана читкоћа кода.  Тамо где није био велики обим потребних метода (MainActivity, StatisticsActivity и SettingsActivity) обједињени су Controller и View. 
@@ -25,7 +25,7 @@ GUI компоненте на одговарајућим екранима реф
  \emph{Dialog}\footnote{\url{https://developer.android.com/reference/android/app/Dialog.html}} и праве одговарајући потребан GUI. 
  Ово је омогућило финије подешавање дијалога и њиховог изгледа oд унапред направљених класа попут \emph{AlertDialog}\footnote{\url{https://developer.android.com/reference/android/app/AlertDialog.html}}.
 \\ \indent 
-Тамо где су била потребна исцртавања на екрану (\emph{CreatePolygonActivity} и \emph{GameActivity}) коришћене су одговарајућe класе које су проширивале \emph{SurfaceView} \footnote{\url{https://developer.android.com/reference/android/view/SurfaceView.html}} (биће касније објашњено како ово ради у глави \ref{Graphics}). 
+Тамо где су била потребна исцртавања на екрану (\emph{CreatePolygonActivity} и \emph{GameActivity}) коришћене су одговарајућe класе које су проширивале \emph{SurfaceView} \footnote{\url{https://developer.android.com/reference/android/view/SurfaceView.html}} (биће касније објашњено како ово ради у поглављу \ref{Graphics}). 
 \\ \indent 
 За \emph{SettingsActivity} било је потребно  унапредити постојећу GUI компоненту SeekBar. Због тога је додата класа \emph{SeekBarUpgrade} која додаје још неки низ особина и омогућава лакше додавање више SeekBar-ова у SettingsActivity. 
 \\ \indent 
@@ -47,9 +47,7 @@ GUI компоненте на одговарајућим екранима реф
 \subsection{Unit Test}
 За потребе тестирања коришћени су корисници који су играли ову игрицу, као и \emph{JUnit} пакет који је омогућио тестирање одређених метода класа и функционалности. Да би ова апликација ишла у продукцију, неопходна су бројна унапређења у тестирању као и броју тестова.
 
-\section{Графика}
-
-
+\section{Графика}\label{Graphics}
  Цео модел је оптимизован тако да се тежило максималној паралелизацији и минимализацији броја lock-ова. У обе активности се на почетку иницијализације \emph{SurfaceView} правe класе \emph{ShapeFactory} и \emph{ShapeDraw}, од којих прва служи за парсирање полигона из фајлова (и њихово скалирање), док друга служи за цртање фигура по \emph{Canvas}-у \emph{SurfaceView}. Да би фигура била исцртана помоћу класе \emph{ShapeDraw} неопходno je да подржава \emph{ShapeDrawInterface}, тј. да може да се кликне на њу, ротира, промени величина, помери, израчуна угао нагиба. Такође при иницијализацији \emph{SurfaceView} прави се и посебна нит која ће да ради исцртавање. При уништавању \emph{SurfaceView} нит се уништава.
 \\ \indent
 Код играња игре, нема потребе за непотребно рендеровање и исцртавање других фигура по \emph{Canvas}-у осим на почетку. Стога се направи спрајт целог полигона без лопте, и лопта се лепи касније на спрајт како се мења њена позиција. Ово омогућава убрзано ажурирање екрана.
@@ -72,13 +70,10 @@ GUI компоненте на одговарајућим екранима реф
 \end{center}
 \end{figure}
 
-Читав java код је организован тако да се налази унутар пакета \emph{com.example.popina.projekat} и то у два потпакета. Код који је везан за MVC преглед и Android део налази се у applicatiоn потпакету (слика \ref{fig:umlPackageApp}). Код који је везан за логику игре (база података, како се праве фигуре, парсира...) налази се у потпакету \emph{logic} (слика \ref{fig:umlPackageLog}). Логика класа из потпакета \emph{application} је објашњена у глави \ref{Android}, као и у глави \ref{Graphics}. Такође логика пакета \emph{coefficent} je објашњена у глави  \ref{Android}, као и логика \emph{collision} пакета унутар кога је \emph{collisionModel}. Стога овде ће бити објашњена организација кода у потпакету \emph{logic }који описује логику из архитектурног угла тј. како ради апликација. 
+Читав java код је организован тако да се налази унутар пакета \emph{com.example.popina.projekat} и то у два потпакета. Код који је везан за MVC преглед и Android део налази се у applicatiоn потпакету (слика \ref{fig:umlPackageApp}). Код који је везан за логику игре (база података, како се праве фигуре, парсира...) налази се у потпакету \emph{logic} (слика \ref{fig:umlPackageLog}). Логика класа из потпакета \emph{application} је објашњена у поглављу \ref{Android}, као и у поглављу \ref{Graphics}. Такође логика пакета \emph{coefficent} je објашњена у поглављу  \ref{Android}. Док је логика \emph{collision} пакета унутар кога је \emph{collisionModel} објашњена у поглављу \ref{Collision}. Стога овде ће бити објашњена организација кода у потпакету \emph{logic }који описује логику из архитектурног угла тј. како ради апликација. 
 
 \subsection{Пакет game}
 \subsubsection{Пакет acceleration.filter}
-
-
-
 \begin{figure}[htb!]
 \begin{center}
 \includegraphics[scale=.6]{pictures/UML/class/filter}
@@ -155,7 +150,7 @@ GUI компоненте на одговарајућим екранима реф
 \item \emph{float calculateAngle(Coordinate point)}  - рачуна угао измећу угла ротиране фигуре и оног одређеног центром те фигуре и тачком \emph{point}
 \end{itemize}
 
-Класа \emph{ShapeDraw} служи за исцртавање \emph{ShapeDrawInterface} по \emph{Canvas}-у. Њена употреба може се прочитати у глави \ref{Graphics}. Поље типа \emph{CommonModel} служи за синхронизацију међу нитима. Методе које подржава:
+Класа \emph{ShapeDraw} служи за исцртавање \emph{ShapeDrawInterface} по \emph{Canvas}-у. Њена употреба може се прочитати у поглављу \ref{Graphics}. Поље типа \emph{CommonModel} служи за синхронизацију међу нитима. Методе које подржава:
 \begin{itemize}
 \item \emph{void spriteOnBackground(LinkedList<? extends ShapeDrawInterface> listFigures)} - црта листу фигура \emph{listFigures} на \emph{Canvas} који већ садржи..
 \item \emph{void drawOnCanvas(LinkedList<? extends ShapeDrawInterface> listFigures, Canvas canvas)} -црта листу фигура \emph{listFigures}на \emph{canvas}, при чему се прво постави подразумевана позадина која је учитана као позадина (по њој ће се цритати).

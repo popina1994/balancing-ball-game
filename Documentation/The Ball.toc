@@ -43,4 +43,4 @@
 \contentsline {section}{\numberline {6.4}\IeC {\CYRR }\IeC {\cyre }\IeC {\cyrz }\IeC {\cyru }\IeC {\cyrl }\IeC {\cyrt }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyri }}{33}{section.6.4}
 \contentsline {section}{\numberline {6.5}\IeC {\CYRP }\IeC {\cyro }\IeC {\cyrd }\IeC {\cyre }\IeC {\cyrsh }\IeC {\cyra }\IeC {\cyrv }\IeC {\cyra }\IeC {\cyrnje }\IeC {\cyra }}{34}{section.6.5}
 \contentsline {chapter}{\numberline {7}\IeC {\CYRZ }\IeC {\cyra }\IeC {\cyrk }\IeC {\cyrlje }\IeC {\cyru }\IeC {\cyrch }\IeC {\cyra }\IeC {\cyrk }}{36}{chapter.7}
-\contentsline {chapter}{\IeC {\CYRL }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri } \IeC {\cyrl }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyri }}{37}{chapter.7}
+\contentsline {chapter}{\IeC {\CYRL }\IeC {\cyri }\IeC {\cyrt }\IeC {\cyre }\IeC {\cyrr }\IeC {\cyra }\IeC {\cyrt }\IeC {\cyru }\IeC {\cyrr }\IeC {\cyra } \IeC {\cyri } \IeC {\cyrl }\IeC {\cyri }\IeC {\cyrn }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyri }}{38}{chapter.7}
